@@ -1,0 +1,17 @@
+{
+  "name": "RhythmVAE",
+  "version": "1.0.0",
+  "main": "rhythmvae.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^1.2.8",
+    "@tonejs/midi": "^2.0.7",
+    "cross-fetch": "^3.0.4"
+  },
+  "description": ""
+}
