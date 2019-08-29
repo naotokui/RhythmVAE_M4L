@@ -1,11 +1,9 @@
 const Max = require('max-api');
-
-const MnistData = require("./data.js").MnistData;
-const tf = require('@tensorflow/tfjs');
+const tf = require('@tensorflow/tfjs-node');
 
 
-const NUM_DRUM_CLASSES = require('./rvae-constants.js').NUM_DRUM_CLASSES;
-const LOOP_DURATION = require('./rvae-constants.js').LOOP_DURATION;
+const NUM_DRUM_CLASSES = require('./constants.js').NUM_DRUM_CLASSES;
+const LOOP_DURATION = require('./constants.js').LOOP_DURATION;
 
 const ORIGINAL_DIM = NUM_DRUM_CLASSES * LOOP_DURATION;
 const INTERMEDIATE_DIM = 512;
@@ -63,9 +61,7 @@ function generatePattern(z1, z2){
   } else {
     zs = tf.tensor2d([[z1, z2]]);
   }
-
   console.log(zs.toString());
-
   let outputs = model.decoder.apply(zs);
   outputs = outputs.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);
   // console.log(outputs.toString());

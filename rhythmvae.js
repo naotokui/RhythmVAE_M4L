@@ -1,15 +1,15 @@
 const path = require('path');
 const Max = require('max-api');
 const fs = require('fs')
-const tf = require('@tensorflow/tfjs');
+const tf = require('@tensorflow/tfjs-node');
 
-const MIDI_DRUM_MAP = require('./rvae-constants.js').MIDI_DRUM_MAP;
-const DRUM_CLASSES = require('./rvae-constants.js').DRUM_CLASSES;
-const NUM_DRUM_CLASSES = require('./rvae-constants.js').NUM_DRUM_CLASSES;
-const LOOP_DURATION = require('./rvae-constants.js').LOOP_DURATION;
+const MIDI_DRUM_MAP = require('./src/constants.js').MIDI_DRUM_MAP;
+const DRUM_CLASSES = require('./src/constants.js').DRUM_CLASSES;
+const NUM_DRUM_CLASSES = require('.//src/constants.js').NUM_DRUM_CLASSES;
+const LOOP_DURATION = require('.//src/constants.js').LOOP_DURATION;
 
-const utils = require('./utils.js');
-const vae = require('./vae.js');
+const utils = require('./src/utils.js');
+const vae = require('./src/vae.js');
 
 const { Midi } = require('@tonejs/midi'); // https://github.com/Tonejs/Midi
 
