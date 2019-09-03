@@ -1,8 +1,11 @@
 const path = require('path');
 const Max = require('max-api');
 const fs = require('fs')
+const glob = require('glob');
+
 const tf = require('@tensorflow/tfjs-node');
 
+// Constants
 const MIDI_DRUM_MAP = require('./src/constants.js').MIDI_DRUM_MAP;
 const DRUM_CLASSES = require('./src/constants.js').DRUM_CLASSES;
 const NUM_DRUM_CLASSES = require('.//src/constants.js').NUM_DRUM_CLASSES;
@@ -16,10 +19,7 @@ const { Midi } = require('@tonejs/midi'); // https://github.com/Tonejs/Midi
 // This will be printed directly to the Max console
 Max.post(`Loaded the ${path.basename(__filename)} script`);
 
-// var x = utils.create2DArray(10, 10);
-// x = tf.tensor2d(x, [10, 10]);
-// console.log(x);
-
+// Global varibles
 var train_data = [];
 
 async function loadMidi(filepath){
@@ -40,35 +40,6 @@ async function loadMidi(filepath){
         console.log(track.instrument.name);
     })
 }
-
-
-function processMidiFile(midiFile){
-
-    var format = midiFile.header.getFormat(); // 0, 1 or 2
-    var num_tracks = midiFile.header.getTracksCount(); // n
-
-
-    console.log(midiFile.header);
-    console.log(num_tracks);
-
-    // // Or for a single track
-    // var trackEventsChunk = midiFile.tracks[0].getTrackContent();
-    // var events = MIDIEvents.createParser(trackEventsChunk);
-
-    // var event;
-    // while(event = events.next()) {
-    //     // Printing meta events containing text only
-    //     if(event.type === MIDIEvents.EVENT_META && event.text) {
-    //         console.log('Text meta: '+event.text);
-    //     }
-    //     console.log(event);
-    // }
-
-
-    // var events = midiFile.getTrackEvents(0);
-    // events.forEach(console.log.bind(console));
-}
-
 
 function validateMIDIFile(midiFile){
     if (midiFile.header.tempos.length > 1){
@@ -141,70 +112,52 @@ function getPianoroll(midiFile){
     }
 }
 
-
-// Use the 'addHandler' function to register a function for a particular message
-Max.addHandler("midi", (filename) =>  {
-
-    // loadMidi('./3_hiphop_90_beat_4-4.mid');
-
+function processMidiFile(filename){
     // // Read MIDI file into a buffer
     var input = fs.readFileSync(filename)
 
-   var midiFile = new Midi(input);  
+    var midiFile = new Midi(input);  
     if (validateMIDIFile(midiFile) == false){
         Max.error("Invalid MIDI file");
-        return;
+        return false;
     }
 
     var tempo = getTempo(midiFile);
     console.log("tempo:", tempo);
     console.log("signature:", midiFile.header.timeSignatures);
 
-//    console.log(midiFile);
-    // processMidiFile(midiFile);
     getPianoroll(midiFile);
+    console.log("processed:", filename);
+    return true;
+}
 
-    // midiFile.tracks.forEach(track => {
-    //     //tracks have notes and controlChanges
-    //     console.log(track.channel);
-
-
-    //     //notes are an array
-    //     const notes = track.notes
-    //     notes.forEach(note => {
-    //         console.log(note.time);
-
-
-    //       //note.midi, note.time, note.duration, note.name
-    //     })
-      
-      
-    //     //the track also has a channel and instrument
-    //     console.log(track.instrument.name)
-    //   })
-
-
- 
-// Let's assume there is an ArrayBuffer called arrayBuffer which contains the binary content of a
-// MIDI file.
- 
-    // parseArrayBuffer(input).then((json) => {
-    //     console.log(json);
-    // });
-
-	Max.post("done");
+// Add training data
+Max.addHandler("midi", (filename) =>  {
+    var count = 0;
+    // is directory? 
+    if (fs.existsSync(filename) && fs.lstatSync(filename).isDirectory()){
+        // iterate over *.mid or *.midi files 
+        // TODO: it may match *.mido *.midifile *.middleageman etc...
+        glob(filename + '/**/*.mid*', {}, (err, files)=>{
+            if (err) console.error(err); 
+            else {
+                for (var idx in files){
+                    if (processMidiFile(files[idx])) count += 1;
+                }
+            }
+        })
+    } else {
+        if (processMidiFile(filename)) count += 1;
+    }
+    Max.post("added", count);
 });
 
-
-// Use the 'outlet' function to send messages out of node.script's outlet
-Max.addHandler("echo", (msg) => {
-	Max.outlet(msg);
-});
-
+// Start training! 
 Max.addHandler("train", ()=>{
     vae.loadAndTrain(train_data);
 });
 
+// Generate a rhythm pattern
 Max.addHandler("generate", (z1, z2)=>{
     pattern = vae.generatePattern(z1, z2);
     console.log(pattern.toString());
@@ -216,6 +169,13 @@ Max.addHandler("generate", (z1, z2)=>{
         }
     }
 });
+
+// Clear training data 
+Max.addHandler("clear_train", ()=>{
+    train_data = [];  // clear
+    
+});
+
 
 // // var fs = require('fs')
 // // var parseMidi = require('midi-file').parseMidi
