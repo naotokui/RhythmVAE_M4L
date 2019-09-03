@@ -1,13 +1,17 @@
-// VAE https://github.com/songer1993/tfjs-vae
+// VAE in tensorflow.js
+// based on https://github.com/songer1993/tfjs-vae
 
 const Max = require('max-api');
 const tf = require('@tensorflow/tfjs-node');
+
+const utils = require('./utils.js')
+const data = require('./data.js')
 
 // Constants
 const NUM_DRUM_CLASSES = require('./constants.js').NUM_DRUM_CLASSES;
 const LOOP_DURATION = require('./constants.js').LOOP_DURATION;
 
-const ORIGINAL_DIM = NUM_DRUM_CLASSES * LOOP_DURATION;
+const ORIGINAL_DIM = require('./constants.js').ORIGINAL_DIM;
 const INTERMEDIATE_DIM = 512;
 const LATENT_DIM = 2;
 
@@ -15,10 +19,13 @@ const BATCH_SIZE = 128;
 const NUM_BATCH = 50;
 const TEST_BATCH_SIZE = 1000;
 
-let data;
+let dataHandler;
 let model;
 
 async function loadAndTrain(train_data) {
+  // data utility
+  dataHandler = new data.DataHandler(train_data);
+
   model = new ConditionalVAE({
     modelConfig:{
       originalDim: ORIGINAL_DIM,
@@ -26,7 +33,7 @@ async function loadAndTrain(train_data) {
       latentDim: LATENT_DIM
     },
     trainConfig:{
-      batchSize: 1,
+      batchSize: 16,
       numBatch: train_data.length,
       testBatchSize: TEST_BATCH_SIZE,
       epochs: 35,
@@ -37,7 +44,15 @@ async function loadAndTrain(train_data) {
     //   updateProgressBar: ui.updateProgressBar
     }
   });
-  await model.train(train_data);
+  await model.train();
+}
+
+function isTraining(){
+  if (model && model.isTraining) return true;
+}
+
+function isReadyToGenerate(){
+  return (model && model.isTrained != true);
 }
 
 function generatePattern(z1, z2){
@@ -47,12 +62,7 @@ function generatePattern(z1, z2){
   } else {
     zs = tf.tensor2d([[z1, z2]]);
   }
-  console.log(zs.toString());
-  let outputs = model.decoder.apply(zs);
-  outputs = outputs.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);
-  // console.log(outputs.toString());
-
-  return outputs.dataSync();
+  return model.generate();
 }
 
 // Sampling Z 
@@ -91,7 +101,6 @@ class ConditionalVAE {
     [this.encoder, this.decoder, this.apply] = this.build();
     this.isTrained = false;
   }
-
 
   build(modelConfig) {
     if (modelConfig != undefined){
@@ -167,6 +176,7 @@ class ConditionalVAE {
 
   async train(data, trainConfig) {
     this.isTrained = false;
+    this.isTraining = true;
     if (trainConfig != undefined){
       this.trainConfig = trainConfig;
     }
@@ -184,6 +194,7 @@ class ConditionalVAE {
 
     const originalDim = this.modelConfig.originalDim;
 
+    Max.outlet("training", 1);
     for (let i = 0; i < epochs; i++) {
       let batchInput;
       let testBatchInput;
@@ -196,7 +207,7 @@ class ConditionalVAE {
       Max.outlet("epoch", i + 1);
       epochLoss = 0;
       for (let j = 0; j < numBatch; j++) {
-        batchInput =  data[j].reshape([batchSize, originalDim]); // data.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
+        batchInput = dataHandler.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
         trainLoss = await optimizer.minimize(() => this.vaeLoss(batchInput, this.apply(batchInput)), true);
         trainLoss = Number(trainLoss.dataSync());
         epochLoss = epochLoss + trainLoss;
@@ -210,6 +221,7 @@ class ConditionalVAE {
       logMessage(i, epochs);
 
       Max.outlet("loss", epochLoss);
+
       // testBatchInput = data.nextTrainBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
       // testBatchResult = this.apply(testBatchInput);
       // valLoss = this.vaeLoss(testBatchInput, testBatchResult);
@@ -218,8 +230,15 @@ class ConditionalVAE {
       await tf.nextFrame();
     }
     this.isTrained = true;
+    this.isTraining = false;
+    Max.outlet("training", 0);
   }
-
+  
+  generate(zs){
+    let outputs = model.decoder.apply(zs);
+    outputs = outputs.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);  
+    return outputs.dataSync();
+  }
 }
 
 function range(start, edge, step) {
@@ -243,3 +262,5 @@ function range(start, edge, step) {
 
 exports.loadAndTrain = loadAndTrain;
 exports.generatePattern = generatePattern;
+exports.isReadyToGenerate = isReadyToGenerate;
+exports.isTraining = isTraining;

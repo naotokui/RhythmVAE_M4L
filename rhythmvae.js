@@ -2,19 +2,24 @@ const path = require('path');
 const Max = require('max-api');
 const fs = require('fs')
 const glob = require('glob');
-
 const tf = require('@tensorflow/tfjs-node');
+const { Midi } = require('@tonejs/midi'); // https://github.com/Tonejs/Midi
 
-// Constants
+// Constants 
 const MIDI_DRUM_MAP = require('./src/constants.js').MIDI_DRUM_MAP;
 const DRUM_CLASSES = require('./src/constants.js').DRUM_CLASSES;
 const NUM_DRUM_CLASSES = require('.//src/constants.js').NUM_DRUM_CLASSES;
 const LOOP_DURATION = require('.//src/constants.js').LOOP_DURATION;
 
+// VAE model and Utilities
 const utils = require('./src/utils.js');
 const vae = require('./src/vae.js');
 
-const { Midi } = require('@tonejs/midi'); // https://github.com/Tonejs/Midi
+// prefixes for max messages
+const PREFIX_STATUS = "status";
+
+const ERROR_FLAG = 1;
+const MESSAGE_FLAG = 0;
 
 // This will be printed directly to the Max console
 Max.post(`Loaded the ${path.basename(__filename)} script`);
@@ -22,26 +27,14 @@ Max.post(`Loaded the ${path.basename(__filename)} script`);
 // Global varibles
 var train_data = [];
 
-async function loadMidi(filepath){
-    const midi = await Midi.fromUrl(filepath)
+function output_status(message, is_error){
+    Max.outlet(PREFIX_STATUS, message, is_error)
 
-    //the file name decoded from the first track
-    const name = midi.name
-
-    //get the tracks
-    midi.tracks.forEach(track => {
-        //notes are an array
-        const notes = track.notes
-        notes.forEach(note => {
-            console.log(note);
-        })
-
-        //the track also has a channel and instrument
-        console.log(track.instrument.name);
-    })
+    if (is_error) Max.post(message, Max.POST_LEVELS.ERROR);
+    else Max.post(message);
 }
 
-function validateMIDIFile(midiFile){
+function isValidMIDIFile(midiFile){
     if (midiFile.header.tempos.length > 1){
         console.log("not compatible with tempo changes");
         console.log(midiFile.header.tempos);
@@ -51,21 +44,22 @@ function validateMIDIFile(midiFile){
 }
 
 function getTempo(midiFile){
-    // no tempo info, then use 120.0 
-    if (midiFile.header.tempos.length == 0) return 120.0
-    return midiFile.header.tempos[0].bpm;
+    if (midiFile.header.tempos.length == 0) return 120.0 // no tempo info, then use 120.0 
+    return midiFile.header.tempos[0].bpm;  // use the first tempo info and ignore tempo changes in MIDI file
 }
 
+// Get location of a note in pianoroll
 function getNoteIndexAndTimeshift(note, tempo){
     const unit = (60.0 / tempo) / 4.0; // the duration of 16th note
     const half_unit = unit * 0.5;
 
-    const index = Math.max(0, Math.floor((note.time + half_unit) / unit))
+    const index = Math.max(0, Math.floor((note.time + half_unit) / unit)) // centering 
     const timeshift = note.time - unit * index;
 
     return [index, timeshift];
 }
 
+// Convert midi into pianoroll matrix
 function getPianoroll(midiFile){
     const tempo = getTempo(midiFile);
 
@@ -91,22 +85,18 @@ function getPianoroll(midiFile){
         })
     })
 
-/*    for debug */
-    var index = utils.getRandomInt(pianorolls.length); 
-
-    let x = pianorolls[index];
-    let y = tf.tensor2d(x, [NUM_DRUM_CLASSES, LOOP_DURATION]).reshape([1, NUM_DRUM_CLASSES*LOOP_DURATION]);
-    let z = y.dataSync();
-
-    console.log(z.toString());
-
-
-    for (var i=0; i< NUM_DRUM_CLASSES; i++){
-        for (var j=0; j < LOOP_DURATION; j++){
-            Max.outlet("random", j, i, Math.ceil(z[i * LOOP_DURATION + j]));
+    /*    for debug */
+    if (pianorolls.length > 0){ 
+        var index = utils.getRandomInt(pianorolls.length); 
+        let x = pianorolls[index];
+        for (var i=0; i< NUM_DRUM_CLASSES; i++){
+            for (var j=0; j < LOOP_DURATION; j++){
+                Max.outlet("note_output", j, i, Math.ceil(x[i][j]));
+            }
         }
     }
-
+    
+    // 2D array to tf.tensor2d
     for (var i=0; i < pianorolls.length; i++){
         train_data.push(tf.tensor2d(pianorolls[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
     }
@@ -117,7 +107,7 @@ function processMidiFile(filename){
     var input = fs.readFileSync(filename)
 
     var midiFile = new Midi(input);  
-    if (validateMIDIFile(midiFile) == false){
+    if (isValidMIDIFile(midiFile) == false){
         Max.error("Invalid MIDI file");
         return false;
     }
@@ -144,29 +134,40 @@ Max.addHandler("midi", (filename) =>  {
                 for (var idx in files){
                     if (processMidiFile(files[idx])) count += 1;
                 }
+                Max.post("# of midi files added: " + count);
             }
         })
     } else {
         if (processMidiFile(filename)) count += 1;
+        Max.post("# of midi files added: " + count);
     }
-    Max.post("added", count);
 });
 
 // Start training! 
 Max.addHandler("train", ()=>{
+    if (vae.isTraining()){
+        output_status("Failed to start training. There is already an ongoing training process.", ERROR_FLAG);
+        return;
+    }
+
+    output_status("Start training...", MESSAGE_FLAG);
+    console.log("# of bars in training data:", train_data.length)
     vae.loadAndTrain(train_data);
 });
 
 // Generate a rhythm pattern
 Max.addHandler("generate", (z1, z2)=>{
-    pattern = vae.generatePattern(z1, z2);
-    console.log(pattern.toString());
-    for (var i=0; i< NUM_DRUM_CLASSES; i++){
-        for (var j=0; j < LOOP_DURATION; j++){
-            var x = 0.0;
-            if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
-            Max.outlet("random", j, i, x);
+    if (vae.isReadyToGenerate()){    
+        pattern = vae.generatePattern(z1, z2);
+        for (var i=0; i< NUM_DRUM_CLASSES; i++){
+            for (var j=0; j < LOOP_DURATION; j++){
+                var x = 0.0;
+                if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
+                Max.outlet("note_output", j, i, x);
+            }
         }
+    } else {
+        output_status("Model is not trained yet", ERROR_FLAG);
     }
 });
 
@@ -175,31 +176,3 @@ Max.addHandler("clear_train", ()=>{
     train_data = [];  // clear
     
 });
-
-
-// // var fs = require('fs')
-// // var parseMidi = require('midi-file').parseMidi
-// // var writeMidi = require('midi-file').writeMidi
- 
-// // Read MIDI file into a buffer
-// var input = fs.readFileSync('3_hiphop_90_beat_4-4.mid')
- 
-// // Parse it into an intermediate representation
-// // This will take any array-like object.  It just needs to support .length, .slice, and the [] indexed element getter.
-// // Buffers do that, so do native JS arrays, typed arrays, etc.
-// var parsed = parseMidi(input)
-
-// for (var note in parsed){
-//     console.log(note);
-// }
-
-
-// // Turn the intermediate representation back into raw bytes
-// var output = writeMidi(parsed)
- 
-// // Note that the output is simply an array of byte values.  writeFileSync wants a buffer, so this will convert accordingly.
-// // Using native Javascript arrays makes the code portable to the browser or non-node environments
-// var outputBuffer = new Buffer(output)
- 
-// // Write to a new MIDI file.  it should match the original
-// fs.writeFileSync('copy_star_wars.mid', outputBuffer)
