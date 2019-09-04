@@ -36,7 +36,7 @@ async function loadAndTrain(train_data) {
       batchSize: 16,
       numBatch: train_data.length,
       testBatchSize: TEST_BATCH_SIZE,
-      epochs: 5,
+      epochs: 50,
       optimizer: tf.train.adam(),
     //   logMessage: ui.logMessage,
     //   plotTrainLoss: ui.plotTrainLoss,
@@ -62,7 +62,7 @@ function generatePattern(z1, z2){
   } else {
     zs = tf.tensor2d([[z1, z2]]);
   }
-  return model.generate();
+  return model.generate(zs);
 }
 
 // Sampling Z 
@@ -177,6 +177,7 @@ class ConditionalVAE {
   async train(data, trainConfig) {
     this.isTrained = false;
     this.isTraining = true;
+    this.shouldStopTraining = false;
     if (trainConfig != undefined){
       this.trainConfig = trainConfig;
     }
@@ -196,6 +197,8 @@ class ConditionalVAE {
 
     Max.outlet("training", 1);
     for (let i = 0; i < epochs; i++) {
+      if (this.shouldStopTraining) break;
+
       let batchInput;
       let testBatchInput;
       let trainLoss;
@@ -236,9 +239,16 @@ class ConditionalVAE {
   }
   
   generate(zs){
-    let outputs = this.decoder.apply(zs);
-    outputs = outputs.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);  
-    return outputs.dataSync();
+    
+    console.log('shape:', zs.shape);
+    let outputs = this.decoder.apply(zs);  
+    console.log('shape:', outputs.shape);
+
+    outputs = outputs.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);
+
+  console.log('shape:', outputs.shape);
+    return outputs.arraySync();
+    // return outputs.arraySync();
   }
 }
 
@@ -260,8 +270,12 @@ function range(start, edge, step) {
   return ret;
 }
 
+function stopTraining(){
+  model.shouldStopTraining = true;
+}
 
 exports.loadAndTrain = loadAndTrain;
 exports.generatePattern = generatePattern;
+exports.stopTraining = stopTraining;
 exports.isReadyToGenerate = isReadyToGenerate;
 exports.isTraining = isTraining;

@@ -51,9 +51,9 @@ class DataHandler {
     const batchArray = [];
     for (let i = 0; i < batchSize; i++) {
       const idx = index();
-      batchArray.push(data[idx]);
+      batchArray.push(data[idx].reshape([1, ORIGINAL_DIM]));
     }
-    const axis = 1;
+    const axis = 0;
     const xs = tf.concat(batchArray, axis);
     return {xs};
   }

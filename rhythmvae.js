@@ -94,7 +94,7 @@ function processMidiFile(filename){
 
     var midiFile = new Midi(input);  
     if (isValidMIDIFile(midiFile) == false){
-        error_status("Invalid MIDI file");
+        utils.error("Invalid MIDI file: " + filename);
         return false;
     }
 
@@ -126,6 +126,7 @@ Max.addHandler("midi", (filename) =>  {
     } else {
         if (processMidiFile(filename)) count += 1;
         Max.post("# of midi files added: " + count);
+        Max.outlet("data", train_data.length);
     }
 });
 
@@ -142,13 +143,14 @@ Max.addHandler("train", ()=>{
 });
 
 // Generate a rhythm pattern
-Max.addHandler("generate", (z1, z2)=>{
+Max.addHandler("generate", (z1, z2, threshold)=>{
     if (vae.isReadyToGenerate()){    
-        pattern = vae.generatePattern(z1, z2);
+        let pattern = vae.generatePattern(z1, z2);
         for (var i=0; i< NUM_DRUM_CLASSES; i++){
             for (var j=0; j < LOOP_DURATION; j++){
                 var x = 0.0;
-                if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
+                // if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
+                if (pattern[i][j] > threshold) x = 1;
                 Max.outlet("note_output", j, i, x);
             }
         }
@@ -160,5 +162,9 @@ Max.addHandler("generate", (z1, z2)=>{
 // Clear training data 
 Max.addHandler("clear_train", ()=>{
     train_data = [];  // clear
-    
+    Max.outlet("data", train_data.length);
+});
+
+Max.addHandler("stop", ()=>{
+    vae.stopTraining();
 });
