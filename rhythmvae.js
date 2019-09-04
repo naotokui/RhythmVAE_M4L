@@ -15,29 +15,15 @@ const LOOP_DURATION = require('.//src/constants.js').LOOP_DURATION;
 const utils = require('./src/utils.js');
 const vae = require('./src/vae.js');
 
-// prefixes for max messages
-const PREFIX_STATUS = "status";
-
-const ERROR_FLAG = 1;
-const MESSAGE_FLAG = 0;
-
 // This will be printed directly to the Max console
 Max.post(`Loaded the ${path.basename(__filename)} script`);
 
 // Global varibles
 var train_data = [];
 
-function output_status(message, is_error){
-    Max.outlet(PREFIX_STATUS, message, is_error)
-
-    if (is_error) Max.post(message, Max.POST_LEVELS.ERROR);
-    else Max.post(message);
-}
-
 function isValidMIDIFile(midiFile){
     if (midiFile.header.tempos.length > 1){
-        console.log("not compatible with tempo changes");
-        console.log(midiFile.header.tempos);
+        utils.error("not compatible with midi files containing multiple tempo changes")
         return false;
     }
     return true;
@@ -60,7 +46,7 @@ function getNoteIndexAndTimeshift(note, tempo){
 }
 
 // Convert midi into pianoroll matrix
-function getPianoroll(midiFile){
+function processPianoroll(midiFile){
     const tempo = getTempo(midiFile);
 
     var pianorolls = [];
@@ -85,16 +71,16 @@ function getPianoroll(midiFile){
         })
     })
 
-    /*    for debug */
-    if (pianorolls.length > 0){ 
-        var index = utils.getRandomInt(pianorolls.length); 
-        let x = pianorolls[index];
-        for (var i=0; i< NUM_DRUM_CLASSES; i++){
-            for (var j=0; j < LOOP_DURATION; j++){
-                Max.outlet("note_output", j, i, Math.ceil(x[i][j]));
-            }
-        }
-    }
+    /*    for debug - output pianoroll */
+    // if (pianorolls.length > 0){ 
+    //     var index = utils.getRandomInt(pianorolls.length); 
+    //     let x = pianorolls[index];
+    //     for (var i=0; i< NUM_DRUM_CLASSES; i++){
+    //         for (var j=0; j < LOOP_DURATION; j++){
+    //             Max.outlet("note_output", j, i, Math.ceil(x[i][j]));
+    //         }
+    //     }
+    // }
     
     // 2D array to tf.tensor2d
     for (var i=0; i < pianorolls.length; i++){
@@ -108,16 +94,15 @@ function processMidiFile(filename){
 
     var midiFile = new Midi(input);  
     if (isValidMIDIFile(midiFile) == false){
-        Max.error("Invalid MIDI file");
+        error_status("Invalid MIDI file");
         return false;
     }
 
     var tempo = getTempo(midiFile);
-    console.log("tempo:", tempo);
-    console.log("signature:", midiFile.header.timeSignatures);
-
-    getPianoroll(midiFile);
-    console.log("processed:", filename);
+    // console.log("tempo:", tempo);
+    // console.log("signature:", midiFile.header.timeSignatures);
+    processPianoroll(midiFile);
+    // console.log("processed:", filename);
     return true;
 }
 
@@ -135,6 +120,7 @@ Max.addHandler("midi", (filename) =>  {
                     if (processMidiFile(files[idx])) count += 1;
                 }
                 Max.post("# of midi files added: " + count);
+                Max.outlet("data", train_data.length);
             }
         })
     } else {
@@ -146,11 +132,11 @@ Max.addHandler("midi", (filename) =>  {
 // Start training! 
 Max.addHandler("train", ()=>{
     if (vae.isTraining()){
-        output_status("Failed to start training. There is already an ongoing training process.", ERROR_FLAG);
+        utils.error_status("Failed to start training. There is already an ongoing training process.");
         return;
     }
 
-    output_status("Start training...", MESSAGE_FLAG);
+    utils.log_status("Start training...");
     console.log("# of bars in training data:", train_data.length)
     vae.loadAndTrain(train_data);
 });
@@ -167,7 +153,7 @@ Max.addHandler("generate", (z1, z2)=>{
             }
         }
     } else {
-        output_status("Model is not trained yet", ERROR_FLAG);
+        utils.error_status("Model is not trained yet");
     }
 });
 

@@ -36,7 +36,7 @@ async function loadAndTrain(train_data) {
       batchSize: 16,
       numBatch: train_data.length,
       testBatchSize: TEST_BATCH_SIZE,
-      epochs: 35,
+      epochs: 5,
       optimizer: tf.train.adam(),
     //   logMessage: ui.logMessage,
     //   plotTrainLoss: ui.plotTrainLoss,
@@ -52,7 +52,7 @@ function isTraining(){
 }
 
 function isReadyToGenerate(){
-  return (model && model.isTrained != true);
+  return (model && model.isTrained);
 }
 
 function generatePattern(z1, z2){
@@ -232,10 +232,11 @@ class ConditionalVAE {
     this.isTrained = true;
     this.isTraining = false;
     Max.outlet("training", 0);
+    utils.log_status("Training finished!");
   }
   
   generate(zs){
-    let outputs = model.decoder.apply(zs);
+    let outputs = this.decoder.apply(zs);
     outputs = outputs.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);  
     return outputs.dataSync();
   }
