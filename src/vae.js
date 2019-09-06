@@ -21,6 +21,7 @@ const TEST_BATCH_SIZE = 1000;
 
 let dataHandler;
 let model;
+let numEpochs = 50;
 
 async function loadAndTrain(train_data) {
   // data utility
@@ -36,7 +37,7 @@ async function loadAndTrain(train_data) {
       batchSize: 16,
       numBatch: train_data.length,
       testBatchSize: TEST_BATCH_SIZE,
-      epochs: 50,
+      // epochs: 50,
       optimizer: tf.train.adam(),
     //   logMessage: ui.logMessage,
     //   plotTrainLoss: ui.plotTrainLoss,
@@ -53,6 +54,11 @@ function isTraining(){
 
 function isReadyToGenerate(){
   return (model && model.isTrained);
+}
+
+function setEpochs(e){
+  numEpochs = e;
+  Max.outlet("epoch", 0, numEpochs);
 }
 
 function generatePattern(z1, z2){
@@ -185,7 +191,7 @@ class ConditionalVAE {
 
     const batchSize = config.batchSize;
     const numBatch = config.numBatch;
-    const epochs = config.epochs;
+    const epochs = numEpochs;
     const testBatchSize = config.testBatchSize;
     const optimizer = config.optimizer;
     const logMessage = console.log;
@@ -207,7 +213,7 @@ class ConditionalVAE {
       let epochLoss;
 
       logMessage(`[Epoch ${i + 1}]\n`);
-      Max.outlet("epoch", i + 1);
+      Max.outlet("epoch", i + 1, epochs);
       epochLoss = 0;
       for (let j = 0; j < numBatch; j++) {
         batchInput = dataHandler.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
@@ -279,3 +285,5 @@ exports.generatePattern = generatePattern;
 exports.stopTraining = stopTraining;
 exports.isReadyToGenerate = isReadyToGenerate;
 exports.isTraining = isTraining;
+exports.setEpochs = setEpochs;
+

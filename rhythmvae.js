@@ -77,7 +77,7 @@ function processPianoroll(midiFile){
     //     let x = pianorolls[index];
     //     for (var i=0; i< NUM_DRUM_CLASSES; i++){
     //         for (var j=0; j < LOOP_DURATION; j++){
-    //             Max.outlet("note_output", j, i, Math.ceil(x[i][j]));
+    //             Max.outlet("matrix_output", j, i, Math.ceil(x[i][j]));
     //         }
     //     }
     // }
@@ -119,14 +119,15 @@ Max.addHandler("midi", (filename) =>  {
                 for (var idx in files){
                     if (processMidiFile(files[idx])) count += 1;
                 }
-                Max.post("# of midi files added: " + count);
-                Max.outlet("data", train_data.length);
+                Max.post("# of midi files added: " + count);    
+                reportNumberOfBars();
             }
         })
     } else {
         if (processMidiFile(filename)) count += 1;
-        Max.post("# of midi files added: " + count);
-        Max.outlet("data", train_data.length);
+        Max.post("# of midi files added: " + count);    
+        reportNumberOfBars();
+
     }
 });
 
@@ -138,7 +139,8 @@ Max.addHandler("train", ()=>{
     }
 
     utils.log_status("Start training...");
-    console.log("# of bars in training data:", train_data.length)
+    console.log("# of bars in training data:", train_data.length * 2);
+    reportNumberOfBars();
     vae.loadAndTrain(train_data);
 });
 
@@ -147,13 +149,23 @@ Max.addHandler("generate", (z1, z2, threshold)=>{
     if (vae.isReadyToGenerate()){    
         let pattern = vae.generatePattern(z1, z2);
         for (var i=0; i< NUM_DRUM_CLASSES; i++){
+            var sequence = [];
+            // output for matrix view
             for (var j=0; j < LOOP_DURATION; j++){
                 var x = 0.0;
                 // if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
                 if (pattern[i][j] > threshold) x = 1;
-                Max.outlet("note_output", j, i, x);
+                Max.outlet("matrix_output", j, i, x);
+
+                // for live.step
+                if (pattern[i][j] > threshold) sequence.push(Math.floor(pattern[i][j]*127.));
+                else sequence.push(0);
             }
+
+            // output for live.step object
+            Max.outlet("seq_output", i+1, sequence.join(" "));
         }
+        Max.outlet("generated", 1);
     } else {
         utils.error_status("Model is not trained yet");
     }
@@ -162,9 +174,18 @@ Max.addHandler("generate", (z1, z2, threshold)=>{
 // Clear training data 
 Max.addHandler("clear_train", ()=>{
     train_data = [];  // clear
-    Max.outlet("data", train_data.length);
+    reportNumberOfBars();
 });
 
 Max.addHandler("stop", ()=>{
     vae.stopTraining();
 });
+
+Max.addHandler("epochs", (e)=>{
+    vae.setEpochs(e);
+    utils.post("number of epochs: " + e);
+});
+
+function reportNumberOfBars(){
+    Max.outlet("train_bars", train_data.length * 2);  // number of bars for training
+}
