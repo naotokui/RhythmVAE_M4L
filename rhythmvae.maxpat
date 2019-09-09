@@ -3412,6 +3412,7 @@
 					"patching_rect" : [ 263.0, 576.0, 196.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 158.0, 144.5, 148.0, 20.0 ],
+					"text" : "Stopping training...",
 					"textcolor" : [ 0.999999284744263, 0.999974429607391, 0.999991297721863, 1.0 ],
 					"textjustification" : 1
 				}

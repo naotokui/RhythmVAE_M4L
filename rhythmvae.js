@@ -147,7 +147,11 @@ Max.addHandler("train", ()=>{
 
 // Generate a rhythm pattern
 Max.addHandler("generate", (z1, z2, threshold)=>{
-    generatePattern(z1, z2, threshold);
+    try {
+        generatePattern(z1, z2, threshold);
+    } catch(error) {
+        error_status(error);
+    }
 });
 
 async function generatePattern(z1, z2, threshold){
