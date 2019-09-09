@@ -20,6 +20,7 @@ Max.post(`Loaded the ${path.basename(__filename)} script`);
 
 // Global varibles
 var train_data = [];
+var isGenerating = false;
 
 function isValidMIDIFile(midiFile){
     if (midiFile.header.tempos.length > 1){
@@ -146,30 +147,42 @@ Max.addHandler("train", ()=>{
 
 // Generate a rhythm pattern
 Max.addHandler("generate", (z1, z2, threshold)=>{
-    if (vae.isReadyToGenerate()){    
-        let pattern = vae.generatePattern(z1, z2);
-        for (var i=0; i< NUM_DRUM_CLASSES; i++){
-            var sequence = [];
-            // output for matrix view
-            for (var j=0; j < LOOP_DURATION; j++){
-                var x = 0.0;
-                // if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
-                if (pattern[i][j] > threshold) x = 1;
-                Max.outlet("matrix_output", j, i, x);
-
-                // for live.step
-                if (pattern[i][j] > threshold) sequence.push(Math.floor(pattern[i][j]*127.));
-                else sequence.push(0);
-            }
-
-            // output for live.step object
-            Max.outlet("seq_output", i+1, sequence.join(" "));
-        }
-        Max.outlet("generated", 1);
-    } else {
-        utils.error_status("Model is not trained yet");
-    }
+    generatePattern(z1, z2, threshold);
 });
+
+async function generatePattern(z1, z2, threshold){
+    if (vae.isReadyToGenerate()){    
+      if (isGenerating) return;
+  
+      isGenerating = true;
+      let pattern = vae.generatePattern(z1, z2);
+      Max.outlet("matrix_clear",1); // clear all
+      for (var i=0; i< NUM_DRUM_CLASSES; i++){
+          var sequence = [];
+          // output for matrix view
+          for (var j=0; j < LOOP_DURATION; j++){
+              var x = 0.0;
+              // if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
+              if (pattern[i][j] > threshold){ 
+                x = 1;
+                Max.outlet("matrix_output", j + 1, i + 1, x); // index for live.grid starts from 1
+              }
+
+              // for live.step
+              if (pattern[i][j] > threshold) sequence.push(Math.floor(pattern[i][j]*127.));
+              else sequence.push(0);
+          }
+  
+          // output for live.step object
+          Max.outlet("seq_output", i+1, sequence.join(" "));
+      }
+      Max.outlet("generated", 1);
+      utils.log_status("");
+      isGenerating = false;
+  } else {
+      utils.error_status("Model is not trained yet");
+  }
+}
 
 // Clear training data 
 Max.addHandler("clear_train", ()=>{
