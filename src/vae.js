@@ -71,6 +71,7 @@ function generatePattern(z1, z2){
   return model.generate(zs);
 }
 
+
 // Sampling Z 
 class sampleLayer extends tf.layers.Layer {
   constructor(args) {
@@ -245,16 +246,9 @@ class ConditionalVAE {
   }
   
   generate(zs){
-    
-    console.log('shape:', zs.shape);
     let outputs = this.decoder.apply(zs);  
-    console.log('shape:', outputs.shape);
-
     outputs = outputs.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);
-
-  console.log('shape:', outputs.shape);
     return outputs.arraySync();
-    // return outputs.arraySync();
   }
 }
 
@@ -278,6 +272,7 @@ function range(start, edge, step) {
 
 function stopTraining(){
   model.shouldStopTraining = true;
+  utils.log_status("Stopping training...");
 }
 
 exports.loadAndTrain = loadAndTrain;
