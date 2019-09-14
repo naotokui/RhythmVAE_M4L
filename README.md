@@ -1,6 +1,7 @@
 # RhythmVAE_M4L
 Max for Live(M4L) Rhythm generator using Variational Autoencoder(VAE) 
 
+[![VAE Rhythm Generator in M4L(Max for Live) Device](https://img.youtube.com/vi/K64gYkvXoUU/0.jpg)](https://www.youtube.com/watch?v=K64gYkvXoUU "VAE Rhythm Generator in M4L(Max for Live) Device")
 
 # Known problems
 - When you keep generating rhythms continuiously, Node for Max crashes with "Max API Timeout" error in some occasions and you'll see "Model is not trained yet" error message.
@@ -14,3 +15,4 @@ Max for Live(M4L) Rhythm generator using Variational Autoencoder(VAE)
 
 # Updates
 - 2019.9.14 added: functionality to save/load trained model 
+
