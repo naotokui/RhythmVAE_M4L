@@ -32,6 +32,10 @@ class DataHandler {
     console.log(this.trainIndices);
   }
 
+  getDataSize(){
+    return this.dataset.length;
+  }
+
   nextTrainBatch(batchSize) {
     return this.nextBatch(batchSize, this.trainData, () => {
       this.shuffledTrainIndex = (this.shuffledTrainIndex + 1) % this.trainIndices.length;

@@ -198,6 +198,23 @@ Max.addHandler("stop", ()=>{
     vae.stopTraining();
 });
 
+Max.addHandler("savemodel", (path)=>{
+    // check if already trained or not
+    if (vae.isReadyToGenerate()){
+        filepath = "file://" + path;
+        vae.saveModel(filepath);
+        utils.log_status("Model saved.");
+    } else {
+        utils.error_status("Train a model first!");
+    }
+});
+
+Max.addHandler("loadmodel", (path)=>{
+    filepath = "file://" + path;
+    vae.loadModel(filepath);
+    utils.log_status("Model loaded!");
+});
+
 Max.addHandler("epochs", (e)=>{
     vae.setEpochs(e);
     utils.post("number of epochs: " + e);

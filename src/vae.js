@@ -24,9 +24,12 @@ let model;
 let numEpochs = 50;
 
 async function loadAndTrain(train_data) {
-  // data utility
-  dataHandler = new data.DataHandler(train_data);
+  dataHandler = new data.DataHandler(train_data); // data utility
+  initModel(); // initializing model class
+  startTraining(); // start the actual training process with the given training data
+}
 
+function initModel(){
   model = new ConditionalVAE({
     modelConfig:{
       originalDim: ORIGINAL_DIM,
@@ -35,7 +38,6 @@ async function loadAndTrain(train_data) {
     },
     trainConfig:{
       batchSize: 16,
-      numBatch: train_data.length,
       testBatchSize: TEST_BATCH_SIZE,
       // epochs: 50,
       optimizer: tf.train.adam(),
@@ -45,7 +47,15 @@ async function loadAndTrain(train_data) {
     //   updateProgressBar: ui.updateProgressBar
     }
   });
+}
+
+async function startTraining(){
   await model.train();
+}
+
+function stopTraining(){
+  model.shouldStopTraining = true;
+  utils.log_status("Stopping training...");
 }
 
 function isTraining(){
@@ -71,6 +81,14 @@ function generatePattern(z1, z2){
   return model.generate(zs);
 }
 
+async function saveModel(filepath){
+  model.saveModel(filepath);
+}
+
+async function loadModel(filepath){
+  if (!model) initModel();
+  model.loadModel(filepath);
+}
 
 // Sampling Z 
 class sampleLayer extends tf.layers.Layer {
@@ -191,7 +209,7 @@ class ConditionalVAE {
     const config = this.trainConfig;
 
     const batchSize = config.batchSize;
-    const numBatch = config.numBatch;
+    const numBatch = Math.floor(dataHandler.getDataSize() / batchSize);
     const epochs = numEpochs;
     const testBatchSize = config.testBatchSize;
     const optimizer = config.optimizer;
@@ -250,6 +268,16 @@ class ConditionalVAE {
     outputs = outputs.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);
     return outputs.arraySync();
   }
+
+  async saveModel(path){
+    const saved = await this.decoder.save(path);
+    utils.post(saved);
+  }
+
+  async loadModel(path){
+    this.decoder = await tf.loadLayersModel(path);
+    this.isTrained = true;
+  }
 }
 
 function range(start, edge, step) {
@@ -270,12 +298,9 @@ function range(start, edge, step) {
   return ret;
 }
 
-function stopTraining(){
-  model.shouldStopTraining = true;
-  utils.log_status("Stopping training...");
-}
-
 exports.loadAndTrain = loadAndTrain;
+exports.saveModel = saveModel;
+exports.loadModel = loadModel;
 exports.generatePattern = generatePattern;
 exports.stopTraining = stopTraining;
 exports.isReadyToGenerate = isReadyToGenerate;
