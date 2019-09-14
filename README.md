@@ -7,6 +7,10 @@ Max for Live(M4L) Rhythm generator using Variational Autoencoder(VAE)
 
 # TO DO
 - Fix "Max API Timeout" error
-- save/load functionaly for trained models  
+- ~~save/load functionaly for trained models~~
 - better documentation
 - better UI design!!
+- custom MIDI note number settings
+
+# Updates
+- 2019.9.14 added: functionality to save/load trained model 
