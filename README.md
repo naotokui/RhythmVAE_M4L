@@ -8,8 +8,9 @@ Max for Live(M4L) Rhythm generator using Variational Autoencoder(VAE)
 # Requirement
 You need to update your Node for Max package to the latest version (version 1.2.3 or later) through Package Manager, or use the latest version of Max (8.1.0 or later)
 
-~~# Known problems~~
+# Known problems
 ~~- When you keep generating rhythms continuiously, Node for Max crashes with "Max API Timeout" error in some occasions and you'll see "Model is not trained yet" error message.~~
+- Incompatible with folders with names containing special characters such as `[]?*!|@`
 
 # TO DO
 - Fix "Max API Timeout" error
@@ -19,5 +20,6 @@ You need to update your Node for Max package to the latest version (version 1.2.
 - custom MIDI note number settings
 
 # Updates
+- 2019.10.18 added: note on the requirement
 - 2019.9.14 added: functionality to save/load trained model 
 
