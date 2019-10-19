@@ -20,6 +20,7 @@ You need to update your Node for Max package to the latest version (version 1.2.
 - custom MIDI note number settings
 
 # Updates
+- 2019.10.19 fixed: beat sync issue
 - 2019.10.18 added: note on the requirement
 - 2019.9.14 added: functionality to save/load trained model 
 
