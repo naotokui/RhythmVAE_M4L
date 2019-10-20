@@ -7,6 +7,8 @@ Max for Live(M4L) Rhythm generator using Variational Autoencoder(VAE)
 
 If you want to quickly test the device, please use the one in `/release` directory.
 
+[![VAE Rhythm Generator in M4L(Max for Live) Device](./images/ui_memo.png)]
+
 ## Requirement
 You need to update your Node for Max package to the latest version (version 1.2.3 or later) through Package Manager, or use the latest version of Max (8.1.0 or later)
 
@@ -20,6 +22,8 @@ You need to update your Node for Max package to the latest version (version 1.2.
 - better documentation
 - better UI design!!
 - custom MIDI note number settings
+- add a feature to add random noise to `z` 
+
 
 ## Updates
 - 2019.10.19 fixed: beat sync issue
