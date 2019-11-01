@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 8,
-			"minor" : 1,
-			"revision" : 0,
+			"minor" : 0,
+			"revision" : 5,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -103,8 +103,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 0,
+							"minor" : 0,
+							"revision" : 5,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -160,8 +160,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 0,
+											"minor" : 0,
+											"revision" : 5,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -668,12 +668,12 @@
 					"presentation_rect" : [ 100.5, 56.0, 41.0, 18.5 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_invisible" : 2,
 							"parameter_mmax" : 1,
 							"parameter_shortname" : "live.text",
 							"parameter_enum" : [ "val1", "val2" ],
 							"parameter_type" : 2,
-							"parameter_longname" : "live.text[4]"
+							"parameter_longname" : "live.text[4]",
+							"parameter_invisible" : 2
 						}
 
 					}
@@ -698,12 +698,12 @@
 					"presentation_rect" : [ 54.75, 56.0, 45.0, 18.5 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_invisible" : 2,
 							"parameter_mmax" : 1,
 							"parameter_shortname" : "live.text",
 							"parameter_enum" : [ "val1", "val2" ],
 							"parameter_type" : 2,
-							"parameter_longname" : "live.text[3]"
+							"parameter_longname" : "live.text[3]",
+							"parameter_invisible" : 2
 						}
 
 					}
@@ -750,8 +750,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 0,
+							"minor" : 0,
+							"revision" : 5,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1054,8 +1054,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 0,
+							"minor" : 0,
+							"revision" : 5,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1624,8 +1624,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 0,
+							"minor" : 0,
+							"revision" : 5,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1934,8 +1934,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 0,
+							"minor" : 0,
+							"revision" : 5,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2098,11 +2098,11 @@
 					"presentation_rect" : [ 15.0, 144.5, 34.0, 15.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_invisible" : 2,
 							"parameter_shortname" : "live.numbox",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 1,
-							"parameter_longname" : "live.numbox[3]"
+							"parameter_longname" : "live.numbox[3]",
+							"parameter_invisible" : 2
 						}
 
 					}
@@ -2155,12 +2155,12 @@
 					"presentation_rect" : [ 8.0, 26.0, 62.5, 22.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_invisible" : 2,
 							"parameter_mmax" : 1,
 							"parameter_shortname" : "live.text",
 							"parameter_enum" : [ "val1", "val2" ],
 							"parameter_type" : 2,
-							"parameter_longname" : "live.text[2]"
+							"parameter_longname" : "live.text[2]",
+							"parameter_invisible" : 2
 						}
 
 					}
@@ -2197,12 +2197,12 @@
 					"presentation_rect" : [ 240.0, 7.560676574707031, 60.0, 18.705746782957192 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_invisible" : 2,
 							"parameter_mmax" : 1,
 							"parameter_shortname" : "live.text",
 							"parameter_enum" : [ "val1", "val2" ],
 							"parameter_type" : 2,
-							"parameter_longname" : "live.text[1]"
+							"parameter_longname" : "live.text[1]",
+							"parameter_invisible" : 2
 						}
 
 					}
@@ -2227,12 +2227,12 @@
 					"presentation_rect" : [ 74.5, 26.0, 54.0, 22.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_invisible" : 2,
 							"parameter_mmax" : 1,
 							"parameter_shortname" : "live.text",
 							"parameter_enum" : [ "val1", "val2" ],
 							"parameter_type" : 2,
-							"parameter_longname" : "live.text"
+							"parameter_longname" : "live.text",
+							"parameter_invisible" : 2
 						}
 
 					}
@@ -2257,12 +2257,12 @@
 					"presentation_rect" : [ 251.0, 95.332116788321173, 44.0, 15.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_invisible" : 2,
 							"parameter_mmax" : 127000000.0,
 							"parameter_shortname" : "live.numbox",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 0,
-							"parameter_longname" : "live.numbox"
+							"parameter_longname" : "live.numbox",
+							"parameter_invisible" : 2
 						}
 
 					}
@@ -2303,10 +2303,10 @@
 					"rows" : 9,
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_invisible" : 1,
 							"parameter_shortname" : "live.grid",
 							"parameter_type" : 3,
-							"parameter_longname" : "live.grid"
+							"parameter_longname" : "live.grid",
+							"parameter_invisible" : 1
 						}
 
 					}
@@ -2392,8 +2392,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 0,
+							"minor" : 0,
+							"revision" : 5,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2450,8 +2450,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 0,
+											"minor" : 0,
+											"revision" : 5,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2544,8 +2544,8 @@
 														"fileversion" : 1,
 														"appversion" : 														{
 															"major" : 8,
-															"minor" : 1,
-															"revision" : 0,
+															"minor" : 0,
+															"revision" : 5,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -2938,8 +2938,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 0,
+											"minor" : 0,
+											"revision" : 5,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -3596,12 +3596,12 @@
 					"presentation_rect" : [ 458.0, 4.25, 30.0, 25.121353149414062 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_invisible" : 2,
 							"parameter_mmax" : 2,
 							"parameter_shortname" : "live.menu",
 							"parameter_enum" : [ "note", "velocity", "duration" ],
 							"parameter_type" : 2,
-							"parameter_longname" : "live.menu[3]"
+							"parameter_longname" : "live.menu[3]",
+							"parameter_invisible" : 2
 						}
 
 					}
@@ -3694,7 +3694,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 2,
 					"numoutlets" : 1,
-					"outlettype" : [ "int" ],
+					"outlettype" : [ "" ],
 					"patching_rect" : [ 1066.0, 261.257293701171875, 108.0, 22.0 ],
 					"text" : "count_for_me 32"
 				}
@@ -3743,14 +3743,14 @@
 					"presentation_rect" : [ 812.820754716981128, 6.0, 37.0, 18.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_invisible" : 2,
 							"parameter_mmax" : 1.0,
 							"parameter_initial" : [ 0.25 ],
 							"parameter_shortname" : "live.numbox",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 1,
 							"parameter_longname" : "live.numbox[2]",
-							"parameter_initial_enable" : 1
+							"parameter_initial_enable" : 1,
+							"parameter_invisible" : 2
 						}
 
 					}
@@ -3765,7 +3765,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 2,
 					"numoutlets" : 2,
-					"outlettype" : [ "", "bang" ],
+					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 1066.0, 193.5, 108.0, 22.0 ],
 					"text" : "shuffle_metro 0.25"
 				}
@@ -3799,9 +3799,9 @@
 				"box" : 				{
 					"id" : "obj-39",
 					"maxclass" : "newobj",
-					"numinlets" : 3,
+					"numinlets" : 1,
 					"numoutlets" : 2,
-					"outlettype" : [ "float", "float" ],
+					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 1139.0, 666.0, 252.0, 22.0 ],
 					"text" : "makenote_for_me @velocity 1 @timeshift 1"
 				}
@@ -3833,14 +3833,14 @@
 					"patching_rect" : [ 1066.0, 475.0, 332.0, 114.166656494140625 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_invisible" : 1,
 							"parameter_mmax" : 1.0,
 							"parameter_initial" : [ 1.0 ],
 							"parameter_shortname" : "live.step",
 							"parameter_enum" : [ "off", "on" ],
 							"parameter_type" : 3,
 							"parameter_longname" : "live.step",
-							"parameter_initial_enable" : 1
+							"parameter_initial_enable" : 1,
+							"parameter_invisible" : 1
 						}
 
 					}
@@ -3942,8 +3942,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 0,
+							"minor" : 0,
+							"revision" : 5,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -4188,8 +4188,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 0,
+							"minor" : 0,
+							"revision" : 5,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -4427,12 +4427,12 @@
 					"rightvalue" : 200,
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_invisible" : 1,
 							"parameter_initial" : [ -200, -200 ],
 							"parameter_shortname" : "pictslider",
 							"parameter_type" : 3,
 							"parameter_longname" : "pictslider",
-							"parameter_initial_enable" : 1
+							"parameter_initial_enable" : 1,
+							"parameter_invisible" : 1
 						}
 
 					}
@@ -4541,7 +4541,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 78.5, 314.0, 211.0, 22.0 ],
+					"patching_rect" : [ 78.5, 314.0, 213.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
@@ -4550,7 +4550,7 @@
 						"watch" : 0
 					}
 ,
-					"text" : "node.script rhythmvae.js @autostart 1"
+					"text" : "node.script melodyvae.js @autostart 1"
 				}
 
 			}
@@ -5121,20 +5121,20 @@
 			}
  ],
 		"parameters" : 		{
-			"obj-28" : [ "Y", "Y", 0 ],
-			"obj-9" : [ "live.text[4]", "live.text", 0 ],
-			"obj-22" : [ "pictslider", "pictslider", 0 ],
-			"obj-68" : [ "live.text[1]", "live.text", 0 ],
-			"obj-35" : [ "live.numbox[2]", "live.numbox", 0 ],
-			"obj-43" : [ "live.step", "live.step", 0 ],
-			"obj-65" : [ "live.numbox", "live.numbox", 0 ],
-			"obj-24" : [ "X", "X", 0 ],
-			"obj-83" : [ "live.numbox[3]", "live.numbox", 0 ],
-			"obj-2" : [ "live.text[3]", "live.text", 0 ],
-			"obj-75" : [ "live.text[2]", "live.text", 0 ],
-			"obj-18" : [ "live.grid", "live.grid", 0 ],
-			"obj-67" : [ "live.text", "live.text", 0 ],
 			"obj-25" : [ "live.menu[3]", "live.menu", 0 ],
+			"obj-67" : [ "live.text", "live.text", 0 ],
+			"obj-28" : [ "Y", "Y", 0 ],
+			"obj-83" : [ "live.numbox[3]", "live.numbox", 0 ],
+			"obj-68" : [ "live.text[1]", "live.text", 0 ],
+			"obj-18" : [ "live.grid", "live.grid", 0 ],
+			"obj-43" : [ "live.step", "live.step", 0 ],
+			"obj-2" : [ "live.text[3]", "live.text", 0 ],
+			"obj-22" : [ "pictslider", "pictslider", 0 ],
+			"obj-75" : [ "live.text[2]", "live.text", 0 ],
+			"obj-24" : [ "X", "X", 0 ],
+			"obj-9" : [ "live.text[4]", "live.text", 0 ],
+			"obj-65" : [ "live.numbox", "live.numbox", 0 ],
+			"obj-35" : [ "live.numbox[2]", "live.numbox", 0 ],
 			"parameterbanks" : 			{
 
 			}
@@ -5142,38 +5142,10 @@
 		}
 ,
 		"dependency_cache" : [ 			{
-				"name" : "rhythmvae.js",
-				"bootpath" : "~/git/_Public/RhythmVAE_M4L",
+				"name" : "melodyvae.js",
+				"bootpath" : "~/git/RhythmVAE_M4L",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "makenote_for_me.maxpat",
-				"bootpath" : "~/git/_Public/RhythmVAE_M4L/subpatches",
-				"patcherrelativepath" : "./subpatches",
-				"type" : "JSON",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "setup_1_16.maxpat",
-				"bootpath" : "~/git/_Public/RhythmVAE_M4L/subpatches",
-				"patcherrelativepath" : "./subpatches",
-				"type" : "JSON",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "shuffle_metro.maxpat",
-				"bootpath" : "~/git/_Public/RhythmVAE_M4L/subpatches",
-				"patcherrelativepath" : "./subpatches",
-				"type" : "JSON",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "count_for_me.maxpat",
-				"bootpath" : "~/git/_Public/RhythmVAE_M4L/subpatches",
-				"patcherrelativepath" : "./subpatches",
-				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{

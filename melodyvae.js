@@ -6,9 +6,9 @@ const tf = require('@tensorflow/tfjs-node');
 const { Midi } = require('@tonejs/midi'); // https://github.com/Tonejs/Midi
 
 // Constants 
-const MIDI_DRUM_MAP = require('./src/constants.js').MIDI_DRUM_MAP;
-const DRUM_CLASSES = require('./src/constants.js').DRUM_CLASSES;
-const NUM_DRUM_CLASSES = require('.//src/constants.js').NUM_DRUM_CLASSES;
+const MIN_MIDI_NOTE = require('./src/constants.js').MIN_MIDI_NOTE;
+const MAX_MIDI_NOTE = require('./src/constants.js').MAX_MIDI_NOTE;
+const NUM_MIDI_CLASSES = require('./src/constants.js').NUM_MIDI_CLASSES;
 const LOOP_DURATION = require('.//src/constants.js').LOOP_DURATION;
 
 // VAE model and Utilities
@@ -53,39 +53,44 @@ function processPianoroll(midiFile){
     var pianorolls = [];
 
     midiFile.tracks.forEach(track => {
-    
-        //notes are an array
-        const notes = track.notes
-        notes.forEach(note => {
-            if ((note.midi in MIDI_DRUM_MAP)){
-                let timing = getNoteIndexAndTimeshift(note, tempo);
-                let index = timing[0];
-                
-                // add new array
-                if (Math.floor(index / LOOP_DURATION) >= pianorolls.length){
-                    pianorolls.push(utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION));
+        
+        if (track.channel != 9 && track.channel != 10){ // ignore drum tracks
+            //notes are an array
+            const notes = track.notes
+            notes.forEach(note => {
+                if (MIN_MIDI_NOTE <= note.midi && note.midi <= MAX_MIDI_NOTE){
+                    console.log(note);
+
+                    let timing = getNoteIndexAndTimeshift(note, tempo);
+                    let index = timing[0];
+                    
+                    // add new array
+                    if (Math.floor(index / LOOP_DURATION) >= pianorolls.length){
+                        pianorolls.push(utils.create2DArray(NUM_MIDI_CLASSES, LOOP_DURATION));
+                    }
+                    let matrix = pianorolls[Math.floor(index / LOOP_DURATION)];
+                    let note_id = note.midi - MIN_MIDI_NOTE;
+                    console.log("note_id: " + note_id)
+                    matrix[note_id][index % LOOP_DURATION] = note.velocity;       
                 }
-                let matrix = pianorolls[Math.floor(index / LOOP_DURATION)];
-                let drum_id = MIDI_DRUM_MAP[note.midi];
-                matrix[drum_id][index % LOOP_DURATION] = note.velocity;       
-            }
-        })
+            })
+        }
     })
 
     /*    for debug - output pianoroll */
-    // if (pianorolls.length > 0){ 
-    //     var index = utils.getRandomInt(pianorolls.length); 
-    //     let x = pianorolls[index];
-    //     for (var i=0; i< NUM_DRUM_CLASSES; i++){
-    //         for (var j=0; j < LOOP_DURATION; j++){
-    //             Max.outlet("matrix_output", j, i, Math.ceil(x[i][j]));
-    //         }
-    //     }
-    // }
+    if (pianorolls.length > 0){ 
+        var index = utils.getRandomInt(pianorolls.length); 
+        let x = pianorolls[index];
+        for (var i=0; i< NUM_MIDI_CLASSES; i++){
+            for (var j=0; j < LOOP_DURATION; j++){
+                Max.outlet("matrix_output", j, i, Math.ceil(x[i][j]));
+            }
+        }
+    }
     
     // 2D array to tf.tensor2d
     for (var i=0; i < pianorolls.length; i++){
-        train_data.push(tf.tensor2d(pianorolls[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+        train_data.push(tf.tensor2d(pianorolls[i], [NUM_MIDI_CLASSES, LOOP_DURATION]));
     }
 }
 
@@ -103,7 +108,7 @@ function processMidiFile(filename){
     // console.log("tempo:", tempo);
     // console.log("signature:", midiFile.header.timeSignatures);
     processPianoroll(midiFile);
-    // console.log("processed:", filename);
+    console.log("processed:", filename);
     return true;
 }
 
@@ -161,7 +166,7 @@ async function generatePattern(z1, z2, threshold){
       isGenerating = true;
       let pattern = vae.generatePattern(z1, z2);
       Max.outlet("matrix_clear",1); // clear all
-      for (var i=0; i< NUM_DRUM_CLASSES; i++){
+      for (var i=0; i< NUM_MIDI_CLASSES; i++){
           var sequence = [];
           // output for matrix view
           for (var j=0; j < LOOP_DURATION; j++){
