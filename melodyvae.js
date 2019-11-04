@@ -59,18 +59,15 @@ function processPianoroll(midiFile){
             const notes = track.notes
             notes.forEach(note => {
                 if (MIN_MIDI_NOTE <= note.midi && note.midi <= MAX_MIDI_NOTE){
-                    console.log(note);
-
                     let timing = getNoteIndexAndTimeshift(note, tempo);
                     let index = timing[0];
-                    
+
                     // add new array
-                    if (Math.floor(index / LOOP_DURATION) >= pianorolls.length){
+                    while (Math.floor(index / LOOP_DURATION) >= pianorolls.length){
                         pianorolls.push(utils.create2DArray(NUM_MIDI_CLASSES, LOOP_DURATION));
                     }
                     let matrix = pianorolls[Math.floor(index / LOOP_DURATION)];
                     let note_id = note.midi - MIN_MIDI_NOTE;
-                    console.log("note_id: " + note_id)
                     matrix[note_id][index % LOOP_DURATION] = note.velocity;       
                 }
             })
@@ -87,6 +84,8 @@ function processPianoroll(midiFile){
             }
         }
     }
+
+    console.log(pianorolls.length);
     
     // 2D array to tf.tensor2d
     for (var i=0; i < pianorolls.length; i++){
