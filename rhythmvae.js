@@ -19,7 +19,8 @@ const vae = require('./src/vae.js');
 Max.post(`Loaded the ${path.basename(__filename)} script`);
 
 // Global varibles
-var train_data = [];
+var train_data = []; 
+var train_data_timeshift = [];
 var isGenerating = false;
 
 function isValidMIDIFile(midiFile){
@@ -41,7 +42,7 @@ function getNoteIndexAndTimeshift(note, tempo){
     const half_unit = unit * 0.5;
 
     const index = Math.max(0, Math.floor((note.time + half_unit) / unit)) // centering 
-    const timeshift = note.time - unit * index;
+    const timeshift = (note.time - unit * index)/half_unit; // normalized
 
     return [index, timeshift];
 }
@@ -51,6 +52,7 @@ function processPianoroll(midiFile){
     const tempo = getTempo(midiFile);
 
     var pianorolls = [];
+    var timeshifts = [];
 
     midiFile.tracks.forEach(track => {
     
@@ -60,14 +62,22 @@ function processPianoroll(midiFile){
             if ((note.midi in MIDI_DRUM_MAP)){
                 let timing = getNoteIndexAndTimeshift(note, tempo);
                 let index = timing[0];
+                let timeshift = timing[1];
                 
                 // add new array
                 if (Math.floor(index / LOOP_DURATION) >= pianorolls.length){
                     pianorolls.push(utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION));
+                    timeshifts.push(utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION));
                 }
-                let matrix = pianorolls[Math.floor(index / LOOP_DURATION)];
+
+                // store velocity
                 let drum_id = MIDI_DRUM_MAP[note.midi];
-                matrix[drum_id][index % LOOP_DURATION] = note.velocity;       
+                let matrix = pianorolls[Math.floor(index / LOOP_DURATION)];
+                matrix[drum_id][index % LOOP_DURATION] = note.velocity;    // normalized 0 - 1
+                
+                // store timeshift
+                matrix = timeshifts[Math.floor(index / LOOP_DURATION)];
+                matrix[drum_id][index % LOOP_DURATION] = timeshift;    // normalized -1 - 1
             }
         })
     })
@@ -86,6 +96,7 @@ function processPianoroll(midiFile){
     // 2D array to tf.tensor2d
     for (var i=0; i < pianorolls.length; i++){
         train_data.push(tf.tensor2d(pianorolls[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+        train_data_timeshift.push(tf.tensor2d(timeshifts[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
     }
 }
 
@@ -142,7 +153,7 @@ Max.addHandler("train", ()=>{
     utils.log_status("Start training...");
     console.log("# of bars in training data:", train_data.length * 2);
     reportNumberOfBars();
-    vae.loadAndTrain(train_data);
+    vae.loadAndTrain(train_data, train_data_timeshift);
 });
 
 // Generate a rhythm pattern
@@ -159,7 +170,7 @@ async function generatePattern(z1, z2, threshold){
       if (isGenerating) return;
   
       isGenerating = true;
-      let pattern = vae.generatePattern(z1, z2);
+      let [pattern, timeshifts] = vae.generatePattern(z1, z2);
       Max.outlet("matrix_clear",1); // clear all
       for (var i=0; i< NUM_DRUM_CLASSES; i++){
           var sequence = [];
@@ -173,8 +184,13 @@ async function generatePattern(z1, z2, threshold){
               }
 
               // for live.step
-              if (pattern[i][j] > threshold) sequence.push(Math.floor(pattern[i][j]*127.));
-              else sequence.push(0);
+              if (pattern[i][j] > threshold) {
+                  sequence.push(Math.floor(pattern[i][j]*127.));
+              }
+              else {
+                  sequence.push(0);
+              
+              }
           }
   
           // output for live.step object
@@ -190,7 +206,9 @@ async function generatePattern(z1, z2, threshold){
 
 // Clear training data 
 Max.addHandler("clear_train", ()=>{
-    train_data = [];  // clear
+    train_data = []; // clear
+    train_data_timeshift = [];  
+
     reportNumberOfBars();
 });
 
