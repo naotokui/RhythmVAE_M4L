@@ -174,6 +174,7 @@ async function generatePattern(z1, z2, threshold){
       Max.outlet("matrix_clear",1); // clear all
       for (var i=0; i< NUM_DRUM_CLASSES; i++){
           var sequence = [];
+          var sequenceTS = []; // for timeshift
           // output for matrix view
           for (var j=0; j < LOOP_DURATION; j++){
               var x = 0.0;
@@ -186,15 +187,17 @@ async function generatePattern(z1, z2, threshold){
               // for live.step
               if (pattern[i][j] > threshold) {
                   sequence.push(Math.floor(pattern[i][j]*127.));
+                  sequenceTS.push(Math.floor(utils.scale(timeshifts[i][j], -1., 1, 0, 127)));
               }
               else {
                   sequence.push(0);
-              
+                  sequenceTS.push(64);
               }
           }
   
           // output for live.step object
           Max.outlet("seq_output", i+1, sequence.join(" "));
+          Max.outlet("timeshift_output", i+1, sequenceTS.join(" "));
       }
       Max.outlet("generated", 1);
       utils.log_status("");
