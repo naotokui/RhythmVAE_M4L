@@ -9,10 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tensorflow/tfjs-node": "^1.2.8",
-    "@tonejs/midi": "^2.0.7",
+    "@tensorflow/tfjs-node": "^1.3.1",
+    "@tonejs/midi": "^2.0.12",
     "cross-fetch": "^3.0.4",
-    "glob": "^7.1.4",
+    "glob": "^7.1.6",
     "tiny-glob": "^0.2.6"
   },
   "description": "Max for Live(M4L) Rhythm generator using Variational Autoencoder(VAE)",
