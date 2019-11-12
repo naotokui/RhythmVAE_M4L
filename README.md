@@ -37,7 +37,7 @@ If you want to quickly test the device, please use the one in `/release` directo
 
 ## MIDI Mapping
 
-This devices considers the following 9 drum types| 
+This devices considers the following 9 drum types:
 
   | Drum Types |
   |:-----:|
@@ -51,7 +51,7 @@ This devices considers the following 9 drum types|
   |Clap|
   |Rim|
 
-MIDI notes in a MIDI file will be classified into the 9 types based on General MIDI (GM) Mappings.
+MIDI notes in a MIDI file will be classified into the 9 types based on [General MIDI (GM) Mapping](https://www.midi.org/specifications-old/item/gm-level-1-sound-set).
 
  | MIDI Note Number | Drum Type | 
  |:-----:|:-----:|
