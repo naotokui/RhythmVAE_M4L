@@ -17,6 +17,7 @@ If you want to quickly test the device, please use the one in `/release` directo
 ## Known problems
 ~~- When you keep generating rhythms continuiously, Node for Max crashes with "Max API Timeout" error in some occasions and you'll see "Model is not trained yet" error message.~~
 - Incompatible with folders with names containing special characters such as `[]?*!|@`
+- Changes you make on the sequence grid view are not reflected the rhythm sequence. It is just a display! 
 
 
 ## TO DO
