@@ -75,18 +75,16 @@ function processPianoroll(midiFile){
         }
     })
 
-    /*    for debug - output pianoroll */
-    if (pianorolls.length > 0){ 
-        var index = utils.getRandomInt(pianorolls.length); 
-        let x = pianorolls[index];
-        for (var i=0; i< NUM_MIDI_CLASSES; i++){
-            for (var j=0; j < LOOP_DURATION; j++){
-                Max.outlet("matrix_output", j, i, Math.ceil(x[i][j]));
-            }
-        }
-    }
-
-    console.log(pianorolls.length);
+    // /*    for debug - output pianoroll */
+    // if (pianorolls.length > 0){ 
+    //     var index = utils.getRandomInt(pianorolls.length); 
+    //     let x = pianorolls[index];
+    //     for (var i=0; i< NUM_MIDI_CLASSES; i++){
+    //         for (var j=0; j < LOOP_DURATION; j++){
+    //             Max.outlet("matrix_output", j, i, Math.ceil(x[i][j]));
+    //         }
+    //     }
+    // }
     
     // 2D array to tf.tensor2d
     for (var i=0; i < pianorolls.length; i++){

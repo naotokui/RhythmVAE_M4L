@@ -2,8 +2,8 @@
 	"name" : "M4L.MelodyVAE",
 	"version" : 1,
 	"creationdate" : 3656588145,
-	"modificationdate" : 3656593090,
-	"viewrect" : [ 25.0, 70.0, 300.0, 500.0 ],
+	"modificationdate" : 3656599141,
+	"viewrect" : [ 27.0, 61.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
 	"showdependencies" : 1,
@@ -1276,6 +1276,496 @@
 				"singleton" : 				{
 					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
 					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"onehot_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"pack_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"pad_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"pad_packed_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"pool_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"reduce_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"reshape_packed_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_bilinear_backprop_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_bilinear_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_bilinear_packed_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_nearest_neighbor_backprop_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_nearest_neighbor_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"reverse_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"reverse_packed_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"scatter_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"segment_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"select_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"shader_compiler.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"shader_compiler_util.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"slice_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"slice_packed_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"strided_slice_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"tex_util.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"texture_manager.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"tile_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"transpose_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"transpose_packed_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"unaryop_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"unaryop_packed_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"unpack_gpu.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"webgl_types.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"webgl_util.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"where_impl.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends"
+				}
+
+			}
+,
+			"browser_util.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"browser_util_test.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"buffer_test.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"debug_mode_test.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"device_util.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"engine.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"engine_test.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"environment.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"environment_test.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"flags.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"flags_test.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"globals.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"globals_test.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"gradients.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"gradients_test.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"browser_files.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/io",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/io"
 				}
 
 			}
@@ -4685,6 +5175,1136 @@
 				}
 
 			}
+,
+			"multinomial_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"onehot_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"onehot_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"pack_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"pack_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"pad_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"pad_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"pad_packed_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"pad_packed_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"pool_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"pool_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"reduce_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"reduce_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"reshape_packed_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"reshape_packed_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"reshape_packed_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"reshape_packed_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_bilinear_backprop_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_bilinear_backprop_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_bilinear_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_bilinear_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_bilinear_packed_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_bilinear_packed_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_nearest_neighbor_backprop_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_nearest_neighbor_backprop_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_nearest_neighbor_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"resize_nearest_neighbor_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"reverse_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"reverse_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"reverse_packed_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"reverse_packed_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"scatter_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"scatter_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"segment_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"segment_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"select_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"select_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"shader_compiler.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"shader_compiler.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"shader_compiler_util.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"shader_compiler_util.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"shader_compiler_util_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"shader_compiler_util_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"slice_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"slice_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"slice_packed_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"slice_packed_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"strided_slice_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"strided_slice_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"tex_util.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"tex_util.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"tex_util_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"tex_util_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"texture_manager.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"texture_manager.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"tile_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"tile_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"transpose_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"transpose_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"transpose_packed_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"transpose_packed_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"unaryop_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"unaryop_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"unaryop_packed_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"unaryop_packed_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"unpack_gpu.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"unpack_gpu.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"webgl_batchnorm_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"webgl_batchnorm_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"webgl_custom_op_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"webgl_custom_op_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"webgl_ops_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"webgl_ops_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"webgl_types.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"webgl_types.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"webgl_util.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"webgl_util.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"webgl_util_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"webgl_util_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends/webgl",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends/webgl"
+				}
+
+			}
+,
+			"where_impl.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends"
+				}
+
+			}
+,
+			"where_impl.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/backends",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/backends"
+				}
+
+			}
+,
+			"browser_util.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"browser_util.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"browser_util_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"browser_util_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"buffer_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"buffer_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"debug_mode_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"debug_mode_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"device_util.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"device_util.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"engine.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"engine.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"engine_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"engine_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"environment.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"environment.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"environment_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"environment_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"flags.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"flags.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"flags_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"flags_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"globals.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"globals.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"globals_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"globals_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"gradients.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"gradients.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"gradients_test.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"gradients_test.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist"
+				}
+
+			}
+,
+			"browser_files.d.ts" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/io",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/io"
+				}
+
+			}
+,
+			"browser_files.js.map" : 			{
+				"kind" : "file",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules/@tensorflow/tfjs-core/dist/io",
+					"projectrelativepath" : "../node_modules/@tensorflow/tfjs-core/dist/io"
+				}
+
+			}
 
 		}
 
@@ -4698,11 +6318,11 @@
 
 	}
 ,
-	"detailsvisible" : 0,
-	"amxdtype" : 1633771873,
+	"detailsvisible" : 1,
+	"amxdtype" : 1835887981,
 	"readonly" : 0,
 	"devpathtype" : 0,
 	"devpath" : ".",
 	"sortmode" : 0,
-	"viewmode" : 0
+	"viewmode" : 1
 }
