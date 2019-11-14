@@ -8,7 +8,7 @@ const utils = require('./utils.js')
 const data = require('./data.js')
 
 // Constants
-const NUM_DRUM_CLASSES = require('./constants.js').NUM_DRUM_CLASSES;
+const NUM_MIDI_CLASSES = require('./constants.js').NUM_MIDI_CLASSES;
 const LOOP_DURATION = require('./constants.js').LOOP_DURATION;
 
 const ORIGINAL_DIM = require('./constants.js').ORIGINAL_DIM;
@@ -265,7 +265,7 @@ class ConditionalVAE {
   
   generate(zs){
     let outputs = this.decoder.apply(zs);  
-    outputs = outputs.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);
+    outputs = outputs.reshape([NUM_MIDI_CLASSES, LOOP_DURATION]);
     return outputs.arraySync();
   }
 

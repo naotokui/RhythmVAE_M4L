@@ -66,6 +66,7 @@ function processPianoroll(midiFile){
                     while (Math.floor(index / LOOP_DURATION) >= pianorolls.length){
                         pianorolls.push(utils.create2DArray(NUM_MIDI_CLASSES, LOOP_DURATION));
                     }
+
                     let matrix = pianorolls[Math.floor(index / LOOP_DURATION)];
                     let note_id = note.midi - MIN_MIDI_NOTE;
                     matrix[note_id][index % LOOP_DURATION] = note.velocity;       
@@ -165,6 +166,8 @@ async function generatePattern(z1, z2, threshold){
       isGenerating = true;
       let pattern = vae.generatePattern(z1, z2);
       Max.outlet("matrix_clear",1); // clear all
+
+      // Velocity
       for (var i=0; i< NUM_MIDI_CLASSES; i++){
           var sequence = [];
           // output for matrix view
@@ -175,15 +178,36 @@ async function generatePattern(z1, z2, threshold){
                 x = 1;
                 Max.outlet("matrix_output", j + 1, i + 1, x); // index for live.grid starts from 1
               }
-
-              // for live.step
-              if (pattern[i][j] > threshold) sequence.push(Math.floor(pattern[i][j]*127.));
-              else sequence.push(0);
-          }
-  
-          // output for live.step object
-          Max.outlet("seq_output", i+1, sequence.join(" "));
+        } 
       }
+
+      // Pitch
+      // live.step has mono-phonic sequences (up to 16 tracks)
+      for (var k=0; k< 16; k++){ // 16 = number of monophonic sequence in live.step
+        var pitch_sequence = [];
+        var velocity_sequence = [];
+        for (var j=0; j < LOOP_DURATION; j++){
+
+            var count = 0;
+            for (var i=0; i< NUM_MIDI_CLASSES; i++){
+                if (pattern[i][j] > threshold) count++;
+                if (count > k) {
+                    pitch_sequence.push(i + MIN_MIDI_NOTE);
+                    velocity_sequence.push(Math.floor(pattern[i][j]*127.));
+                    break;
+                }
+            }
+            if (count <= k){ // padding if there is no note
+                pitch_sequence.push(0);
+                velocity_sequence.push(0);
+            }
+        }
+
+        // output for live.step object
+        Max.outlet("pitch_output", k+1, pitch_sequence.join(" "));
+        Max.outlet("velocity_output", k+1, velocity_sequence.join(" "));
+    }
+
       Max.outlet("generated", 1);
       utils.log_status("");
       isGenerating = false;
