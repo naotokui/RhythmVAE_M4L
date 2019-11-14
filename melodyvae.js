@@ -117,8 +117,9 @@ Max.addHandler("midi", (filename) =>  {
     if (fs.existsSync(filename) && fs.lstatSync(filename).isDirectory()){
         // iterate over *.mid or *.midi files 
         // TODO: it may match *.mido *.midifile *.middleageman etc...
-        glob(filename + '/**/*.mid*', {}, (err, files)=>{
-            if (err) console.error(err); 
+        glob(filename + '**/*.mid', {}, (err, files)=>{
+            console.log(files);
+            if (err) console.log(err); 
             else {
                 for (var idx in files){
                     if (processMidiFile(files[idx])) count += 1;

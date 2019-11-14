@@ -39,6 +39,26 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"bgmode" : 0,
+					"border" : 0,
+					"clickthrough" : 0,
+					"enablehscroll" : 0,
+					"enablevscroll" : 0,
+					"id" : "obj-53",
+					"lockeddragscroll" : 0,
+					"maxclass" : "bpatcher",
+					"name" : "n4m.monitor.maxpat",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"offset" : [ 0.0, 0.0 ],
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 520.0, 410.0, 400.0, 220.0 ],
+					"viewvisibility" : 1
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-70",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -1813,7 +1833,7 @@
 					"presentation_rect" : [ 210.216102361679077, 105.167883211678827, 93.0, 54.46076363890711 ],
 					"setminmax" : [ 0.0, 150.0 ],
 					"setstyle" : 1,
-					"size" : 150
+					"size" : 100
 				}
 
 			}
@@ -4645,8 +4665,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -4874,7 +4892,16 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-53", 0 ],
+					"order" : 1,
+					"source" : [ "obj-3", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-81", 0 ],
+					"order" : 0,
 					"source" : [ "obj-3", 1 ]
 				}
 
@@ -5281,12 +5308,12 @@
  ],
 		"parameters" : 		{
 			"obj-35" : [ "shuffle", "shuffle", 0 ],
-			"obj-9" : [ "live.text[4]", "live.text", 0 ],
 			"obj-75" : [ "live.text[2]", "live.text", 0 ],
+			"obj-9" : [ "live.text[4]", "live.text", 0 ],
 			"obj-24" : [ "X", "X", 0 ],
 			"obj-65" : [ "live.numbox", "live.numbox", 0 ],
-			"obj-2" : [ "live.text[3]", "live.text", 0 ],
 			"obj-68" : [ "live.text[1]", "live.text", 0 ],
+			"obj-2" : [ "live.text[3]", "live.text", 0 ],
 			"obj-15" : [ "live.menu", "live.menu", 0 ],
 			"obj-22" : [ "pictslider", "pictslider", 0 ],
 			"obj-25" : [ "live.menu[3]", "live.menu", 0 ],
@@ -5335,6 +5362,24 @@
 				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "n4m.monitor.maxpat",
+				"bootpath" : "C74:/packages/Node For Max/patchers/debug-monitor",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "resize_n4m_monitor_patcher.js",
+				"bootpath" : "C74:/packages/Node For Max/patchers/debug-monitor",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "fit_jweb_to_bounds.js",
+				"bootpath" : "C74:/packages/Node For Max/patchers/debug-monitor",
+				"type" : "TEXT",
 				"implicit" : 1
 			}
  ],
