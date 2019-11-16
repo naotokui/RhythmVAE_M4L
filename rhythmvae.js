@@ -124,17 +124,16 @@ Max.addHandler("midi", (filename) =>  {
     // is directory? 
     if (fs.existsSync(filename) && fs.lstatSync(filename).isDirectory()){
         // iterate over *.mid or *.midi files 
-        // TODO: it may match *.mido *.midifile *.middleageman etc...
-        let pattern = filename + '**/*.(mid|midi)';
-        utils.post(pattern);
-        glob(pattern, {}, (err, files)=>{
-
+        glob(filename + '**/*.+(mid|midi)', {}, (err, files)=>{
             utils.post("# of files in dir: " + files.length); 
             if (err) utils.error(err); 
             else {
-                for (var idx in files){
-                    utils.post(files[idx]);    
-                    if (processMidiFile(files[idx])) count += 1;
+                for (var idx in files){   
+                    try {
+                        if (processMidiFile(files[idx])) count += 1;
+                    } catch(error) {
+                        console.error("failed to process " + files[idx] + " - " + error);
+                      }
                 }
                 utils.post("# of midi files added: " + count);    
                 reportNumberOfBars();
@@ -144,7 +143,6 @@ Max.addHandler("midi", (filename) =>  {
         if (processMidiFile(filename)) count += 1;
         Max.post("# of midi files added: " + count);    
         reportNumberOfBars();
-
     }
 });
 
