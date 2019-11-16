@@ -2,7 +2,7 @@
 	"name" : "M4L.MelodyVAE",
 	"version" : 1,
 	"creationdate" : 3656588145,
-	"modificationdate" : 3656766955,
+	"modificationdate" : 3656780929,
 	"viewrect" : [ 27.0, 79.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -22,39 +22,19 @@
 			}
 ,
 			"makenote_for_me.maxpat" : 			{
-				"kind" : "patcher",
-				"singleton" : 				{
-					"bootpath" : "~/git/_Public/RhythmVAE_M4L",
-					"projectrelativepath" : ".."
-				}
-
+				"kind" : "patcher"
 			}
 ,
 			"setup_1_16.maxpat" : 			{
-				"kind" : "patcher",
-				"singleton" : 				{
-					"bootpath" : "~/git/_Public/RhythmVAE_M4L",
-					"projectrelativepath" : ".."
-				}
-
+				"kind" : "patcher"
 			}
 ,
 			"shuffle_metro.maxpat" : 			{
-				"kind" : "patcher",
-				"singleton" : 				{
-					"bootpath" : "~/git/_Public/RhythmVAE_M4L",
-					"projectrelativepath" : ".."
-				}
-
+				"kind" : "patcher"
 			}
 ,
 			"count_for_me.maxpat" : 			{
-				"kind" : "patcher",
-				"singleton" : 				{
-					"bootpath" : "~/git/_Public/RhythmVAE_M4L",
-					"projectrelativepath" : ".."
-				}
-
+				"kind" : "patcher"
 			}
 
 		}
@@ -6365,7 +6345,7 @@
 	}
 ,
 	"detailsvisible" : 1,
-	"amxdtype" : 1633771873,
+	"amxdtype" : 1835887981,
 	"readonly" : 0,
 	"devpathtype" : 0,
 	"devpath" : ".",
