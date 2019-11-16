@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 8,
-			"minor" : 0,
-			"revision" : 5,
+			"minor" : 1,
+			"revision" : 0,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -92,7 +92,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 265.0, 64.0, 62.0, 33.0 ],
+					"patching_rect" : [ 120.0, 64.0, 62.0, 33.0 ],
 					"text" : "restart the count"
 				}
 
@@ -104,7 +104,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 277.0, 192.0, 91.0, 22.0 ],
+					"patching_rect" : [ 369.0, 176.0, 91.0, 22.0 ],
 					"text" : "patcherargs 16"
 				}
 
@@ -142,7 +142,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 291.0, 109.0, 30.0, 30.0 ]
+					"patching_rect" : [ 109.0, 116.0, 30.0, 30.0 ]
 				}
 
 			}
@@ -184,6 +184,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-12", 0 ],
+					"midpoints" : [ 118.5, 150.5, 118.5, 150.5 ],
 					"source" : [ "obj-3", 0 ]
 				}
 
@@ -207,7 +208,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-7", 4 ],
-					"midpoints" : [ 286.5, 218.5, 136.5, 218.5 ],
+					"midpoints" : [ 378.5, 218.5, 136.5, 218.5 ],
 					"source" : [ "obj-9", 0 ]
 				}
 
