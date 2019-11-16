@@ -2,7 +2,7 @@
 	"name" : "M4L.RhythmVAE",
 	"version" : 1,
 	"creationdate" : 3650640218,
-	"modificationdate" : 3656485313,
+	"modificationdate" : 3656778579,
 	"viewrect" : [ 25.0, 229.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
