@@ -19,8 +19,9 @@ const vae = require('./src/vae.js');
 Max.post(`Loaded the ${path.basename(__filename)} script`);
 
 // Global varibles
-var train_data = []; 
-var train_data_timeshift = [];
+var train_data_onsets = []; 
+var train_data_velocities = []; 
+var train_data_timeshifts = [];
 var isGenerating = false;
 
 function isValidMIDIFile(midiFile){
@@ -51,7 +52,9 @@ function getNoteIndexAndTimeshift(note, tempo){
 function processPianoroll(midiFile){
     const tempo = getTempo(midiFile);
 
-    var pianorolls = [];
+    // data array
+    var onsets = [];
+    var velocities = [];
     var timeshifts = [];
 
     midiFile.tracks.forEach(track => {
@@ -65,14 +68,19 @@ function processPianoroll(midiFile){
                 let timeshift = timing[1];
                 
                 // add new array
-                if (Math.floor(index / LOOP_DURATION) >= pianorolls.length){
-                    pianorolls.push(utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION));
+                if (Math.floor(index / LOOP_DURATION) >= onsets.length){
+                    onsets.push(utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION));
+                    velocities.push(utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION));
                     timeshifts.push(utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION));
                 }
 
                 // store velocity
                 let drum_id = MIDI_DRUM_MAP[note.midi];
-                let matrix = pianorolls[Math.floor(index / LOOP_DURATION)];
+
+                let matrix = onsets[Math.floor(index / LOOP_DURATION)];
+                matrix[drum_id][index % LOOP_DURATION] = 1;    // 1 for onsets
+
+                matrix = velocities[Math.floor(index / LOOP_DURATION)];
                 matrix[drum_id][index % LOOP_DURATION] = note.velocity;    // normalized 0 - 1
                 
                 // store timeshift
@@ -83,9 +91,9 @@ function processPianoroll(midiFile){
     })
 
     /*    for debug - output pianoroll */
-    // if (pianorolls.length > 0){ 
-    //     var index = utils.getRandomInt(pianorolls.length); 
-    //     let x = pianorolls[index];
+    // if (velocities.length > 0){ 
+    //     var index = utils.getRandomInt(velocities.length); 
+    //     let x = velocities[index];
     //     for (var i=0; i< NUM_DRUM_CLASSES; i++){
     //         for (var j=0; j < LOOP_DURATION; j++){
     //             Max.outlet("matrix_output", j, i, Math.ceil(x[i][j]));
@@ -94,9 +102,10 @@ function processPianoroll(midiFile){
     // }
     
     // 2D array to tf.tensor2d
-    for (var i=0; i < pianorolls.length; i++){
-        train_data.push(tf.tensor2d(pianorolls[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
-        train_data_timeshift.push(tf.tensor2d(timeshifts[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+    for (var i=0; i < onsets.length; i++){
+        train_data_onsets.push(tf.tensor2d(onsets[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+        train_data_velocities.push(tf.tensor2d(velocities[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+        train_data_timeshifts.push(tf.tensor2d(timeshifts[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
     }
 }
 
@@ -154,9 +163,9 @@ Max.addHandler("train", ()=>{
     }
 
     utils.log_status("Start training...");
-    console.log("# of bars in training data:", train_data.length * 2);
+    console.log("# of bars in training data:", train_data_onsets.length * 2);
     reportNumberOfBars();
-    vae.loadAndTrain(train_data, train_data_timeshift);
+    vae.loadAndTrain(train_data_onsets, train_data_velocities, train_data_timeshifts);
 });
 
 // Generate a rhythm pattern
@@ -173,28 +182,25 @@ async function generatePattern(z1, z2, threshold){
       if (isGenerating) return;
   
       isGenerating = true;
-      let [pattern, timeshifts] = vae.generatePattern(z1, z2);
+      let [onsets, velocities, timeshifts] = vae.generatePattern(z1, z2);
       Max.outlet("matrix_clear",1); // clear all
       for (var i=0; i< NUM_DRUM_CLASSES; i++){
-          var sequence = [];
+          var sequence = []; // for velocity
           var sequenceTS = []; // for timeshift
           // output for matrix view
           for (var j=0; j < LOOP_DURATION; j++){
               var x = 0.0;
               // if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
-              if (pattern[i][j] > threshold){ 
+              if (onsets[i][j] > threshold){ 
                 x = 1;
                 Max.outlet("matrix_output", j + 1, i + 1, x); // index for live.grid starts from 1
-              }
-
-              // for live.step
-              if (pattern[i][j] > threshold) {
-                  sequence.push(Math.floor(pattern[i][j]*127.));
-                  sequenceTS.push(Math.floor(utils.scale(timeshifts[i][j], -1., 1, 0, 127)));
-              }
-              else {
-                  sequence.push(0);
-                  sequenceTS.push(64);
+           
+                // for live.step
+                sequence.push(Math.floor(velocities[i][j]*127.));
+                sequenceTS.push(Math.floor(utils.scale(timeshifts[i][j], -1., 1, 0, 127)));
+              } else {
+                sequence.push(0);
+                sequenceTS.push(64);
               }
           }
   
@@ -212,7 +218,8 @@ async function generatePattern(z1, z2, threshold){
 
 // Clear training data 
 Max.addHandler("clear_train", ()=>{
-    train_data = []; // clear
+    train_data_onsets = []; // clear
+    train_data_velocities = [];
     train_data_timeshift = [];  
 
     reportNumberOfBars();
@@ -245,5 +252,5 @@ Max.addHandler("epochs", (e)=>{
 });
 
 function reportNumberOfBars(){
-    Max.outlet("train_bars", train_data.length * 2);  // number of bars for training
+    Max.outlet("train_bars", train_data_onsets.length * 2);  // number of bars for training
 }
