@@ -183,21 +183,19 @@ async function generatePattern(z1, z2, threshold){
   
       isGenerating = true;
       let [onsets, velocities, timeshifts] = vae.generatePattern(z1, z2);
-      Max.outlet("matrix_clear",1); // clear all
+      Max.outlet("matrix_clear", 1); // clear all
       for (var i=0; i< NUM_DRUM_CLASSES; i++){
           var sequence = []; // for velocity
           var sequenceTS = []; // for timeshift
           // output for matrix view
           for (var j=0; j < LOOP_DURATION; j++){
-              var x = 0.0;
               // if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
-              if (onsets[i][j] > threshold){ 
-                x = 1;
-                Max.outlet("matrix_output", j + 1, i + 1, x); // index for live.grid starts from 1
+              if (onsets[i][j] > threshold){
+                Max.outlet("matrix_output", j + 1, i + 1, 1); // index for live.grid starts from 1
            
                 // for live.step
-                sequence.push(Math.floor(velocities[i][j]*127.));
-                sequenceTS.push(Math.floor(utils.scale(timeshifts[i][j], -1., 1, 0, 127)));
+                sequence.push(Math.floor(velocities[i][j]*127.)); // 0-1 -> 0-127
+                sequenceTS.push(Math.floor(utils.scale(timeshifts[i][j], -1., 1, 0, 127))); // -1 - 1 -> 0 - 127
               } else {
                 sequence.push(0);
                 sequenceTS.push(64);
