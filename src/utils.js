@@ -20,6 +20,30 @@ function create2DArray(row, col){
     return x;
 }
 
+// get max pitch index with onsets with none-zero velocity
+function getMaxPitch(a){
+    for (var r = a.length -1; r >= 0; r--){
+        if (getMax(a[r]) > 0) return r;
+    }
+    return 0;
+}
+
+// get min pitch index with onsets with none-zero velocity
+function getMinPitch(a){
+    for (var r = 0; r < a.length; r++){
+        if (getMax(a[r]) > 0) return r;
+    }
+    return 0;
+}
+
+function getMax(a){
+    return Math.max(...a.map(e => Array.isArray(e) ? getMax(e) : e));
+}
+
+function getMin(a){
+    return Math.min(...a.map(e => Array.isArray(e) ? getMin(e) : e));
+}
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
@@ -65,6 +89,8 @@ function error_status(message){
 
 exports.create2DArray = create2DArray;
 exports.getRandomInt = getRandomInt;
+exports.getMaxPitch = getMaxPitch;
+exports.getMinPitch = getMinPitch;
 exports.shuffle = shuffle;
 exports.post = post;
 exports.error = error;
