@@ -69,16 +69,35 @@ function processPianoroll(midiFile){
 
                     let matrix = pianorolls[Math.floor(index / LOOP_DURATION)];
                     let note_id = note.midi - MIN_MIDI_NOTE;
-                    matrix[note_id][index % LOOP_DURATION] = note.velocity;       
+                    matrix[note_id][index % LOOP_DURATION] = note.velocity;   
                 }
-            })
+            });
         }
     })
 
-    // /*    for debug - output pianoroll */
-    // if (pianorolls.length > 0){ 
-    //     var index = utils.getRandomInt(pianorolls.length); 
-    //     let x = pianorolls[index];
+    //data augmentation - with all keys
+    pianorolls.forEach(pianoroll => {
+        let maxv = utils.getMaxPitch(pianoroll) + MIN_MIDI_NOTE;
+        let minv = utils.getMinPitch(pianoroll) + MIN_MIDI_NOTE;
+        for (let diff = -12; diff <= 12; diff++){
+            if (maxv + diff <= MAX_MIDI_NOTE && minv + diff >= MIN_MIDI_NOTE){ // if it's in the transposition range...
+                let newroll = utils.create2DArray(NUM_MIDI_CLASSES, LOOP_DURATION);
+                for (var i = 0; i < NUM_MIDI_CLASSES; i++){
+                    for (var j =0; j < LOOP_DURATION; j++){
+                        if (i + diff >= 0 && i + diff < NUM_MIDI_CLASSES){
+                            newroll[i + diff][j] = pianoroll[i][j]; // transpose
+                        }
+                    }
+                }
+                pianorolls.push(newroll);
+            }
+        }
+    });
+
+    // // /*    for debug - output pianoroll */
+    // if (augments.length > 0){ 
+    //     var index = utils.getRandomInt(augments.length); 
+    //     let x = augments[index];
     //     for (var i=0; i< NUM_MIDI_CLASSES; i++){
     //         for (var j=0; j < LOOP_DURATION; j++){
     //             Max.outlet("matrix_output", j, i, Math.ceil(x[i][j]));
