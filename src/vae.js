@@ -21,7 +21,7 @@ const TEST_BATCH_SIZE = 1000;
 
 let dataHandler;
 let model;
-let numEpochs = 50;
+let numEpochs = 150;
 
 async function loadAndTrain(train_data) {
   dataHandler = new data.DataHandler(train_data); // data utility
