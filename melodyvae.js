@@ -20,6 +20,7 @@ Max.post(`Loaded the ${path.basename(__filename)} script`);
 
 // Global varibles
 var train_data = [];
+var train_data_durations = []; 
 var isGenerating = false;
 
 function isValidMIDIFile(midiFile){
@@ -43,7 +44,11 @@ function getNoteIndexAndTimeshift(note, tempo){
     const index = Math.max(0, Math.floor((note.time + half_unit) / unit)) // centering 
     const timeshift = note.time - unit * index;
 
-    return [index, timeshift];
+    // duration
+    const durationUnit = (60.0 / tempo) * 2.0; // the duration of half note
+    const duration      = Math.max(0.1, Math.min(note.duration / durationUnit, 1.0));
+
+    return [index, timeshift, duration];
 }
 
 // Convert midi into pianoroll matrix
@@ -51,6 +56,7 @@ function processPianoroll(midiFile){
     const tempo = getTempo(midiFile);
 
     var pianorolls = [];
+    var durations = [];
 
     midiFile.tracks.forEach(track => {
         
@@ -61,35 +67,45 @@ function processPianoroll(midiFile){
                 if (MIN_MIDI_NOTE <= note.midi && note.midi <= MAX_MIDI_NOTE){
                     let timing = getNoteIndexAndTimeshift(note, tempo);
                     let index = timing[0];
+                    let duration = timing[2];
 
                     // add new array
                     while (Math.floor(index / LOOP_DURATION) >= pianorolls.length){
                         pianorolls.push(utils.create2DArray(NUM_MIDI_CLASSES, LOOP_DURATION));
+                        durations.push(utils.create2DArray(NUM_MIDI_CLASSES, LOOP_DURATION));
                     }
 
                     let matrix = pianorolls[Math.floor(index / LOOP_DURATION)];
                     let note_id = note.midi - MIN_MIDI_NOTE;
                     matrix[note_id][index % LOOP_DURATION] = note.velocity;   
+
+                    // store timeshift
+                    matrix = durations[Math.floor(index / LOOP_DURATION)];
+                    matrix[note_id][index % LOOP_DURATION] = duration;    
                 }
             });
         }
     })
 
     //data augmentation - with all keys
-    pianorolls.forEach(pianoroll => {
+    pianorolls.forEach(function (pianoroll, i){
+        let duration = durations[i];
         let maxv = utils.getMaxPitch(pianoroll) + MIN_MIDI_NOTE;
         let minv = utils.getMinPitch(pianoroll) + MIN_MIDI_NOTE;
         for (let diff = -12; diff <= 12; diff++){
             if (maxv + diff <= MAX_MIDI_NOTE && minv + diff >= MIN_MIDI_NOTE){ // if it's in the transposition range...
-                let newroll = utils.create2DArray(NUM_MIDI_CLASSES, LOOP_DURATION);
+                let newroll     = utils.create2DArray(NUM_MIDI_CLASSES, LOOP_DURATION);
+                let newduration = utils.create2DArray(NUM_MIDI_CLASSES, LOOP_DURATION);
                 for (var i = 0; i < NUM_MIDI_CLASSES; i++){
                     for (var j =0; j < LOOP_DURATION; j++){
                         if (i + diff >= 0 && i + diff < NUM_MIDI_CLASSES){
                             newroll[i + diff][j] = pianoroll[i][j]; // transpose
+                            newduration[i+diff][j] = duration[i][j];
                         }
                     }
                 }
                 pianorolls.push(newroll);
+                durations.push(newduration);
             }
         }
     });
@@ -108,6 +124,7 @@ function processPianoroll(midiFile){
     // 2D array to tf.tensor2d
     for (var i=0; i < pianorolls.length; i++){
         train_data.push(tf.tensor2d(pianorolls[i], [NUM_MIDI_CLASSES, LOOP_DURATION]));
+        train_data_durations.push(tf.tensor2d(durations[i], [NUM_MIDI_CLASSES, LOOP_DURATION]));
     }
 }
 
@@ -165,7 +182,7 @@ Max.addHandler("train", ()=>{
     utils.log_status("Start training...");
     console.log("# of bars in training data:", train_data.length * 2);
     reportNumberOfBars();
-    vae.loadAndTrain(train_data);
+    vae.loadAndTrain(train_data, train_data_durations);
 });
 
 // Generate a rhythm pattern
