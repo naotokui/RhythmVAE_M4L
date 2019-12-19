@@ -234,18 +234,18 @@ class ConditionalVAE {
   vaeLoss(yTrue, yPred) {
     return tf.tidy(() => {
       const [yTrueOn, yTrueDur] = yTrue;
-      const [yOn, yDur] = y;
       const [z_mean, z_log_var, y] = yPred;
+      const [yOn, yDur] = y;
+
       const reconstruction_loss = this.reconstructionLoss(yTrueOn, yOn);
 
       let duration_loss = this.mseLoss(yTrueDur, yDur);
       duration_loss = duration_loss.mul(DUR_LOSS_COEF);
 
       const kl_loss = this.klLoss(z_mean, z_log_var);
-
-      console.log("onset_loss", tf.mean(reconstruction_loss).dataSync());
-      console.log("duration_loss",  tf.mean(duration_loss).dataSync());
-      console.log("kl_loss",  tf.mean(kl_loss).dataSync());
+      // console.log("onset_loss", tf.mean(reconstruction_loss).dataSync());
+      // console.log("duration_loss",  tf.mean(duration_loss).dataSync());
+      // console.log("kl_loss",  tf.mean(kl_loss).dataSync());
 
       const total_loss = tf.mean(reconstruction_loss.add(duration_loss).add(kl_loss)); // averaged in the batch
       return total_loss;
@@ -277,7 +277,7 @@ class ConditionalVAE {
     for (let i = 0; i < epochs; i++) {
       if (this.shouldStopTraining) break;
 
-      let batchInput;
+      let batchInput, batchInputDur;
       let testBatchInput;
       let trainLoss;
       let valLoss;
@@ -289,7 +289,8 @@ class ConditionalVAE {
       epochLoss = 0;
       for (let j = 0; j < numBatch; j++) {
         batchInput = dataHandler.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
-        trainLoss = await optimizer.minimize(() => this.vaeLoss(batchInput, this.apply(batchInput)), true);
+        batchInputDur = dataHandlerDuration.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
+        trainLoss = await optimizer.minimize(() => this.vaeLoss([batchInput, batchInputDur], this.apply([batchInput, batchInputDur])), true);
         trainLoss = Number(trainLoss.dataSync());
         epochLoss = epochLoss + trainLoss;
         // logMessage(`\t[Batch ${j + 1}] Training Loss: ${trainLoss}.\n`);
@@ -317,9 +318,12 @@ class ConditionalVAE {
   }
   
   generate(zs){
-    let outputs = this.decoder.apply(zs);  
-    outputs = outputs.reshape([NUM_MIDI_CLASSES, LOOP_DURATION]);
-    return outputs.arraySync();
+    let [outputsOn, outputsDur] = this.decoder.apply(zs);
+
+    outputsOn = outputsOn.reshape([NUM_MIDI_CLASSES, LOOP_DURATION]);   
+    outputsDur = outputsDur.reshape([NUM_MIDI_CLASSES, LOOP_DURATION]);    
+
+    return [outputsOn.arraySync(), outputsDur.arraySync()];
   }
 
   async saveModel(path){

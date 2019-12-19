@@ -46,7 +46,7 @@ function getNoteIndexAndTimeshift(note, tempo){
 
     // duration
     const durationUnit = (60.0 / tempo) * 2.0; // the duration of half note
-    const duration      = Math.max(0.1, Math.min(note.duration / durationUnit, 1.0));
+    const duration      = Math.max(0.1, Math.min(note.duration / durationUnit, 2.0));
 
     return [index, timeshift, duration];
 }
@@ -110,15 +110,16 @@ function processPianoroll(midiFile){
         }
     });
 
-    // // /*    for debug - output pianoroll */
-    // if (augments.length > 0){ 
-    //     var index = utils.getRandomInt(augments.length); 
-    //     let x = augments[index];
-    //     for (var i=0; i< NUM_MIDI_CLASSES; i++){
-    //         for (var j=0; j < LOOP_DURATION; j++){
-    //             Max.outlet("matrix_output", j, i, Math.ceil(x[i][j]));
-    //         }
-    //     }
+    // /*    for debug - output pianoroll */
+    // if (durations.length > 0){ 
+    //     var index = utils.getRandomInt(durations.length); 
+    //     let x = durations[index];
+    //     // for (var i=0; i< NUM_MIDI_CLASSES; i++){
+    //     //     for (var j=0; j < LOOP_DURATION; j++){
+    //     //         // Max.outlet("matrix_output", j, i, Math.ceil(x[i][j]));
+    //     //     }
+    //     // }
+    //     console.log(x);
     // }
     
     // 2D array to tf.tensor2d
@@ -154,7 +155,6 @@ Max.addHandler("midi", (filename) =>  {
         // iterate over *.mid or *.midi files 
         // TODO: it may match *.mido *.midifile *.middleageman etc...
         glob(filename + '**/*.mid', {}, (err, files)=>{
-            console.log(files);
             if (err) console.log(err); 
             else {
                 for (var idx in files){
@@ -199,7 +199,7 @@ async function generatePattern(z1, z2, threshold){
       if (isGenerating) return;
   
       isGenerating = true;
-      let pattern = vae.generatePattern(z1, z2);
+      let [pattern, durations] = vae.generatePattern(z1, z2);
       Max.outlet("matrix_clear",1); // clear all
 
       // Velocity
@@ -221,6 +221,7 @@ async function generatePattern(z1, z2, threshold){
       for (var k=0; k< 16; k++){ // 16 = number of monophonic sequence in live.step
         var pitch_sequence = [];
         var velocity_sequence = [];
+        var duration_sequence = [];
         for (var j=0; j < LOOP_DURATION; j++){
 
             var count = 0;
@@ -229,18 +230,21 @@ async function generatePattern(z1, z2, threshold){
                 if (count > k) {
                     pitch_sequence.push(i + MIN_MIDI_NOTE);
                     velocity_sequence.push(Math.floor(pattern[i][j]*127.));
+                    duration_sequence.push(Math.min(Math.floor(durations[i][j]*64.), 127));
                     break;
                 }
             }
             if (count <= k){ // padding if there is no note
                 pitch_sequence.push(0);
                 velocity_sequence.push(0);
+                duration_sequence.push(0);
             }
         }
 
         // output for live.step object
         Max.outlet("pitch_output", k+1, pitch_sequence.join(" "));
         Max.outlet("velocity_output", k+1, velocity_sequence.join(" "));
+        Max.outlet("duration_output", k+1, duration_sequence.join(" "));
     }
 
       Max.outlet("generated", 1);
