@@ -52,7 +52,7 @@ function getNoteIndexAndTimeshift(note, tempo){
 }
 
 // Convert midi into pianoroll matrix
-function processPianoroll(midiFile){
+function processPianoroll(midiFile, augmentation){
     const tempo = getTempo(midiFile);
 
     var pianorolls = [];
@@ -88,27 +88,35 @@ function processPianoroll(midiFile){
     })
 
     //data augmentation - with all keys
-    pianorolls.forEach(function (pianoroll, i){
-        let duration = durations[i];
-        let maxv = utils.getMaxPitch(pianoroll) + MIN_MIDI_NOTE;
-        let minv = utils.getMinPitch(pianoroll) + MIN_MIDI_NOTE;
-        for (let diff = -12; diff <= 12; diff++){
-            if (maxv + diff <= MAX_MIDI_NOTE && minv + diff >= MIN_MIDI_NOTE){ // if it's in the transposition range...
-                let newroll     = utils.create2DArray(NUM_MIDI_CLASSES, LOOP_DURATION);
-                let newduration = utils.create2DArray(NUM_MIDI_CLASSES, LOOP_DURATION);
-                for (var i = 0; i < NUM_MIDI_CLASSES; i++){
-                    for (var j =0; j < LOOP_DURATION; j++){
-                        if (i + diff >= 0 && i + diff < NUM_MIDI_CLASSES){
-                            newroll[i + diff][j] = pianoroll[i][j]; // transpose
-                            newduration[i+diff][j] = duration[i][j];
+    if (augmentation){
+        aug_pianorolls = [];
+        aug_durations = [];
+
+        pianorolls.forEach(function (pianoroll, i){
+            let duration = durations[i];
+            let maxv = utils.getMaxPitch(pianoroll) + MIN_MIDI_NOTE;
+            let minv = utils.getMinPitch(pianoroll) + MIN_MIDI_NOTE;
+            for (let diff = -12; diff <= 12; diff++){
+                if (maxv + diff <= MAX_MIDI_NOTE && minv + diff >= MIN_MIDI_NOTE){ // if it's in the transposition range...
+                    let newroll     = utils.create2DArray(NUM_MIDI_CLASSES, LOOP_DURATION);
+                    let newduration = utils.create2DArray(NUM_MIDI_CLASSES, LOOP_DURATION);
+                    for (var i = 0; i < NUM_MIDI_CLASSES; i++){
+                        for (var j =0; j < LOOP_DURATION; j++){
+                            if (i + diff >= 0 && i + diff < NUM_MIDI_CLASSES){
+                                newroll[i + diff][j] = pianoroll[i][j]; // transpose
+                                newduration[i+diff][j] = duration[i][j];
+                            }
                         }
                     }
+                    aug_pianorolls.push(newroll);
+                    aug_durations.push(newduration);
                 }
-                pianorolls.push(newroll);
-                durations.push(newduration);
             }
-        }
-    });
+        });
+
+        pianorolls.push(...aug_pianorolls);
+        durations.push(...aug_durations);
+    }
 
     // /*    for debug - output pianoroll */
     // if (durations.length > 0){ 
@@ -129,7 +137,7 @@ function processPianoroll(midiFile){
     }
 }
 
-function processMidiFile(filename){
+function processMidiFile(filename, augmentation){
     // // Read MIDI file into a buffer
     var input = fs.readFileSync(filename)
 
@@ -142,13 +150,13 @@ function processMidiFile(filename){
     var tempo = getTempo(midiFile);
     // console.log("tempo:", tempo);
     // console.log("signature:", midiFile.header.timeSignatures);
-    processPianoroll(midiFile);
+    processPianoroll(midiFile, augmentation);
     console.log("processed:", filename);
     return true;
 }
 
 // Add training data
-Max.addHandler("midi", (filename) =>  {
+Max.addHandler("midi", (filename, augmentation) =>  {
     var count = 0;
     // is directory? 
     if (fs.existsSync(filename) && fs.lstatSync(filename).isDirectory()){
@@ -158,14 +166,14 @@ Max.addHandler("midi", (filename) =>  {
             if (err) console.log(err); 
             else {
                 for (var idx in files){
-                    if (processMidiFile(files[idx])) count += 1;
+                    if (processMidiFile(files[idx],augmentation)) count += 1;
                 }
                 Max.post("# of midi files added: " + count);    
                 reportNumberOfBars();
             }
         })
     } else {
-        if (processMidiFile(filename)) count += 1;
+        if (processMidiFile(filename,augmentation)) count += 1;
         Max.post("# of midi files added: " + count);    
         reportNumberOfBars();
 
