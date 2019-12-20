@@ -1,9 +1,9 @@
-# RhythmVAE_M4L
+# M4L.RhythmVAE
 Max for Live(M4L) Rhythm generator using Variational Autoencoder(VAE) 
 
 ## How it works
 
-[![VAE Rhythm Generator in M4L(Max for Live) Device](./images/youtube_video.png)](https://www.youtube.com/watch?v=K64gYkvXoUU "VAE Rhythm Generator in M4L(Max for Live) Device")
+[![M4L.RhythmVAE - VAE Rhythm Generator for Max for Live/Ableton Live](./images/youtube_video.png)](https://www.youtube.com/watch?v=rH7mEumq9wQ "M4L.RhythmVAE - VAE Rhythm Generator for Max for Live/Ableton Live")
 
 If you want to quickly test the device, please use the one in `/release` directory.
 
