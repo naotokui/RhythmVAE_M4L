@@ -2,7 +2,7 @@
 	"name" : "M4L.MelodyVAE",
 	"version" : 1,
 	"creationdate" : 3656588145,
-	"modificationdate" : 3659695542,
+	"modificationdate" : 3659769440,
 	"viewrect" : [ 27.0, 79.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
