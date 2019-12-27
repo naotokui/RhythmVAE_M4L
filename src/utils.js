@@ -59,6 +59,15 @@ function shuffle(a) {
     return a;
 }
 
+function shuffle_with_indices(a, indices){
+    console.assert(a.length == indices.length);
+    let b = [];
+    for (var i = 0; i < indices.length; i++){
+        b.push(a[indices[i]]);
+    }
+    return b;
+}
+
 
 function does_post(message, is_error){
     if (is_error) Max.post(message, Max.POST_LEVELS.ERROR);
@@ -92,6 +101,7 @@ exports.getRandomInt = getRandomInt;
 exports.getMaxPitch = getMaxPitch;
 exports.getMinPitch = getMinPitch;
 exports.shuffle = shuffle;
+exports.shuffle_with_indices = shuffle_with_indices;
 exports.post = post;
 exports.error = error;
 exports.log_status = log_status;
