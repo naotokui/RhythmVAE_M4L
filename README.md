@@ -21,15 +21,17 @@ If you want to quickly test the device, please use the one in `/release` directo
 
 
 ## TO DO
-- Fix "Max API Timeout" error
+- *Windows Version!!* 
+- ~~Fix "Max API Timeout" error~~
 - ~~save/load functionaly for trained models~~
 - better documentation
 - better UI design!!
-- custom MIDI note number settings
+- ~~custom MIDI note number settings~~
 - add a feature to add random noise to `z` 
 
 
 ## Updates
+- 2019.12.27 fxied| onset/velocity/offset training data used be shuffled independently. it makes no sense! 
 - 2019.11.10 added| Time shift parameter / MIDI Mapping
 - 2019.10.19 fixed| beat sync issue
 - 2019.10.18 added| note on the requirement

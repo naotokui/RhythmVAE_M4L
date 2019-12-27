@@ -29,12 +29,27 @@ let model;
 let numEpochs = 100; // default # of epochs
 
 async function loadAndTrain(train_data_onset, train_data_velocity, train_data_timeshift) {
-  dataHandlerOnset = new data.DataHandler(train_data_onset); // data utility
-  dataHandlerVelocity = new data.DataHandler(train_data_velocity); // data utility
-  dataHandlerTimeshift = new data.DataHandler(train_data_timeshift); // data utility for timeshift data
+  console.assert(train_data_onset.length == train_data_velocity.length && train_data_velocity.length == train_data_timeshift.length);
+  
+  // shuffle in sync
+  const total_num = train_data_onset.length;
+  shuffled_indices = tf.util.createShuffledIndices(total_num);
+  train_data_onset = utils.shuffle_with_indices(train_data_onset,shuffled_indices);
+  train_data_velocity = utils.shuffle_with_indices(train_data_velocity,shuffled_indices);
+  train_data_timeshift = utils.shuffle_with_indices(train_data_timeshift,shuffled_indices);
 
-  console.log(train_data_velocity);
+  // synced indices
+  const num_trains = Math.floor(data.TRAIN_TEST_RATIO * total_num);
+  const num_tests  = total_num - num_trains;
+  const train_indices = tf.util.createShuffledIndices(num_trains);
+  const test_indices = tf.util.createShuffledIndices(num_tests);
 
+  // create data handlers
+  dataHandlerOnset = new data.DataHandler(train_data_onset, train_indices, test_indices); // data utility fo onset
+  dataHandlerVelocity = new data.DataHandler(train_data_velocity, train_indices, test_indices); // data utility for velocity
+  dataHandlerTimeshift = new data.DataHandler(train_data_timeshift, train_indices, test_indices); // data utility for duration
+
+  // start training!
   initModel(); // initializing model class
   startTraining(); // start the actual training process with the given training data
 }

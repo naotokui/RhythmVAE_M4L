@@ -10,14 +10,13 @@ const TRAIN_TEST_RATIO = 5 / 6;
 const ORIGINAL_DIM = require('./constants.js').ORIGINAL_DIM;
 
 class DataHandler {
-  constructor(training_data) {
-    this.dataset = utils.shuffle(training_data);
+  constructor(shuffled_data, trainIndices, testIndices) {
+    this.dataset = shuffled_data;
 
     this.shuffledTrainIndex = 0;
     this.shuffledTestIndex = 0;
 
     this.NUM_DATASET_ELEMENTS = this.dataset.length;
-
     this.NUM_TRAIN_ELEMENTS   = Math.floor(TRAIN_TEST_RATIO * this.NUM_DATASET_ELEMENTS);
     this.NUM_TEST_ELEMENTS    = this.NUM_DATASET_ELEMENTS - this.NUM_TRAIN_ELEMENTS;
 
@@ -26,8 +25,8 @@ class DataHandler {
     this.testData = this.dataset.slice(this.NUM_TRAIN_ELEMENTS);
 
     // Shuffled indices for both training and test data
-    this.trainIndices = tf.util.createShuffledIndices(this.NUM_TRAIN_ELEMENTS);
-    this.testIndices = tf.util.createShuffledIndices(this.NUM_TEST_ELEMENTS);
+    this.trainIndices = trainIndices; 
+    this.testIndices = testIndices; 
   }
 
   getDataSize(){
@@ -62,3 +61,4 @@ class DataHandler {
 }
 
 exports.DataHandler = DataHandler;
+exports.TRAIN_TEST_RATIO = TRAIN_TEST_RATIO;
