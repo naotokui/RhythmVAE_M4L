@@ -17,12 +17,13 @@ You need to update your Node for Max package to the latest version (version 1.2.
 - Incompatible with folders with names containing special characters such as `[]?*!|@`
 
 ## TO DO
-- Fix "Max API Timeout" error
+- Windows version
 - ~~save/load functionaly for trained models~~
 - better documentation
-- better UI design!!
-- custom MIDI note number settings
 - add a feature to add random noise to `z` 
+- try LSTM
+- add evaluation loss
+- check shuffled indices 
 
 
 ## Updates

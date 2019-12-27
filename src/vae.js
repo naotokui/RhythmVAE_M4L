@@ -18,6 +18,7 @@ const LATENT_DIM = 2;
 const BATCH_SIZE = 128;
 const NUM_BATCH = 50;
 const TEST_BATCH_SIZE = 1000;
+const ON_LOSS_COEF = 0.75;  // coef for onsets loss
 const DUR_LOSS_COEF = 1.0;  // coef for duration loss
 const VEL_LOSS_COEF = 2.5;  // coef for velocity loss
 
@@ -195,7 +196,7 @@ class ConditionalVAE {
     const x4LinearVel = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
     const x4NormalisedVel = tf.layers.batchNormalization({axis: 1}).apply(x4LinearVel);
     const x4Vel = tf.layers.leakyReLU().apply(x4NormalisedVel);
-    const decoderOutputsVel = tf.layers.dense({units: originalDim, activation: 'relu'}).apply(x4Vel);
+    const decoderOutputsVel = tf.layers.dense({units: originalDim, activation: 'sigmoid'}).apply(x4Vel);
     
     // Decoder for duration
     const x4LinearDur = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
@@ -254,16 +255,17 @@ class ConditionalVAE {
       const [z_mean, z_log_var, y] = yPred;
       const [yOn, yVel, yDur] = y;
 
-      const onset_loss = this.reconstructionLoss(yTrueOn, yOn);
+      let onset_loss = this.reconstructionLoss(yTrueOn, yOn);
+      onset_loss = onset_loss.mul(ON_LOSS_COEF);
       let velocity_loss = this.mseLoss(yTrueVel, yVel);
       velocity_loss = velocity_loss.mul(VEL_LOSS_COEF);
       let duration_loss = this.mseLoss(yTrueDur, yDur);
       duration_loss = duration_loss.mul(DUR_LOSS_COEF);
 
       const kl_loss = this.klLoss(z_mean, z_log_var);
-      console.log("onset_loss", tf.mean(onset_loss).dataSync());
-      console.log("velocity_loss", tf.mean(velocity_loss).dataSync());
-      console.log("duration_loss",  tf.mean(duration_loss).dataSync());
+      // console.log("onset_loss", tf.mean(onset_loss).dataSync());
+      // console.log("velocity_loss", tf.mean(velocity_loss).dataSync());
+      // console.log("duration_loss",  tf.mean(duration_loss).dataSync());
       // console.log("kl_loss",  tf.mean(kl_loss).dataSync());
       const total_loss = tf.mean(onset_loss.add(velocity_loss).add(duration_loss).add(kl_loss)); // averaged in the batch
       return total_loss;
