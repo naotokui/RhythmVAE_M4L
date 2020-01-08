@@ -2,7 +2,7 @@
 	"name" : "M4L.RhythmVAE",
 	"version" : 1,
 	"creationdate" : 3650640218,
-	"modificationdate" : 3660300863,
+	"modificationdate" : 3661333917,
 	"viewrect" : [ 24.0, 229.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -14,7 +14,7 @@
 				"kind" : "patcher",
 				"local" : 1,
 				"singleton" : 				{
-					"bootpath" : "~/git/_Public/RhythmVAE_M4L/subpatches",
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
 					"projectrelativepath" : "../subpatches"
 				}
 
@@ -25,7 +25,7 @@
 				"local" : 1,
 				"toplevel" : 1,
 				"singleton" : 				{
-					"bootpath" : "~/git/_Public/RhythmVAE_M4L",
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L",
 					"projectrelativepath" : ".."
 				}
 
@@ -60,7 +60,7 @@
 ,
 	"searchpath" : 	{
 		"0" : 		{
-			"bootpath" : "~/git/_Public/RhythmVAE_M4L/src",
+			"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/src",
 			"projectrelativepath" : "../src",
 			"label" : "JS code",
 			"recursive" : 1,
@@ -69,7 +69,7 @@
 		}
 ,
 		"1" : 		{
-			"bootpath" : "~/git/_Public/RhythmVAE_M4L/node_modules",
+			"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules",
 			"projectrelativepath" : "../node_modules",
 			"label" : "node modeuls",
 			"recursive" : 1,
@@ -78,7 +78,7 @@
 		}
 ,
 		"2" : 		{
-			"bootpath" : "~/git/_Public/RhythmVAE_M4L/subpatches",
+			"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
 			"projectrelativepath" : "../subpatches",
 			"label" : "",
 			"recursive" : 1,
