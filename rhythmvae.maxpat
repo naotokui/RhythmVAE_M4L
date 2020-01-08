@@ -2565,7 +2565,7 @@
 					"numoutlets" : 1,
 					"offset" : [ 0.0, 0.0 ],
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 515.0, 483.0, 400.0, 220.0 ],
+					"patching_rect" : [ 515.0, 483.0, 279.5, 194.0 ],
 					"viewvisibility" : 1
 				}
 

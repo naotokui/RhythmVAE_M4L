@@ -13,6 +13,8 @@ const LOOP_DURATION = require('./constants.js').LOOP_DURATION;
 
 const ORIGINAL_DIM = require('./constants.js').ORIGINAL_DIM;
 const INTERMEDIATE_DIM = 512;
+const ENCODER_LSTM_DIM = 256;
+const DECODER_LSTM_DIM = 256;
 const LATENT_DIM = 2;
 
 const BATCH_SIZE = 64;
@@ -56,7 +58,7 @@ async function loadAndTrain(train_data_onset, train_data_velocity, train_data_ti
 function initModel(){
   model = new ConditionalVAE({
     modelConfig:{
-      originalDim: ORIGINAL_DIM,
+      inputDim: [LOOP_DURATION, NUM_DRUM_CLASSES],
       intermediateDim: INTERMEDIATE_DIM,
       latentDim: LATENT_DIM
     },
@@ -161,30 +163,22 @@ class ConditionalVAE {
     // build encoder model
 
     // Onset input
-    const encoderInputsOn = tf.input({shape: [originalDim]});
-    const x1LinearOn = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsOn);
-    const x1NormalisedOn = tf.layers.batchNormalization({axis: 1}).apply(x1LinearOn);
-    const x1On = tf.layers.leakyReLU().apply(x1NormalisedOn);
+    const encoderInputsOn = tf.input({shape: [LOOP_DURATION, NUM_DRUM_CLASSES]});
     
     // Velocity input
-    const encoderInputsVel = tf.input({shape: [originalDim]});
-    const x1LinearVel = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsVel);
-    const x1NormalisedVel = tf.layers.batchNormalization({axis: 1}).apply(x1LinearVel);
-    const x1Vel = tf.layers.leakyReLU().apply(x1NormalisedVel);
+    const encoderInputsVel = tf.input({shape: [LOOP_DURATION, NUM_DRUM_CLASSES]});
 
     // Timeshift input
-    const encoderInputsTS= tf.input({shape: [originalDim]});
-    const x1LinearTS = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsTS);
-    const x1NormalisedTS = tf.layers.batchNormalization({axis: 1}).apply(x1LinearTS);
-    const x1TS = tf.layers.leakyReLU().apply(x1NormalisedTS);
-
+    const encoderInputsTS= tf.input({shape: [LOOP_DURATION, NUM_DRUM_CLASSES]});
+    
     // Merged
     const concatLayer = tf.layers.concatenate();
-    const x1Merged = concatLayer.apply([x1On, x1Vel, x1TS]);
-    const x2Linear = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x1Merged);
-    const x2Normalised = tf.layers.batchNormalization({axis: 1}).apply(x2Linear);
-    const x2 = tf.layers.leakyReLU().apply(x2Normalised);
+    const x1 = concatLayer.apply([encoderInputsOn, encoderInputsVel, encoderInputsTS]); // (None, 32, 27) 
 
+    // Bidirectional LSTM
+    const x2 = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_DIM}), mergeMode: 'concat'}).apply(x1)
+
+    // VAE Z
     const zMean = tf.layers.dense({units: latentDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x2);
     const zLogVar = tf.layers.dense({units: latentDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x2);
     const z = new sampleLayer().apply([zMean, zLogVar]);
@@ -193,34 +187,27 @@ class ConditionalVAE {
     const encoderOutputs = [zMean, zLogVar, z];
 
     const encoder = tf.model({inputs: encoderInputs, outputs: encoderOutputs, name: "encoder"})
+    encoder.summary();
 
     // build decoder model
     const decoderInputs = tf.input({shape: [latentDim]});
-    const x3Linear = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(decoderInputs);
-    const x3Normalised = tf.layers.batchNormalization({axis: 1}).apply(x3Linear);
-    const x3 = tf.layers.leakyReLU().apply(x3Normalised);
 
-    // Decoder for onsets
-    const x4LinearOn = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
-    const x4NormalisedOn = tf.layers.batchNormalization({axis: 1}).apply(x4LinearOn);
-    const x4On = tf.layers.leakyReLU().apply(x4NormalisedOn);
-    const decoderOutputsOn = tf.layers.dense({units: originalDim, activation: 'sigmoid'}).apply(x4On);
+    const x3 = tf.layers.dense({units: LOOP_DURATION, useBias: true, kernelInitializer: 'glorotNormal'}).apply(decoderInputs);
+    const x4 = tf.layers.reshape({targetShape: [LOOP_DURATION, 1]}).apply(x3)
+    const x5 = tf.layers.lstm({units: ENCODER_LSTM_DIM, returnSequences: 'true'}).apply(x4)     
 
-    // Decoder for velocity
-    const x4LinearVel = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
-    const x4NormalisedVel = tf.layers.batchNormalization({axis: 1}).apply(x4LinearVel);
-    const x4Vel = tf.layers.leakyReLU().apply(x4NormalisedVel);
-    const decoderOutputsVel = tf.layers.dense({units: originalDim, activation: 'sigmoid'}).apply(x4Vel);
+    const decoderOutputsOn = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'softmax'}).apply(x5) // axis (number) Integer, axis along which the softmax normalization is applied. Defaults to -1 (i.e., the last axis).
+    const decoderOutputsVel = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'sigmoid'}).apply(x5) 
+    const decoderOutputsTS = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'tanh'}).apply(x5) 
 
-    // Decoder for timeshift
-    const x4LinearTS = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
-    const x4NormalisedTS = tf.layers.batchNormalization({axis: 1}).apply(x4LinearTS);
-    const x4TS = tf.layers.leakyReLU().apply(x4NormalisedTS);
-    const decoderOutputsTS = tf.layers.dense({units: originalDim, activation: 'sigmoid'}).apply(x4TS);
+    console.log(decoderOutputsTS.shape)
     const decoderOutputs = [decoderOutputsOn, decoderOutputsVel, decoderOutputsTS];
+
+    console.log(decoderOutputs.shape)
 
     // Decoder model
     const decoder = tf.model({inputs: decoderInputs, outputs: decoderOutputs, name: "decoder"})
+    decoder.summary();
 
     // build VAE model
     const vae = (inputs) => {
@@ -267,17 +254,24 @@ class ConditionalVAE {
       const [z_mean, z_log_var, y] = yPred;
       const [yOn, yVel, yTS] = y;
 
+      console.log("yOn", yOn.shape);
+
       const onset_loss = this.reconstructionLoss(yTrueOn, yOn);
+      console.log("onset_loss", onset_loss.shape);
       let velocity_loss = this.mseLoss(yTrueVel, yVel);
+      console.log("velocity_loss", velocity_loss.shape);
       velocity_loss = velocity_loss.mul(VEL_LOSS_COEF);
       let timeshift_loss = this.mseLoss(yTrueTS, yTS);
+      console.log("timeshift_loss", timeshift_loss.shape);
       timeshift_loss = timeshift_loss.mul(TS_LOSS_COEF);
 
       const kl_loss = this.klLoss(z_mean, z_log_var);
-      // console.log("onset_loss", tf.mean(onset_loss).dataSync());
-      // console.log("velocity_loss",  tf.mean(velocity_loss).dataSync());
-      // console.log("timeshift_loss",  tf.mean(timeshift_loss).dataSync());
-      // console.log("kl_loss",  tf.mean(kl_loss).dataSync());
+      console.log("kl_loss", kl_loss.shape);
+      
+      console.log("onset_loss", tf.mean(onset_loss).dataSync());
+      console.log("velocity_loss",  tf.mean(velocity_loss).dataSync());
+      console.log("timeshift_loss",  tf.mean(timeshift_loss).dataSync());
+      console.log("kl_loss",  tf.mean(kl_loss).dataSync());
       const total_loss = tf.mean(onset_loss.add(velocity_loss).add(timeshift_loss).add(kl_loss)); // averaged in the batch
       return total_loss;
     });
@@ -299,7 +293,7 @@ class ConditionalVAE {
     const optimizer = config.optimizer;
     const logMessage = console.log;
 
-    const originalDim = this.modelConfig.originalDim;
+    const inputDim = this.modelConfig.inputDim;
 
     Max.outlet("training", 1);
     for (let i = 0; i < epochs; i++) {
@@ -316,11 +310,14 @@ class ConditionalVAE {
 
       // Training 
       for (let j = 0; j < numBatch; j++) {
-        batchInputOn = dataHandlerOnset.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
-        batchInputVel = dataHandlerVelocity.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
-        batchInputTS = dataHandlerTimeshift.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
+        batchInputOn = dataHandlerOnset.nextTrainBatch(batchSize).xs.reshape([batchSize, inputDim[0], inputDim[1]]);
+        batchInputVel = dataHandlerVelocity.nextTrainBatch(batchSize).xs.reshape([batchSize, inputDim[0], inputDim[1]]);
+        batchInputTS = dataHandlerTimeshift.nextTrainBatch(batchSize).xs.reshape([batchSize, inputDim[0], inputDim[1]]);
+        console.log("here");
+
         trainLoss = await optimizer.minimize(() => this.vaeLoss([batchInputOn, batchInputVel, batchInputTS],
            this.apply([batchInputOn, batchInputVel, batchInputTS])), true);
+
         trainLoss = Number(trainLoss.dataSync());
         epochLoss = epochLoss + trainLoss;
 
@@ -331,9 +328,9 @@ class ConditionalVAE {
       Max.outlet("loss", epochLoss);
 
       // Validation 
-      testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
-      testBatchInputVel = dataHandlerVelocity.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
-      testBatchInputTS = dataHandlerTimeshift.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
+      testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, inputDim[0], inputDim[1]]);
+      testBatchInputVel = dataHandlerVelocity.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, inputDim[0], inputDim[1]]);
+      testBatchInputTS = dataHandlerTimeshift.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, inputDim[0], inputDim[1]]);
       valLoss = this.vaeLoss([testBatchInputOn, testBatchInputVel, testBatchInputTS], 
                                 this.apply([testBatchInputOn, testBatchInputVel, testBatchInputTS]));
       valLoss = Number(valLoss.dataSync());

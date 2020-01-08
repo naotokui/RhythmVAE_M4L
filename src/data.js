@@ -7,7 +7,10 @@ const NUM_CLASSES = 10;
 
 const TRAIN_TEST_RATIO = 5 / 6;
 
+// Constants
 const ORIGINAL_DIM = require('./constants.js').ORIGINAL_DIM;
+const NUM_DRUM_CLASSES = require('./constants.js').NUM_DRUM_CLASSES;
+const LOOP_DURATION = require('./constants.js').LOOP_DURATION;
 
 class DataHandler {
   constructor(shuffled_data, trainIndices, testIndices) {
@@ -52,10 +55,11 @@ class DataHandler {
     const batchArray = [];
     for (let i = 0; i < batchSize; i++) {
       const idx = index();
-      batchArray.push(data[idx].reshape([1, ORIGINAL_DIM]));
+      batchArray.push(data[idx].transpose().reshape([1, LOOP_DURATION, NUM_DRUM_CLASSES]));
     }
     const axis = 0;
     const xs = tf.concat(batchArray, axis);
+    console.log(xs.shape);
     return {xs};
   }
 }
