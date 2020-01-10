@@ -216,7 +216,7 @@ class ConditionalVAE {
     const x4LinearTS = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
     const x4NormalisedTS = tf.layers.batchNormalization({axis: 1}).apply(x4LinearTS);
     const x4TS = tf.layers.leakyReLU().apply(x4NormalisedTS);
-    const decoderOutputsTS = tf.layers.dense({units: originalDim, activation: 'sigmoid'}).apply(x4TS);
+    const decoderOutputsTS = tf.layers.dense({units: originalDim, activation: 'tanh'}).apply(x4TS);
     const decoderOutputs = [decoderOutputsOn, decoderOutputsVel, decoderOutputsTS];
 
     // Decoder model
