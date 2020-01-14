@@ -31,3 +31,20 @@ You need to update your Node for Max package to the latest version (version 1.2.
 - 2019.10.18 added: note on the requirement
 - 2019.9.14 added: functionality to save/load trained model 
 
+## Start edits
+
+This project depends some npm packages. So first, you need to install there.
+
+
+1. To open _M4L.MelodyVAE -> M4L.MelodyVAE.maxproj_
+2. Also to open _melodyvae.maxpat_ from project window and disable Presentation Mode
+    ![Disable presentation mode on melodyvae.maxpat](./images/00_disable_presentation.png)
+3. when click `scirpt npm install`, start install packages to _./node_modules_
+    ![Start to Install dependencies](./images/01_click_npm_install.png)
+4. When success to install, node debug tool shows like below
+    ![Status pattern changes blue to green](./images/02_Installing_status.png)
+5. Click `script start` to check script running, debug tool shows like below 
+    ![Check script running](./images/03_scirpt_checking.png)
+6. Click `script stop` well done.
+
+This process may fix export error or script error.
