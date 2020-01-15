@@ -18,6 +18,9 @@ const vae = require('./src/vae.js');
 // This will be printed directly to the Max console
 Max.post(`Loaded the ${path.basename(__filename)} script`);
 
+//outlet stored this message when this script loaded
+Max.outlet("loaded");
+
 // Global varibles
 var train_data_onsets = [];
 var train_data_velocities = []; 
