@@ -10,7 +10,8 @@ If you want to quickly test the device, please use the one in `/release` directo
 ![VAE Rhythm Generator in M4L(Max for Live) Device](./images/ui_memo.png)
 
 ## Requirement
-- You need to update your Node for Max package to the latest version (version 1.2.3 or later) through Package Manager, or use the latest version of Max (8.1.0 or later)
+- **Ableton Live Suite for Mac 10.1.2** or later 
+- Or if you really need to use a previous version of Ableton Live Suite 10.x,  you have to update your Node for Max package to the latest version (version 1.2.3 or later) through Package Manager, or use the latest version of Max (8.1.0 or later)
 - **Currently the device supports Mac OS only.**  
 
 
