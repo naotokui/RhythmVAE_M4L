@@ -17,7 +17,7 @@ const ENCODER_LSTM_DIM = 256;
 const DECODER_LSTM_DIM = 256;
 const LATENT_DIM = 2;
 
-const BATCH_SIZE = 64;
+const BATCH_SIZE = 8;
 const TEST_BATCH_SIZE = 128;
 const TS_LOSS_COEF = 5.0;  // coef for timeshift loss
 const VEL_LOSS_COEF = 2.5;  // coef for velocity loss
@@ -31,7 +31,14 @@ let numEpochs = 150; // default # of epochs
 
 async function loadAndTrain(train_data_onset, train_data_velocity, train_data_timeshift) {
   console.assert(train_data_onset.length == train_data_velocity.length && train_data_velocity.length == train_data_timeshift.length);
-  
+  // await createDataHandlers(train_data_onset, train_data_velocity, train_data_timeshift);  
+
+  // start training!
+  initModel(); // initializing model class
+  // await startTraining(); // start the actual training process with the given training data
+}
+
+async function createDataHandlers(train_data_onset, train_data_velocity, train_data_timeshift){
   // shuffle in sync
   const total_num = train_data_onset.length;
   shuffled_indices = tf.util.createShuffledIndices(total_num);
@@ -49,13 +56,9 @@ async function loadAndTrain(train_data_onset, train_data_velocity, train_data_ti
   dataHandlerOnset = new data.DataHandler(train_data_onset, train_indices, test_indices); // data utility fo onset
   dataHandlerVelocity = new data.DataHandler(train_data_velocity, train_indices, test_indices); // data utility for velocity
   dataHandlerTimeshift = new data.DataHandler(train_data_timeshift, train_indices, test_indices); // data utility for duration
-
-  // start training!
-  initModel(); // initializing model class
-  startTraining(); // start the actual training process with the given training data
 }
 
-function initModel(){
+async function initModel(){
   model = new ConditionalVAE({
     modelConfig:{
       inputDim: [LOOP_DURATION, NUM_DRUM_CLASSES],
@@ -69,6 +72,8 @@ function initModel(){
       optimizer: tf.train.adam()
     }
   });
+
+  buildModel(model);
 }
 
 async function startTraining(){
@@ -140,12 +145,15 @@ class sampleLayer extends tf.layers.Layer {
   }
 }
 
+async function buildModel(model){
+  [model.encoder, model.decoder, model.apply] = model.build(model.modelConfig);
   
+}  
+
 class ConditionalVAE {
   constructor(config) {
     this.modelConfig = config.modelConfig;
     this.trainConfig = config.trainConfig;
-    [this.encoder, this.decoder, this.apply] = this.build();
     this.isTrained = false;
   }
 
@@ -200,10 +208,7 @@ class ConditionalVAE {
     const decoderOutputsVel = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'sigmoid'}).apply(x5) 
     const decoderOutputsTS = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'tanh'}).apply(x5) 
 
-    console.log(decoderOutputsTS.shape)
     const decoderOutputs = [decoderOutputsOn, decoderOutputsVel, decoderOutputsTS];
-
-    console.log(decoderOutputs.shape)
 
     // Decoder model
     const decoder = tf.model({inputs: decoderInputs, outputs: decoderOutputs, name: "decoder"})
@@ -226,6 +231,7 @@ class ConditionalVAE {
       let reconstruction_loss;
       reconstruction_loss = tf.metrics.binaryCrossentropy(yTrue, yPred);
       reconstruction_loss = reconstruction_loss.mul(tf.scalar(yPred.shape[1]));
+      reconstruction_loss = tf.mean(reconstruction_loss, -1);
       return reconstruction_loss;
     });
   }
@@ -234,6 +240,7 @@ class ConditionalVAE {
     return tf.tidy(() => {
       let mse_loss = tf.metrics.meanSquaredError(yTrue, yPred);
       mse_loss = mse_loss.mul(tf.scalar(yPred.shape[1]));
+      mse_loss = tf.mean(mse_loss, -1);
       return mse_loss;
     });
   }
@@ -254,24 +261,23 @@ class ConditionalVAE {
       const [z_mean, z_log_var, y] = yPred;
       const [yOn, yVel, yTS] = y;
 
-      console.log("yOn", yOn.shape);
-
       const onset_loss = this.reconstructionLoss(yTrueOn, yOn);
-      console.log("onset_loss", onset_loss.shape);
       let velocity_loss = this.mseLoss(yTrueVel, yVel);
-      console.log("velocity_loss", velocity_loss.shape);
       velocity_loss = velocity_loss.mul(VEL_LOSS_COEF);
       let timeshift_loss = this.mseLoss(yTrueTS, yTS);
-      console.log("timeshift_loss", timeshift_loss.shape);
       timeshift_loss = timeshift_loss.mul(TS_LOSS_COEF);
 
       const kl_loss = this.klLoss(z_mean, z_log_var);
-      console.log("kl_loss", kl_loss.shape);
+
+      // console.log("onset_loss", onset_loss.shape);
+      // console.log("velocity_loss", velocity_loss.shape);
+      // console.log("timeshift_loss", timeshift_loss.shape);
+      // console.log("kl_loss", kl_loss.shape);
       
-      console.log("onset_loss", tf.mean(onset_loss).dataSync());
-      console.log("velocity_loss",  tf.mean(velocity_loss).dataSync());
-      console.log("timeshift_loss",  tf.mean(timeshift_loss).dataSync());
-      console.log("kl_loss",  tf.mean(kl_loss).dataSync());
+      // console.log("onset_loss", tf.mean(onset_loss).dataSync());
+      // console.log("velocity_loss",  tf.mean(velocity_loss).dataSync());
+      // console.log("timeshift_loss",  tf.mean(timeshift_loss).dataSync());
+      // console.log("kl_loss",  tf.mean(kl_loss).dataSync());
       const total_loss = tf.mean(onset_loss.add(velocity_loss).add(timeshift_loss).add(kl_loss)); // averaged in the batch
       return total_loss;
     });
@@ -313,32 +319,33 @@ class ConditionalVAE {
         batchInputOn = dataHandlerOnset.nextTrainBatch(batchSize).xs.reshape([batchSize, inputDim[0], inputDim[1]]);
         batchInputVel = dataHandlerVelocity.nextTrainBatch(batchSize).xs.reshape([batchSize, inputDim[0], inputDim[1]]);
         batchInputTS = dataHandlerTimeshift.nextTrainBatch(batchSize).xs.reshape([batchSize, inputDim[0], inputDim[1]]);
-        console.log("here");
-
+      
         trainLoss = await optimizer.minimize(() => this.vaeLoss([batchInputOn, batchInputVel, batchInputTS],
            this.apply([batchInputOn, batchInputVel, batchInputTS])), true);
 
+        console.log(trainLoss);
         trainLoss = Number(trainLoss.dataSync());
         epochLoss = epochLoss + trainLoss;
 
         await tf.nextFrame();
       }
+      
       epochLoss = epochLoss / numBatch; // average
       logMessage(`\t[Average] Training Loss: ${epochLoss.toFixed(3)}. Epoch ${i} / ${epochs} \n`);
       Max.outlet("loss", epochLoss);
 
       // Validation 
-      testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, inputDim[0], inputDim[1]]);
-      testBatchInputVel = dataHandlerVelocity.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, inputDim[0], inputDim[1]]);
-      testBatchInputTS = dataHandlerTimeshift.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, inputDim[0], inputDim[1]]);
-      valLoss = this.vaeLoss([testBatchInputOn, testBatchInputVel, testBatchInputTS], 
-                                this.apply([testBatchInputOn, testBatchInputVel, testBatchInputTS]));
-      valLoss = Number(valLoss.dataSync());
+      // testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, inputDim[0], inputDim[1]]);
+      // testBatchInputVel = dataHandlerVelocity.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, inputDim[0], inputDim[1]]);
+      // testBatchInputTS = dataHandlerTimeshift.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, inputDim[0], inputDim[1]]);
+      // valLoss = this.vaeLoss([testBatchInputOn, testBatchInputVel, testBatchInputTS], 
+      //                           this.apply([testBatchInputOn, testBatchInputVel, testBatchInputTS]));
+      // valLoss = Number(valLoss.dataSync());
 
-      logMessage(`\tVal Loss: ${valLoss.toFixed(3)}. Epoch ${i} / ${epochs}\n`);
-      Max.outlet("val_loss", valLoss);
+      // logMessage(`\tVal Loss: ${valLoss.toFixed(3)}. Epoch ${i} / ${epochs}\n`);
+      // Max.outlet("val_loss", valLoss);
 
-      await tf.nextFrame();
+      //  await tf.nextFrame();
     }
     this.isTrained = true;
     this.isTraining = false;
