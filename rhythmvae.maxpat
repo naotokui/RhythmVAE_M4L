@@ -75,7 +75,7 @@
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 1,
 							"parameter_longname" : "noise range",
-							"parameter_mmax" : 0.5
+							"parameter_mmax" : 2.0
 						}
 
 					}
@@ -1124,6 +1124,7 @@
 					"id" : "obj-1",
 					"loopruler" : 0,
 					"maxclass" : "live.step",
+					"mode" : 4,
 					"nseq" : 9,
 					"numinlets" : 1,
 					"numoutlets" : 5,
@@ -7751,7 +7752,6 @@
 					"patching_rect" : [ 291.25, 557.0, 164.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 6.0, 141.868613138686129, 142.0, 18.0 ],
-					"text" : "Start training...",
 					"textcolor" : [ 0.999999284744263, 0.999974429607391, 0.999991297721863, 1.0 ],
 					"textjustification" : 1
 				}
@@ -7906,7 +7906,7 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "float" ],
-									"patching_rect" : [ 126.0, 105.0, 39.0, 22.0 ],
+									"patching_rect" : [ 126.0, 109.0, 39.0, 22.0 ],
 									"text" : "/ 100."
 								}
 
@@ -7918,7 +7918,7 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "float" ],
-									"patching_rect" : [ 50.0, 61.0, 39.0, 22.0 ],
+									"patching_rect" : [ 50.0, 113.0, 39.0, 22.0 ],
 									"text" : "/ 100."
 								}
 
@@ -8021,7 +8021,7 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-2", 0 ],
-									"midpoints" : [ 352.5, 132.5, 59.5, 132.5 ],
+									"midpoints" : [ 352.5, 152.5, 59.5, 152.5 ],
 									"source" : [ "obj-4", 0 ]
 								}
 
