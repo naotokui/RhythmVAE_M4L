@@ -195,7 +195,7 @@ async function generatePattern(z1, z2, threshold, noise_range){
       if (isGenerating) return;
   
       isGenerating = true;
-      let [onsets, velocities, timeshifts] = vae.generatePattern(z1, z2);
+      let [onsets, velocities, timeshifts] = vae.generatePattern(z1, z2, noise_range);
       Max.outlet("matrix_clear", 1); // clear all
       for (var i=0; i< NUM_DRUM_CLASSES; i++){
           var sequence = []; // for velocity
