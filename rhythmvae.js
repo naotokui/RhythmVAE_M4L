@@ -10,6 +10,7 @@ const MIDI_DRUM_MAP = require('./src/constants.js').MIDI_DRUM_MAP;
 const DRUM_CLASSES = require('./src/constants.js').DRUM_CLASSES;
 const NUM_DRUM_CLASSES = require('.//src/constants.js').NUM_DRUM_CLASSES;
 const LOOP_DURATION = require('.//src/constants.js').LOOP_DURATION;
+const MIN_ONSETS_THRESHOLD = require('./src/constants.js').MIN_ONSETS_THRESHOLD;
 
 // VAE model and Utilities
 const utils = require('./src/utils.js');
@@ -48,6 +49,16 @@ function getNoteIndexAndTimeshift(note, tempo){
     return [index, timeshift];
 }
 
+function getNumOfDrumOnsets(onsets){
+    var count = 0;
+    for (var i = 0; i < NUM_DRUM_CLASSES; i++){
+        for (var j=0; j < LOOP_DURATION; j++){
+            if (onsets[i][j] > 0) count += 1;
+        }
+    }
+    return count;
+}
+
 // Convert midi into pianoroll matrix
 function processPianoroll(midiFile){
     const tempo = getTempo(midiFile);
@@ -68,7 +79,7 @@ function processPianoroll(midiFile){
                 let timeshift = timing[1];
                 
                 // add new array
-                if (Math.floor(index / LOOP_DURATION) >= onsets.length){
+                while (Math.floor(index / LOOP_DURATION) >= onsets.length){
                     onsets.push(utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION));
                     velocities.push(utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION));
                     timeshifts.push(utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION));
@@ -103,9 +114,11 @@ function processPianoroll(midiFile){
     
     // 2D array to tf.tensor2d
     for (var i=0; i < onsets.length; i++){
-        train_data_onsets.push(tf.tensor2d(onsets[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
-        train_data_velocities.push(tf.tensor2d(velocities[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
-        train_data_timeshifts.push(tf.tensor2d(timeshifts[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+        if (getNumOfDrumOnsets(onsets[i]) > MIN_ONSETS_THRESHOLD){
+            train_data_onsets.push(tf.tensor2d(onsets[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+            train_data_velocities.push(tf.tensor2d(velocities[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+            train_data_timeshifts.push(tf.tensor2d(timeshifts[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+        }
     }
 }
 
