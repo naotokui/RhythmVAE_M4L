@@ -79,6 +79,8 @@ const MIDI_DRUM_MAP = {
 const NUM_DRUM_CLASSES = DRUM_CLASSES.length;
 const LOOP_DURATION = 32; // 2bars x 16th note
 
+const MIN_ONSETS_THRESHOLD = 5; // ignore loops with onsets less than this num
+
 const ORIGINAL_DIM = NUM_DRUM_CLASSES * LOOP_DURATION;
 
 exports.MIDI_DRUM_MAP = MIDI_DRUM_MAP;
@@ -87,3 +89,4 @@ exports.DRUM_CLASSES = DRUM_CLASSES;
 exports.NUM_DRUM_CLASSES = NUM_DRUM_CLASSES;
 exports.LOOP_DURATION = LOOP_DURATION;
 exports.ORIGINAL_DIM = ORIGINAL_DIM;
+exports.MIN_ONSETS_THRESHOLD = MIN_ONSETS_THRESHOLD;

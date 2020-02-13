@@ -91,12 +91,18 @@ function setEpochs(e){
   Max.outlet("epoch", 0, numEpochs);
 }
 
-function generatePattern(z1, z2){
+function generatePattern(z1, z2, noise_range=0.0){
   var zs;
   if (z1 === 'undefined' || z2 === 'undefined'){
     zs = tf.randomNormal([1, 2]);
   } else {
     zs = tf.tensor2d([[z1, z2]]);
+  }
+
+  // noise
+  if (noise_range > 0.0){
+    var noise = tf.randomNormal([1, 2]);
+    zs = zs.add(noise.mul(tf.scalar(noise_range)));
   }
   return model.generate(zs);
 }
