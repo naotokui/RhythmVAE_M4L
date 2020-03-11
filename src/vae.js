@@ -31,11 +31,11 @@ let numEpochs = 150; // default # of epochs
 
 async function loadAndTrain(train_data_onset, train_data_velocity, train_data_timeshift) {
   console.assert(train_data_onset.length == train_data_velocity.length && train_data_velocity.length == train_data_timeshift.length);
-  // await createDataHandlers(train_data_onset, train_data_velocity, train_data_timeshift);  
+  await createDataHandlers(train_data_onset, train_data_velocity, train_data_timeshift);  
 
   // start training!
   initModel(); // initializing model class
-  // await startTraining(); // start the actual training process with the given training data
+  await startTraining(); // start the actual training process with the given training data
 }
 
 async function createDataHandlers(train_data_onset, train_data_velocity, train_data_timeshift){
@@ -74,9 +74,11 @@ async function initModel(){
   });
 
   buildModel(model);
+  console.log("model initted");
 }
 
 async function startTraining(){
+  console.log("start training");
   await model.train();
 }
 

@@ -59,6 +59,7 @@ class DataHandler {
     }
     const axis = 0;
     const xs = tf.concat(batchArray, axis);
+    console.log(xs.shape);
     return {xs};
   }
 }
