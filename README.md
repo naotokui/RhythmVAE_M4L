@@ -17,19 +17,16 @@ If you want to quickly test the device, please use the one in `/release` directo
 ![VAE Rhythm Generator in M4L(Max for Live) Device](./images/ui_memo.png)
 
 ## Requirement
-- **Ableton Live Suite for Mac 10.1.2** or later 
-- Or if you really need to use a previous version of Ableton Live Suite 10.x,  you have to update your Node for Max package to the latest version (version 1.2.3 or later) through Package Manager, or use the latest version of Max (8.1.0 or later)
-- **Currently the device supports Mac OS only.**  
-
+- On Mac: **Ableton Live Suite for Mac 10.1.2** or later
+- On Windows: Ableton Live Suite for Windows 10.1.2 **and Standalone Max 8.1.2 or later**  
+On windows, you need to set the path of external standalone Max installation on the preference panel of Ableton Live. The device is not compatible with the internal Max runtime.
 
 ## Known problems
-~~- When you keep generating rhythms continuiously, Node for Max crashes with "Max API Timeout" error in some occasions and you'll see "Model is not trained yet" error message.~~
 - Incompatible with folders with names containing special characters such as `[]?*!|@`
 - Changes you make on the sequence grid view are not reflected the rhythm sequence. It is just a display! 
 
 
 ## TO DO
-- *Windows Version!!* 
 - ~~Fix "Max API Timeout" error~~
 - ~~save/load functionaly for trained models~~
 - better documentation
@@ -39,6 +36,7 @@ If you want to quickly test the device, please use the one in `/release` directo
 
 
 ## Updates
+- 2019.3.11 added| Windows version! 
 - 2019.12.27 fxied| onset/velocity/offset training data used be shuffled independently. it makes no sense! 
 - 2019.11.10 added| Time shift parameter / MIDI Mapping
 - 2019.10.19 fixed| beat sync issue
