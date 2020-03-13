@@ -19,7 +19,10 @@ If you want to quickly test the device, please use the one in `/release` directo
 ## Requirement
 - On Mac: **Ableton Live Suite for Mac 10.1.2** or later
 - On Windows: Ableton Live Suite for Windows 10.1.2 **and Standalone Max 8.1.2 or later**  
-On windows, you need to set the path of external standalone Max installation on the preference panel of Ableton Live. The device is not compatible with the internal Max runtime.
+On Windows, you need to set the path of external standalone Max installation on the preference panel of Ableton Live. The device is not compatible with the internal Max runtime.
+
+## Installation
+- When you open the Max patch first time, you need to press `script npm install` to install Node.js packages. 
 
 ## Known problems
 - Incompatible with folders with names containing special characters such as `[]?*!|@`
@@ -27,11 +30,8 @@ On windows, you need to set the path of external standalone Max installation on 
 
 
 ## TO DO
-- ~~Fix "Max API Timeout" error~~
-- ~~save/load functionaly for trained models~~
 - better documentation
 - better UI design!!
-- ~~custom MIDI note number settings~~
 - add a feature to add random noise to `z` 
 
 
