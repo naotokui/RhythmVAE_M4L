@@ -265,3 +265,5 @@ Max.addHandler("epochs", (e)=>{
 function reportNumberOfBars(){
     Max.outlet("train_bars", train_data_onsets.length * 2);  // number of bars for training
 }
+
+Max.outlet("loaded");
