@@ -207,7 +207,7 @@ async function generatePattern(z1, z2, threshold, noise_range){
                 Max.outlet("matrix_output", j + 1, i + 1, 1); // index for live.grid starts from 1
            
                 // for live.step
-                sequence.push(Math.floor(velocities[i][j]*127.)); // 0-1 -> 0-127
+                sequence.push(Math.floor(velocities[i][j]*127. + 1)); // 0-1 -> 1-127
                 sequenceTS.push(Math.floor(utils.scale(timeshifts[i][j], -1., 1, 0, 127))); // -1 - 1 -> 0 - 127
               } else {
                 sequence.push(0);
