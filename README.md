@@ -22,7 +22,14 @@ If you want to quickly test the device, please use the one in `/release` directo
 On Windows, you need to set the path of external standalone Max installation on the preference panel of Ableton Live. The device is not compatible with the internal Max runtime.
 
 ## Installation
-- When you open the Max patch first time, you need to press `script npm install` to install Node.js packages. 
+
+If you want to edit Max patches and export the device by yourself:
+
+- Open `M4L.RhythmVAE/M4L.RhythmVAE.maxproj`, then open `rhythmvae.maxpat` from the project.
+- When you open `rhythmvae.maxpat` for the first time, you need to press `script npm install` to install Node.js packages. 
+- Every time you export the device, you have to set `Max for Live Device Type` to `MIDI` on Project Inspector (Apparently this is a bug of Max/MSP.)
+
+
 
 ## Known problems
 - Incompatible with folders with names containing special characters such as `[]?*!|@`
