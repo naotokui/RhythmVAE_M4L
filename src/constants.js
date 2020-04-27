@@ -76,6 +76,28 @@ const MIDI_DRUM_MAP = {
   82: 8
 }
 
+const MIDI_DRUM_MAP_STRICT = {
+  36: 0, // Acoustic Bass Drum
+  35: 0, // Bass drum
+  38: 1, // Acoustic Snare
+  40: 1, // Electric Snare
+  42: 2, // closed hihat
+  44: 3, // pedal hihat
+  46: 3, // open hihat
+  41: 4, // low floor tom
+  45: 4, // low tom
+  47: 5, // low-mid tom
+  48: 5, // high-mid tom
+  43: 6, // high floor tom
+  50: 6, // high tom
+  39: 7, // hand clap
+  51: 8, // Ride Symbal 1
+  52: 8, // Chinese Symbal
+  53: 8, // Ride Bell
+  59: 8, // Ride Symbal 2
+}
+
+
 const NUM_DRUM_CLASSES = DRUM_CLASSES.length;
 const LOOP_DURATION = 32; // 2bars x 16th note
 
@@ -84,6 +106,7 @@ const MIN_ONSETS_THRESHOLD = 5; // ignore loops with onsets less than this num
 const ORIGINAL_DIM = NUM_DRUM_CLASSES * LOOP_DURATION;
 
 exports.MIDI_DRUM_MAP = MIDI_DRUM_MAP;
+exports.MIDI_DRUM_MAP_STRICT = MIDI_DRUM_MAP_STRICT;
 exports.DRUM_CLASSES = DRUM_CLASSES;
 
 exports.NUM_DRUM_CLASSES = NUM_DRUM_CLASSES;

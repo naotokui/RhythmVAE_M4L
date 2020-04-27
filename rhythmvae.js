@@ -7,6 +7,7 @@ const { Midi } = require('@tonejs/midi'); // https://github.com/Tonejs/Midi
 
 // Constants 
 const MIDI_DRUM_MAP = require('./src/constants.js').MIDI_DRUM_MAP;
+const MIDI_DRUM_MAP_STRICT = require('./src/constants.js').MIDI_DRUM_MAP_STRICT;
 const DRUM_CLASSES = require('./src/constants.js').DRUM_CLASSES;
 const NUM_DRUM_CLASSES = require('.//src/constants.js').NUM_DRUM_CLASSES;
 const LOOP_DURATION = require('.//src/constants.js').LOOP_DURATION;
@@ -60,7 +61,7 @@ function getNumOfDrumOnsets(onsets){
 }
 
 // Convert midi into pianoroll matrix
-function processPianoroll(midiFile){
+function processPianoroll(midiFile, midi_map){
     const tempo = getTempo(midiFile);
 
     // data array
@@ -73,7 +74,7 @@ function processPianoroll(midiFile){
         //notes are an array
         const notes = track.notes
         notes.forEach(note => {
-            if ((note.midi in MIDI_DRUM_MAP)){
+            if ((note.midi in midi_map)){
                 let timing = getNoteIndexAndTimeshift(note, tempo);
                 let index = timing[0];
                 let timeshift = timing[1];
@@ -86,7 +87,7 @@ function processPianoroll(midiFile){
                 }
 
                 // store velocity
-                let drum_id = MIDI_DRUM_MAP[note.midi];
+                let drum_id = midi_map[note.midi];
 
                 let matrix = onsets[Math.floor(index / LOOP_DURATION)];
                 matrix[drum_id][index % LOOP_DURATION] = 1;    // 1 for onsets
@@ -122,7 +123,7 @@ function processPianoroll(midiFile){
     }
 }
 
-function processMidiFile(filename){
+function processMidiFile(filename, mapping = 0){
     // // Read MIDI file into a buffer
     var input = fs.readFileSync(filename)
 
@@ -135,24 +136,29 @@ function processMidiFile(filename){
     var tempo = getTempo(midiFile);
     // console.log("tempo:", tempo);
     // console.log("signature:", midiFile.header.timeSignatures);
-    processPianoroll(midiFile);
+
+    // select mapping
+    if (mapping == 0) midi_map = MIDI_DRUM_MAP_STRICT; 
+    else midi_map = MIDI_DRUM_MAP;
+
+    processPianoroll(midiFile, midi_map);
     // console.log("processed:", filename);
     return true;
 }
 
 // Add training data
-Max.addHandler("midi", (filename) =>  {
+Max.addHandler("midi", (filename, mapping) =>  {
     var count = 0;
     // is directory? 
     if (fs.existsSync(filename) && fs.lstatSync(filename).isDirectory()){
-        // iterate over *.mid or *.midi files 
-        glob(filename + '**/*.+(mid|midi)', {}, (err, files)=>{
+        // iterate over *.mid or *.midi files
+        glob(filename + '**/*.@(mid|midi)', {}, (err, files)=>{
             utils.post("# of files in dir: " + files.length); 
             if (err) utils.error(err); 
             else {
                 for (var idx in files){   
                     try {
-                        if (processMidiFile(files[idx])) count += 1;
+                        if (processMidiFile(files[idx], mapping)) count += 1;
                     } catch(error) {
                         console.error("failed to process " + files[idx] + " - " + error);
                       }
@@ -162,7 +168,7 @@ Max.addHandler("midi", (filename) =>  {
             }
         })
     } else {
-        if (processMidiFile(filename)) count += 1;
+        if (processMidiFile(filename, mapping)) count += 1;
         Max.post("# of midi files added: " + count);    
         reportNumberOfBars();
     }

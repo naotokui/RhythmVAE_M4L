@@ -71,7 +71,33 @@ This devices considers the following 9 drum types:
   |Clap|
   |Rim|
 
-MIDI notes in a MIDI file will be classified into the 9 types based on [General MIDI (GM) Mapping](https://www.midi.org/specifications-old/item/gm-level-1-sound-set).
+MIDI notes in a MIDI file will be classified into the 9 Drum Types based on [General MIDI (GM) Mapping](https://www.midi.org/specifications-old/item/gm-level-1-sound-set). We have two MIDI Mapping modes and you can select one of these mappings on the device:
+
+*Strict*
+
+ | MIDI Note Number | Drum Type | GM Type | 
+ |:-----:|:-----:|:-----:|
+ | 36  |  Kick  | Acoustic Bass Drum
+ | 35  |  Kick  | Bass Drum
+ | 38  |  Snare  | Acoustic Snare
+ | 40  |  Snare  | Electric Snare
+ | 42  |  Hi-hat closed  | Closed Hihat
+ | 44  |  Hi-hat open  | Pedal Hihat
+ | 46  |  Hi-hat open  | Open Hihat
+ | 41  |  Tom low  | Low floor Tom
+ | 45  |  Tom low  | Low Tom
+ | 47  |  Tom mid  | Low-mid Tom
+ | 48  |  Tom mid  | High-mid Tom
+ | 43  |  Tom high  | High Floor Tom
+ | 50  |  Tom high  | High Tom
+ | 39  |  Clap  | hand clap
+ | 51  |  Rim  | Ride Symbal 1
+ | 52  |  Rim  | Chinese Symbal
+ | 53  |  Rim  | Ride Bell
+ | 59  |  Rim  | Ride Symbal 2
+
+
+*Greedy*
 
  | MIDI Note Number | Drum Type | 
  |:-----:|:-----:|
@@ -136,3 +162,5 @@ MIDI notes in a MIDI file will be classified into the 9 types based on [General 
  | 53| Rim |  
  | 59| Rim | 
  | 82| Rim |  
+
+  (If you find these mappings are unnatual, please let me know. I'm not a drummer!) 
