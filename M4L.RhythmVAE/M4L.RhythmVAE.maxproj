@@ -1,49 +1,24 @@
 {
 	"name" : "M4L.RhythmVAE",
 	"version" : 1,
-	"creationdate" : 3650640218,
-	"modificationdate" : 3670835771,
-	"viewrect" : [ 24.0, 229.0, 300.0, 500.0 ],
+	"creationdate" : 3672837233,
+	"modificationdate" : 3672837328,
+	"viewrect" : [ 25.0, 104.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
 	"showdependencies" : 1,
 	"autolocalize" : 0,
 	"contents" : 	{
 		"patchers" : 		{
-			"count_for_me.maxpat" : 			{
-				"kind" : "patcher",
-				"local" : 1,
-				"singleton" : 				{
-					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
-					"projectrelativepath" : "../subpatches"
-				}
-
-			}
-,
 			"rhythmvae.maxpat" : 			{
 				"kind" : "patcher",
 				"local" : 1,
 				"toplevel" : 1,
 				"singleton" : 				{
 					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L",
-					"projectrelativepath" : ".."
+					"projectrelativepath" : "../.."
 				}
 
-			}
-,
-			"makenote_for_me.maxpat" : 			{
-				"kind" : "patcher",
-				"local" : 1
-			}
-,
-			"setup_1_16.maxpat" : 			{
-				"kind" : "patcher",
-				"local" : 1
-			}
-,
-			"shuffle_metro.maxpat" : 			{
-				"kind" : "patcher",
-				"local" : 1
 			}
 
 		}
@@ -60,18 +35,18 @@
 ,
 	"searchpath" : 	{
 		"0" : 		{
-			"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/src",
-			"projectrelativepath" : "../src",
-			"label" : "JS code",
+			"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules",
+			"projectrelativepath" : "../../node_modules",
+			"label" : "node_modules",
 			"recursive" : 1,
 			"enabled" : 1,
 			"includeincollective" : 1
 		}
 ,
 		"1" : 		{
-			"bootpath" : "/",
-			"projectrelativepath" : "../../../../../..",
-			"label" : "node modeuls",
+			"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/src",
+			"projectrelativepath" : "../../src",
+			"label" : "src",
 			"recursive" : 1,
 			"enabled" : 1,
 			"includeincollective" : 1
@@ -79,8 +54,8 @@
 ,
 		"2" : 		{
 			"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
-			"projectrelativepath" : "../subpatches",
-			"label" : "",
+			"projectrelativepath" : "../../subpatches",
+			"label" : "subpatch",
 			"recursive" : 1,
 			"enabled" : 1,
 			"includeincollective" : 1
