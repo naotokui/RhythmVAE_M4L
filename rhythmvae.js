@@ -60,6 +60,8 @@ function getNumOfDrumOnsets(onsets){
     return count;
 }
 
+
+
 // Convert midi into pianoroll matrix
 function processPianoroll(midiFile, midi_map){
     const tempo = getTempo(midiFile);
@@ -232,6 +234,45 @@ async function generatePattern(z1, z2, threshold, noise_range){
       utils.error_status("Model is not trained yet");
   }
 }
+
+
+
+// Start encoding... reset input matrix
+var input_onset, input_velocity, input_timeshift;
+Max.addHandler("encode_start", () =>  {
+    input_onset = utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION);
+    input_velocity = utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION);
+    input_timeshift = utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION);
+});
+
+Max.addHandler("encode_add", (mapping, pitch, time, duration, velocity, muted) =>  {
+
+    // select mapping
+    if (mapping == 0) midi_map = MIDI_DRUM_MAP_STRICT; 
+    else midi_map = MIDI_DRUM_MAP;
+
+    // add note
+    if (!muted){
+        var unit = 1.0/16.0; // grid size = 16th note
+        const half_unit = unit * 0.5;
+        const index = Math.max(0, Math.floor((time + half_unit) / unit)) // centering 
+        const timeshift = (time - unit * index)/half_unit; // normalized
+
+        // Ignore notes after the first 2 bars
+        if (index < LOOP_DURATION && pitch in midi_map){
+            let drum_id = midi_map[pitch];
+            input_onset[drum_id][index]     = 1;
+            input_velocity[drum_id][index]  = velocity/127.;
+            input_onset[drum_id][index]     = timeshift;
+        }
+    }
+});
+
+Max.addHandler("encode_done", () =>  {
+    console.log(input_onset);
+    console.log(input_velocity);
+    console.log(input_timeshift);
+});
 
 // Clear training data 
 Max.addHandler("clear_train", ()=>{
