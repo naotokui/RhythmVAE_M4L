@@ -238,14 +238,25 @@ async function generatePattern(z1, z2, threshold, noise_range){
 
 
 // Start encoding... reset input matrix
-var input_onset, input_velocity, input_timeshift;
-Max.addHandler("encode_start", () =>  {
-    input_onset = utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION);
-    input_velocity = utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION);
+var input_onset;
+var input_velocity; 
+var input_timeshift;
+Max.addHandler("encode_start", (is_test) =>  {
+    Max.post("encode_start");
+    input_onset     = utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION);
+    input_velocity  = utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION);
     input_timeshift = utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION);
+
+    if (is_test){
+        for (var i=0; i < LOOP_DURATION; i=i+4){
+            input_onset[0][i] = 1;
+            input_velocity[0][i] = 0.8;
+        }
+        
+    }
 });
 
-Max.addHandler("encode_add", (mapping, pitch, time, duration, velocity, muted) =>  {
+Max.addHandler("encode_add", (pitch, time, duration, velocity, muted, mapping) =>  {
 
     // select mapping
     if (mapping == 0) midi_map = MIDI_DRUM_MAP_STRICT; 
@@ -253,25 +264,36 @@ Max.addHandler("encode_add", (mapping, pitch, time, duration, velocity, muted) =
 
     // add note
     if (!muted){
-        var unit = 1.0/16.0; // grid size = 16th note
+        var unit = 0.25; // 1.0 = quarter note   grid size = 16th note 
         const half_unit = unit * 0.5;
         const index = Math.max(0, Math.floor((time + half_unit) / unit)) // centering 
         const timeshift = (time - unit * index)/half_unit; // normalized
-
+        Max.post("index", index, timeshift, pitch);
         // Ignore notes after the first 2 bars
         if (index < LOOP_DURATION && pitch in midi_map){
             let drum_id = midi_map[pitch];
+			Max.post("pitch", pitch, drum_id);
             input_onset[drum_id][index]     = 1;
             input_velocity[drum_id][index]  = velocity/127.;
-            input_onset[drum_id][index]     = timeshift;
+            input_timeshift[drum_id][index]     = timeshift;
         }
     }
 });
 
 Max.addHandler("encode_done", () =>  {
-    console.log(input_onset);
-    console.log(input_velocity);
-    console.log(input_timeshift);
+    utils.post(input_onset);
+    utils.post(input_velocity);
+    utils.post(input_timeshift);
+
+    // Encoding!
+    var inputOn     = tf.tensor2d(input_onset, [NUM_DRUM_CLASSES, LOOP_DURATION])
+    var inputVel    = tf.tensor2d(input_velocity, [NUM_DRUM_CLASSES, LOOP_DURATION])
+    var inputTS     = tf.tensor2d(input_timeshift, [NUM_DRUM_CLASSES, LOOP_DURATION])
+    let zs = vae.encodePattern(inputOn, inputVel, inputTS);
+    
+    // output encoded z vector
+    utils.post(zs)
+    Max.outlet("zs", zs[0], zs[1]);  
 });
 
 // Clear training data 

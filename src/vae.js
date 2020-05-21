@@ -107,6 +107,10 @@ function generatePattern(z1, z2, noise_range=0.0){
   return model.generate(zs);
 }
 
+function encodePattern(inputOn, inputVel, inputTS){
+  return model.encode(inputOn, inputVel, inputTS);
+}
+
 async function saveModel(filepath){
   model.saveModel(filepath);
 }
@@ -374,6 +378,24 @@ class ConditionalVAE {
     this.decoder = await tf.loadLayersModel(path);
     this.isTrained = true;
   }
+
+  encode(inputOn, inputVel, inputTS){
+    if (!this.encoder) {
+      utils.error_status("Model is not trained yet");
+      return;
+    }
+
+    // reshaping...
+    inputOn = inputOn.reshape([1, ORIGINAL_DIM]);
+    inputVel = inputVel.reshape([1, ORIGINAL_DIM]);
+    inputTS = inputTS.reshape([1, ORIGINAL_DIM]);
+    
+    let [zMean, zLogVar, zs] = this.encoder.apply([inputOn, inputVel, inputTS]);
+    this.generate(zs); // generate rhythm pattern with the encoded z
+    zs = zs.arraySync();
+    return zs[0]; 
+  }
+
 }
 
 function range(start, edge, step) {
@@ -398,6 +420,7 @@ exports.loadAndTrain = loadAndTrain;
 exports.saveModel = saveModel;
 exports.loadModel = loadModel;
 exports.generatePattern = generatePattern;
+exports.encodePattern = encodePattern;
 exports.stopTraining = stopTraining;
 exports.isReadyToGenerate = isReadyToGenerate;
 exports.isTraining = isTraining;
