@@ -16,6 +16,14 @@ If you want to quickly test the device, please use the one in `/release` directo
 
 ![VAE Rhythm Generator in M4L(Max for Live) Device](./images/ui_memo.png)
 
+If you want to know the detail of the plugin, please refer to my [arxiv paper](https://arxiv.org/abs/2004.01525):
+
+```
+Towards democratizing music production with AI-Design of Variational Autoencoder-based Rhythm Generator as a DAW plugin
+Nao Tokui
+```
+
+
 ## Requirement
 - On Mac: **Ableton Live Suite for Mac 10.1.2** or later
 - On Windows: Ableton Live Suite for Windows 10.1.2 **and Standalone Max 8.1.2 or later**  
@@ -29,7 +37,8 @@ If you want to edit Max patches and export the device by yourself:
 - When you open `rhythmvae.maxpat` for the first time, you need to press `script npm install` to install Node.js packages. 
 - Every time you export the device, you have to set `Max for Live Device Type` to `MIDI` on Project Inspector (Apparently this is a bug of Max/MSP.)
 
-
+## Pretrained model
+- You don't have enough training MIDI data? Don't worry! You can find a pretrained model trained with thausands of electronic dance music rhythm patterns in `/release/models`. 
 
 ## Known problems
 - Incompatible with folders with names containing special characters such as `[]?*!|@`
@@ -43,6 +52,7 @@ If you want to edit Max patches and export the device by yourself:
 
 
 ## Updates
+- 2019.5.21 added| a pretrained model
 - 2019.3.11 added| Windows version! 
 - 2019.12.27 fxied| onset/velocity/offset training data used be shuffled independently. it makes no sense! 
 - 2019.11.10 added| Time shift parameter / MIDI Mapping
