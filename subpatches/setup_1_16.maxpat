@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 8,
-			"minor" : 0,
-			"revision" : 2,
+			"minor" : 1,
+			"revision" : 7,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -37,6 +37,7 @@
 		"tags" : "",
 		"style" : "",
 		"subpatcher_template" : "no_top",
+		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
 					"id" : "obj-14",
@@ -48,8 +49,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 0,
-							"revision" : 2,
+							"minor" : 1,
+							"revision" : 7,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -82,6 +83,7 @@
 						"tags" : "",
 						"style" : "",
 						"subpatcher_template" : "no_top",
+						"assistshowspatchername" : 0,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-11",
@@ -90,7 +92,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 238.0, 179.0, 191.0, 22.0 ],
-									"text" : "target_seq $1, nstep 32, loop 1 32"
+									"text" : "target_seq $1, nstep 48, loop 1 48"
 								}
 
 							}
@@ -192,7 +194,8 @@
 									"outlettype" : [ "", "", "", "" ],
 									"patching_rect" : [ 50.0, 154.0, 137.0, 22.0 ],
 									"saved_object_attributes" : 									{
-										"embed" : 1
+										"embed" : 1,
+										"precision" : 6
 									}
 ,
 									"text" : "coll seq_id_to_midi_vae"
@@ -330,8 +333,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 297.0, 123.0, 565.0, 35.0 ],
-					"text" : "nseq 9, nstep 32, mode 0, loopruler 0, usestepcolor2 1, pitch_active 1, velocity_active 1, duration_active 1, loop 1 32, display_seq 1, target_seq 1"
+					"patching_rect" : [ 297.0, 123.0, 634.0, 35.0 ],
+					"text" : "nseq 9, nstep 48, mode 0, loopruler 0, usestepcolor2 1, pitch_active 1, velocity_active 1, duration_active 1, loop 1 48, display_seq 1, target_seq 1"
 				}
 
 			}

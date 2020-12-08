@@ -12,6 +12,7 @@ const DRUM_CLASSES = require('./src/constants.js').DRUM_CLASSES;
 const NUM_DRUM_CLASSES = require('.//src/constants.js').NUM_DRUM_CLASSES;
 const LOOP_DURATION = require('.//src/constants.js').LOOP_DURATION;
 const MIN_ONSETS_THRESHOLD = require('./src/constants.js').MIN_ONSETS_THRESHOLD;
+const BEAT_RESOLUTION = require('./src/constants.js').BEAT_RESOLUTION; 
 
 // VAE model and Utilities
 const utils = require('./src/utils.js');
@@ -41,7 +42,7 @@ function getTempo(midiFile){
 
 // Get location of a note in pianoroll
 function getNoteIndexAndTimeshift(note, tempo){
-    const unit = (60.0 / tempo) / 4.0; // the duration of 16th note
+    const unit = (60.0 / tempo) / BEAT_RESOLUTION; // the duration of 16th note
     const half_unit = unit * 0.5;
 
     const index = Math.max(0, Math.floor((note.time + half_unit) / unit)) // centering 
