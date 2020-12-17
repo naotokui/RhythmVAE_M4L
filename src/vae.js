@@ -24,7 +24,7 @@ const VEL_LOSS_COEF = 2.5;  // coef for velocity loss
 let dataHandlerOnset; 
 let dataHandlerVelocity;
 let dataHandlerTimeshift;
-let model;
+let model = null;
 let numEpochs = 150; // default # of epochs
 
 async function loadAndTrain(train_data_onset, train_data_velocity, train_data_timeshift) {
@@ -49,7 +49,7 @@ async function loadAndTrain(train_data_onset, train_data_velocity, train_data_ti
   dataHandlerTimeshift = new data.DataHandler(train_data_timeshift, train_indices, test_indices); // data utility for duration
 
   // start training!
-  initModel(); // initializing model class
+  if (!model) initModel(); // initializing model class
   startTraining(); // start the actual training process with the given training data
 }
 
@@ -118,6 +118,10 @@ async function saveModel(filepath){
 async function loadModel(filepath){
   if (!model) initModel();
   model.loadModel(filepath);
+}
+
+function clearModel(){
+  model = null;
 }
 
 // Sampling Z 
@@ -419,6 +423,7 @@ function range(start, edge, step) {
 exports.loadAndTrain = loadAndTrain;
 exports.saveModel = saveModel;
 exports.loadModel = loadModel;
+exports.clearModel = clearModel;
 exports.generatePattern = generatePattern;
 exports.encodePattern = encodePattern;
 exports.stopTraining = stopTraining;

@@ -184,6 +184,12 @@ Max.addHandler("train", ()=>{
         return;
     }
 
+    if (train_data_onsets.length == 0){
+        utils.error_status("No training data provided.");
+        return;
+    }
+
+    // Start training
     utils.log_status("Start training...");
     console.log("# of bars in training data:", train_data_onsets.length * 2);
     reportNumberOfBars();
@@ -232,7 +238,11 @@ async function generatePattern(z1, z2, threshold, noise_range){
       utils.log_status("");
       isGenerating = false;
   } else {
-      utils.error_status("Model is not trained yet");
+    if (vae.isTraining()){
+        utils.error_status("Still training...");
+    } else {
+        utils.error_status("Model is not trained yet");
+    }
   }
 }
 
@@ -325,6 +335,11 @@ Max.addHandler("loadmodel", (path)=>{
     filepath = "file://" + path;
     vae.loadModel(filepath);
     utils.log_status("Model loaded!");
+});
+
+Max.addHandler("clearmodel", ()=>{
+    vae.clearModel();
+    utils.log_status("Model reset");
 });
 
 Max.addHandler("epochs", (e)=>{
