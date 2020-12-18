@@ -124,6 +124,10 @@ function clearModel(){
   model = null;
 }
 
+function bendModel(noise_range){
+  model.bendModel(noise_range)
+}
+
 // Sampling Z 
 class sampleLayer extends tf.layers.Layer {
   constructor(args) {
@@ -373,6 +377,19 @@ class ConditionalVAE {
     return [outputsOn.arraySync(), outputsVel.arraySync(), outputsTS.arraySync()];
   }
 
+  bendModel(noise_range){
+    let weights = [];
+    for (let i = 0; i < this.decoder.getWeights().length; i++) {
+      let w = this.decoder.getWeights()[i];
+      let shape = w.shape;
+      console.log(shape);
+      let noise = tf.randomNormal(w.shape, 0.0, noise_range);
+      let neww = tf.add(w, noise);
+      weights.push(neww);
+    }
+    this.decoder.setWeights(weights);
+  }
+
   async saveModel(path){
     const saved = await this.decoder.save(path);
     utils.post(saved);
@@ -430,4 +447,5 @@ exports.stopTraining = stopTraining;
 exports.isReadyToGenerate = isReadyToGenerate;
 exports.isTraining = isTraining;
 exports.setEpochs = setEpochs;
+exports.bendModel = bendModel;
 

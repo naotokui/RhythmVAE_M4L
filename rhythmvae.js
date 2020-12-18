@@ -201,7 +201,7 @@ Max.addHandler("generate", (z1, z2, threshold, noise_range = 0.0)=>{
     try {
         generatePattern(z1, z2, threshold, noise_range);
     } catch(error) {
-        error_status(error);
+        utils.error_status(error);
     }
 });
 
@@ -350,5 +350,15 @@ Max.addHandler("epochs", (e)=>{
 function reportNumberOfBars(){
     Max.outlet("train_bars", train_data_onsets.length * 2);  // number of bars for training
 }
+
+// Generate a rhythm pattern
+Max.addHandler("bend", (noise_range = 0.0)=>{
+    try {
+        vae.bendModel(noise_range);
+    } catch(error) {
+        console.log(error);
+        utils.error_status("model bending failed");
+    }
+});
 
 Max.outlet("loaded");
