@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 7,
+			"revision" : 8,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -40,6 +40,17 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-3",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 270.0, 173.0, 141.0, 20.0 ],
+					"text" : "basic sequencer settings"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-14",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -50,7 +61,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 7,
+							"revision" : 8,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -223,7 +234,7 @@
 									"maxclass" : "outlet",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 146.0, 293.0, 30.0, 30.0 ]
+									"patching_rect" : [ 66.0, 294.0, 30.0, 30.0 ]
 								}
 
 							}
@@ -289,7 +300,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 115.0, 228.0, 90.0, 22.0 ],
+					"patching_rect" : [ 115.0, 235.0, 90.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -321,7 +332,7 @@
 					"maxclass" : "outlet",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 251.0, 377.0, 30.0, 30.0 ]
+					"patching_rect" : [ 115.0, 364.0, 30.0, 30.0 ]
 				}
 
 			}
@@ -333,7 +344,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 297.0, 123.0, 634.0, 35.0 ],
+					"patching_rect" : [ 238.0, 200.0, 634.0, 35.0 ],
 					"text" : "nseq 9, nstep 48, mode 0, loopruler 0, usestepcolor2 1, pitch_active 1, velocity_active 1, duration_active 1, loop 1 48, display_seq 1, target_seq 1"
 				}
 
@@ -347,7 +358,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 251.0, 71.0, 30.0, 30.0 ]
+					"patching_rect" : [ 115.0, 84.0, 30.0, 30.0 ]
 				}
 
 			}
