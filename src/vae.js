@@ -4,6 +4,8 @@
 const Max = require('max-api');
 const tf = require('@tensorflow/tfjs-node');
 
+console.log(tf.getBackend());
+
 const utils = require('./utils.js')
 const data = require('./data.js')
 
@@ -12,13 +14,15 @@ const NUM_DRUM_CLASSES = require('./constants.js').NUM_DRUM_CLASSES;
 const LOOP_DURATION = require('./constants.js').LOOP_DURATION;
 
 const ENCODER_LSTM_UNIT = 64;
-const DECODER_LSTM_DIM = 256;
+const DECODER_LSTM_DIM = 128;
 const LATENT_DIM = 2;
 
-const BATCH_SIZE = 8;
-const TEST_BATCH_SIZE = 128;
-const TS_LOSS_COEF = 5.0;  // coef for timeshift loss
-const VEL_LOSS_COEF = 2.5;  // coef for velocity loss
+const BATCH_SIZE = 16;
+const TEST_BATCH_SIZE = 16;
+
+const ONSET_LOSS_COEF = 1.0;  // weight for onset loss
+const VEL_LOSS_COEF = 1.0;  // weight for velocity loss
+const TS_LOSS_COEF = 1.0;  // weight for timeshift loss
 
 
 let dataHandlerOnset; 
@@ -179,9 +183,9 @@ class ConditionalVAE {
     const encoderInputsTS= tf.input({shape: [LOOP_DURATION, NUM_DRUM_CLASSES]});
     
     // Bidirectional LSTM
-    const xOn  = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT}), mergeMode: 'concat'}).apply(encoderInputsOn)
-    const xVel = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT}), mergeMode: 'concat'}).apply(encoderInputsVel)
-    const xTS  = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT}), mergeMode: 'concat'}).apply(encoderInputsTS)
+    const xOn  = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT})}).apply(encoderInputsOn)
+    const xVel = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT})}).apply(encoderInputsVel)
+    const xTS  = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT})}).apply(encoderInputsTS)
 
 
     // Merged
@@ -213,9 +217,13 @@ class ConditionalVAE {
     const x4 = tf.layers.repeatVector({n: LOOP_DURATION, inputShape: [DECODER_LSTM_DIM]}).apply(x3);
     // const x5 = tf.layers.lstm({units: ENCODER_LSTM_UNIT, returnSequences: 'true'}).apply(x4); 
 
-    const decoderOutputsOn = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'softmax'}).apply(x4); // axis (number) Integer, axis along which the softmax normalization is applied. Defaults to -1 (i.e., the last axis).
-    const decoderOutputsVel = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'sigmoid'}).apply(x4); 
-    const decoderOutputsTS = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'tanh'}).apply(x4);
+    // const x4On = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'sigmoid'}).apply(x4);
+    // const x4Vel = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'sigmoid'}).apply(x4); 
+    const x5 = tf.layers.lstm({units: DECODER_LSTM_DIM, returnSequences: 'true', activation: 'tanh'}).apply(x4);
+
+    const decoderOutputsOn = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'sigmoid'}).apply(x5);
+    const decoderOutputsVel = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'sigmoid'}).apply(x5); 
+    const decoderOutputsTS = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'tanh'}).apply(x5);
 
     const decoderOutputs = [decoderOutputsOn, decoderOutputsVel, decoderOutputsTS];
 
@@ -273,6 +281,7 @@ class ConditionalVAE {
       const [yOn, yVel, yTS] = y;
 
       const onset_loss = this.reconstructionLoss(yTrueOn, yOn);
+      onset_loss = onset_loss.mul(ONSET_LOSS_COEF);
       let velocity_loss = this.mseLoss(yTrueVel, yVel);
       velocity_loss = velocity_loss.mul(VEL_LOSS_COEF);
       let timeshift_loss = this.mseLoss(yTrueTS, yTS);
@@ -327,14 +336,13 @@ class ConditionalVAE {
 
       // Training 
       for (let j = 0; j < numBatch; j++) {
-        batchInputOn = dataHandlerOnset.nextTrainBatch(batchSize).xs.reshape([batchSize, inputDim[0], inputDim[1]]);
-        batchInputVel = dataHandlerVelocity.nextTrainBatch(batchSize).xs.reshape([batchSize, inputDim[0], inputDim[1]]);
-        batchInputTS = dataHandlerTimeshift.nextTrainBatch(batchSize).xs.reshape([batchSize, inputDim[0], inputDim[1]]);
+        batchInputOn = dataHandlerOnset.nextTrainBatch(batchSize).xs;
+        batchInputVel = dataHandlerVelocity.nextTrainBatch(batchSize).xs;
+        batchInputTS = dataHandlerTimeshift.nextTrainBatch(batchSize).xs;
       
         trainLoss = await optimizer.minimize(() => this.vaeLoss([batchInputOn, batchInputVel, batchInputTS],
            this.apply([batchInputOn, batchInputVel, batchInputTS])), true);
 
-        console.log(trainLoss);
         trainLoss = Number(trainLoss.dataSync());
         epochLoss = epochLoss + trainLoss;
 
@@ -367,9 +375,17 @@ class ConditionalVAE {
   generate(zs){
     let [outputsOn, outputsVel, outputsTS] = this.decoder.apply(zs);
 
-    outputsOn = outputsOn.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);   
-    outputsVel = outputsVel.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);    
-    outputsTS = outputsTS.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]); // timshift output
+    outputsOn = outputsOn.squeeze().transpose();
+
+    outputsVel = outputsVel.squeeze().transpose();
+    outputsTS = outputsTS.squeeze().transpose();
+
+    console.log("shape", outputsOn.shape);
+    outputsOn.print();
+
+    // outputsOn = outputsOn.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);   
+    // outputsVel = outputsVel.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);    
+    // outputsTS = outputsTS.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]); // timshift output
 
     return [outputsOn.arraySync(), outputsVel.arraySync(), outputsTS.arraySync()];
   }

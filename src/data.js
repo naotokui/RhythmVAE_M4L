@@ -2,9 +2,6 @@
 const tf = require('@tensorflow/tfjs-node');
 const utils = require('./utils.js')
 
-const IMAGE_SIZE = 784;
-const NUM_CLASSES = 10;
-
 const TRAIN_TEST_RATIO = 5 / 6;
 
 // Constants
@@ -55,11 +52,12 @@ class DataHandler {
     const batchArray = [];
     for (let i = 0; i < batchSize; i++) {
       const idx = index();
+      // training data is stored in (NUM_DRUM_CLASSES, LOOP_DURATION) array. 
+      // you need to transpose them into (LOOP_DURATION, NUM_DRUM_CLASSES) to feed them into LSTM layers.
       batchArray.push(data[idx].transpose().reshape([1, LOOP_DURATION, NUM_DRUM_CLASSES]));
     }
     const axis = 0;
     const xs = tf.concat(batchArray, axis);
-    console.log(xs.shape);
     return {xs};
   }
 }

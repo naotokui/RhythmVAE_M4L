@@ -57,7 +57,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 155.142857142857139, 292.371353149414062, 34.0, 22.0 ],
-					"presentation_linecount" : 2,
 					"text" : "build"
 				}
 
@@ -71,7 +70,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 93.0, 59.5, 213.0, 62.0 ],
-					"text" : "\"Detroit:/MIDI_DATASET/800000_Drum_Percussion_MIDI_Archive/GM MIDI/GM - Electronic/GM - Electronic GA/Garage/\""
+					"text" : "\"Detroit:/MIDI_DATASET/800000_Drum_Percussion_MIDI_Archive/GM MIDI/GM - Electronic/GM - Electronic GA/House/\""
 				}
 
 			}
@@ -1990,39 +1989,39 @@
 										"count" : 9,
 										"data" : [ 											{
 												"key" : 0,
-												"value" : [ "bass_drum", 36 ]
+												"value" : [ "bass_drum", 0 ]
 											}
 , 											{
 												"key" : 1,
-												"value" : [ "snare_drum", 38 ]
+												"value" : [ "snare_drum", 1 ]
 											}
 , 											{
 												"key" : 2,
-												"value" : [ "closed_hihat", 42 ]
+												"value" : [ "closed_hihat", 8 ]
 											}
 , 											{
 												"key" : 3,
-												"value" : [ "open_hihat", 46 ]
+												"value" : [ "open_hihat", 9 ]
 											}
 , 											{
 												"key" : 4,
-												"value" : [ "low_tom", 41 ]
+												"value" : [ "low_tom", 5 ]
 											}
 , 											{
 												"key" : 5,
-												"value" : [ "mid_tom", 45 ]
+												"value" : [ "mid_tom", 6 ]
 											}
 , 											{
 												"key" : 6,
-												"value" : [ "high_tom", 48 ]
+												"value" : [ "high_tom", 7 ]
 											}
 , 											{
 												"key" : 7,
-												"value" : [ "hand_clap", 39 ]
+												"value" : [ "hand_clap", 3 ]
 											}
 , 											{
 												"key" : 8,
-												"value" : [ "rim_shot", 37 ]
+												"value" : [ "rim_shot", 2 ]
 											}
  ]
 									}
@@ -2305,39 +2304,39 @@
 						"count" : 9,
 						"data" : [ 							{
 								"key" : 0,
-								"value" : [ "bass_drum", 36 ]
+								"value" : [ "bass_drum", 0 ]
 							}
 , 							{
 								"key" : 1,
-								"value" : [ "snare_drum", 38 ]
+								"value" : [ "snare_drum", 1 ]
 							}
 , 							{
 								"key" : 2,
-								"value" : [ "closed_hihat", 42 ]
+								"value" : [ "closed_hihat", 8 ]
 							}
 , 							{
 								"key" : 3,
-								"value" : [ "open_hihat", 46 ]
+								"value" : [ "open_hihat", 9 ]
 							}
 , 							{
 								"key" : 4,
-								"value" : [ "low_tom", 41 ]
+								"value" : [ "low_tom", 5 ]
 							}
 , 							{
 								"key" : 5,
-								"value" : [ "mid_tom", 45 ]
+								"value" : [ "mid_tom", 6 ]
 							}
 , 							{
 								"key" : 6,
-								"value" : [ "high_tom", 48 ]
+								"value" : [ "high_tom", 7 ]
 							}
 , 							{
 								"key" : 7,
-								"value" : [ "hand_clap", 39 ]
+								"value" : [ "hand_clap", 3 ]
 							}
 , 							{
 								"key" : 8,
-								"value" : [ "rim_shot", 37 ]
+								"value" : [ "rim_shot", 2 ]
 							}
  ]
 					}
@@ -2609,7 +2608,7 @@
 					"numoutlets" : 1,
 					"offset" : [ 0.0, 0.0 ],
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 515.0, 483.0, 535.0, 378.0 ],
+					"patching_rect" : [ 530.5, 471.5, 350.0, 251.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -4250,7 +4249,7 @@
 					"patching_rect" : [ 108.666666666666657, 716.0, 140.0, 119.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 216.966102361679077, 99.635036496350352, 85.0, 61.993610354235585 ],
-					"setminmax" : [ 0.0, 200.0 ],
+					"setminmax" : [ 0.0, 20.0 ],
 					"setstyle" : 1,
 					"size" : 150,
 					"slidercolor" : [ 0.454959, 0.684788, 0.824976, 1.0 ]
@@ -4740,15 +4739,28 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
+						"visible" : 1,
 						"boxes" : [ 							{
+								"box" : 								{
+									"id" : "obj-2",
+									"maxclass" : "message",
+									"numinlets" : 2,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"patching_rect" : [ 177.0, 143.0, 104.0, 22.0 ],
+									"text" : "script npm update"
+								}
+
+							}
+, 							{
 								"box" : 								{
 									"id" : "obj-17",
 									"maxclass" : "message",
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 65.0, 185.0, 104.0, 22.0 ],
-									"text" : "script npm update"
+									"patching_rect" : [ 91.0, 186.0, 223.0, 22.0 ],
+									"text" : "script npm update @tensorflow/tfjs-node"
 								}
 
 							}
@@ -5566,39 +5578,39 @@
 														"count" : 9,
 														"data" : [ 															{
 																"key" : 0,
-																"value" : [ "bass_drum", 36 ]
+																"value" : [ "bass_drum", 0 ]
 															}
 , 															{
 																"key" : 1,
-																"value" : [ "snare_drum", 38 ]
+																"value" : [ "snare_drum", 1 ]
 															}
 , 															{
 																"key" : 2,
-																"value" : [ "closed_hihat", 42 ]
+																"value" : [ "closed_hihat", 8 ]
 															}
 , 															{
 																"key" : 3,
-																"value" : [ "open_hihat", 46 ]
+																"value" : [ "open_hihat", 9 ]
 															}
 , 															{
 																"key" : 4,
-																"value" : [ "low_tom", 41 ]
+																"value" : [ "low_tom", 5 ]
 															}
 , 															{
 																"key" : 5,
-																"value" : [ "mid_tom", 45 ]
+																"value" : [ "mid_tom", 6 ]
 															}
 , 															{
 																"key" : 6,
-																"value" : [ "high_tom", 48 ]
+																"value" : [ "high_tom", 7 ]
 															}
 , 															{
 																"key" : 7,
-																"value" : [ "hand_clap", 39 ]
+																"value" : [ "hand_clap", 3 ]
 															}
 , 															{
 																"key" : 8,
-																"value" : [ "rim_shot", 37 ]
+																"value" : [ "rim_shot", 2 ]
 															}
  ]
 													}
@@ -6202,39 +6214,39 @@
 														"count" : 9,
 														"data" : [ 															{
 																"key" : 0,
-																"value" : [ "bass_drum", 36 ]
+																"value" : [ "bass_drum", 0 ]
 															}
 , 															{
 																"key" : 1,
-																"value" : [ "snare_drum", 38 ]
+																"value" : [ "snare_drum", 1 ]
 															}
 , 															{
 																"key" : 2,
-																"value" : [ "closed_hihat", 42 ]
+																"value" : [ "closed_hihat", 8 ]
 															}
 , 															{
 																"key" : 3,
-																"value" : [ "open_hihat", 46 ]
+																"value" : [ "open_hihat", 9 ]
 															}
 , 															{
 																"key" : 4,
-																"value" : [ "low_tom", 41 ]
+																"value" : [ "low_tom", 5 ]
 															}
 , 															{
 																"key" : 5,
-																"value" : [ "mid_tom", 45 ]
+																"value" : [ "mid_tom", 6 ]
 															}
 , 															{
 																"key" : 6,
-																"value" : [ "high_tom", 48 ]
+																"value" : [ "high_tom", 7 ]
 															}
 , 															{
 																"key" : 7,
-																"value" : [ "hand_clap", 39 ]
+																"value" : [ "hand_clap", 3 ]
 															}
 , 															{
 																"key" : 8,
-																"value" : [ "rim_shot", 37 ]
+																"value" : [ "rim_shot", 2 ]
 															}
  ]
 													}
@@ -7721,7 +7733,6 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-2",
@@ -8050,6 +8061,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -8692,7 +8705,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-58", 0 ],
-					"midpoints" : [ 347.0, 440.0, 524.5, 440.0 ],
+					"midpoints" : [ 347.0, 440.0, 540.0, 440.0 ],
 					"order" : 1,
 					"source" : [ "obj-3", 1 ]
 				}

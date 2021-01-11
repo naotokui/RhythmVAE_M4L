@@ -93,7 +93,7 @@ function processPianoroll(midiFile){
         })
     })
 
-    /*    for debug - output pianoroll */
+    // /*    for debug - output pianoroll */
     // if (velocities.length > 0){ 
     //     var index = utils.getRandomInt(velocities.length); 
     //     let x = velocities[index];
@@ -198,6 +198,7 @@ async function generatePattern(z1, z2, threshold){
   
       isGenerating = true;
       let [onsets, velocities, timeshifts] = vae.generatePattern(z1, z2);
+
       Max.outlet("matrix_clear", 1); // clear all
       for (var i=0; i< NUM_DRUM_CLASSES; i++){
           var sequence = []; // for velocity
