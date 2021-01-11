@@ -11,9 +11,7 @@ const data = require('./data.js')
 const NUM_DRUM_CLASSES = require('./constants.js').NUM_DRUM_CLASSES;
 const LOOP_DURATION = require('./constants.js').LOOP_DURATION;
 
-const ORIGINAL_DIM = require('./constants.js').ORIGINAL_DIM;
-const INTERMEDIATE_DIM = 512;
-const ENCODER_LSTM_DIM = 256;
+const ENCODER_LSTM_UNIT = 64;
 const DECODER_LSTM_DIM = 256;
 const LATENT_DIM = 2;
 
@@ -34,8 +32,7 @@ async function loadAndTrain(train_data_onset, train_data_velocity, train_data_ti
   await createDataHandlers(train_data_onset, train_data_velocity, train_data_timeshift);  
 
   // start training!
-  initModel(); // initializing model class
-  await startTraining(); // start the actual training process with the given training data
+  await startTraining(); // initializing model class
 }
 
 async function createDataHandlers(train_data_onset, train_data_velocity, train_data_timeshift){
@@ -62,7 +59,6 @@ async function initModel(){
   model = new ConditionalVAE({
     modelConfig:{
       inputDim: [LOOP_DURATION, NUM_DRUM_CLASSES],
-      intermediateDim: INTERMEDIATE_DIM,
       latentDim: LATENT_DIM
     },
     trainConfig:{
@@ -74,7 +70,7 @@ async function initModel(){
   });
 
   buildModel(model);
-  console.log("model initted");
+  console.log("model initialized");
 }
 
 async function startTraining(){
@@ -166,11 +162,12 @@ class ConditionalVAE {
     const config = this.modelConfig;
 
     const originalDim = config.originalDim;
-    const intermediateDim = config.intermediateDim;
     const latentDim = config.latentDim;
 
     // VAE model = encoder + decoder
     // build encoder model
+
+    utils.log_status("Building encoder model...");
 
     // Onset input
     const encoderInputsOn = tf.input({shape: [LOOP_DURATION, NUM_DRUM_CLASSES]});
@@ -181,12 +178,19 @@ class ConditionalVAE {
     // Timeshift input
     const encoderInputsTS= tf.input({shape: [LOOP_DURATION, NUM_DRUM_CLASSES]});
     
+    // Bidirectional LSTM
+    const xOn  = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT}), mergeMode: 'concat'}).apply(encoderInputsOn)
+    const xVel = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT}), mergeMode: 'concat'}).apply(encoderInputsVel)
+    const xTS  = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT}), mergeMode: 'concat'}).apply(encoderInputsTS)
+
+
     // Merged
     const concatLayer = tf.layers.concatenate();
-    const x1 = concatLayer.apply([encoderInputsOn, encoderInputsVel, encoderInputsTS]); // (None, 32, 27) 
+    const x2 = concatLayer.apply([xOn, xVel, xTS]); // (None, 32, 27) 
+  
 
-    // Bidirectional LSTM
-    const x2 = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_DIM}), mergeMode: 'concat'}).apply(x1)
+    // // Bidirectional LSTM
+    // const x2 = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT}), mergeMode: 'concat'}).apply(x1)
 
     // VAE Z
     const zMean = tf.layers.dense({units: latentDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x2);
@@ -199,22 +203,27 @@ class ConditionalVAE {
     const encoder = tf.model({inputs: encoderInputs, outputs: encoderOutputs, name: "encoder"})
     encoder.summary();
 
+
+    utils.log_status("Building decoder model...");
     // build decoder model
     const decoderInputs = tf.input({shape: [latentDim]});
 
-    const x3 = tf.layers.dense({units: LOOP_DURATION, useBias: true, kernelInitializer: 'glorotNormal'}).apply(decoderInputs);
-    const x4 = tf.layers.reshape({targetShape: [LOOP_DURATION, 1]}).apply(x3)
-    const x5 = tf.layers.lstm({units: ENCODER_LSTM_DIM, returnSequences: 'true'}).apply(x4)     
+    const x3 = tf.layers.dense({units: DECODER_LSTM_DIM, useBias: true, kernelInitializer: 'glorotNormal'}).apply(decoderInputs);
+    // const x4 = tf.layers.reshape({targetShape: [LOOP_DURATION, 1]}).apply(x3)
+    const x4 = tf.layers.repeatVector({n: LOOP_DURATION, inputShape: [DECODER_LSTM_DIM]}).apply(x3);
+    // const x5 = tf.layers.lstm({units: ENCODER_LSTM_UNIT, returnSequences: 'true'}).apply(x4); 
 
-    const decoderOutputsOn = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'softmax'}).apply(x5) // axis (number) Integer, axis along which the softmax normalization is applied. Defaults to -1 (i.e., the last axis).
-    const decoderOutputsVel = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'sigmoid'}).apply(x5) 
-    const decoderOutputsTS = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'tanh'}).apply(x5) 
+    const decoderOutputsOn = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'softmax'}).apply(x4); // axis (number) Integer, axis along which the softmax normalization is applied. Defaults to -1 (i.e., the last axis).
+    const decoderOutputsVel = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'sigmoid'}).apply(x4); 
+    const decoderOutputsTS = tf.layers.lstm({units: NUM_DRUM_CLASSES, returnSequences: 'true', activation: 'tanh'}).apply(x4);
 
     const decoderOutputs = [decoderOutputsOn, decoderOutputsVel, decoderOutputsTS];
 
     // Decoder model
     const decoder = tf.model({inputs: decoderInputs, outputs: decoderOutputs, name: "decoder"})
     decoder.summary();
+
+    utils.log_status("Model built!");
 
     // build VAE model
     const vae = (inputs) => {
@@ -394,10 +403,12 @@ function range(start, edge, step) {
   return ret;
 }
 
+exports.initModel = initModel;
 exports.loadAndTrain = loadAndTrain;
 exports.saveModel = saveModel;
 exports.loadModel = loadModel;
 exports.generatePattern = generatePattern;
+exports.startTraining = startTraining;
 exports.stopTraining = stopTraining;
 exports.isReadyToGenerate = isReadyToGenerate;
 exports.isTraining = isTraining;

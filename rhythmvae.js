@@ -18,6 +18,9 @@ const vae = require('./src/vae.js');
 // This will be printed directly to the Max console
 Max.post(`Loaded the ${path.basename(__filename)} script`);
 
+// Initialization
+vae.initModel();
+
 // Global varibles
 var train_data_onsets = []; 
 var train_data_velocities = []; 
@@ -156,6 +159,18 @@ Max.addHandler("midi", (filename) =>  {
 });
 
 // Start training! 
+// Max.addHandler("build", ()=>{
+//     if (vae.isTraining()){
+//         utils.error_status("Failed to start training. There is already an ongoing training process.");
+//         return;
+//     }
+
+//     utils.log_status("Building a model");
+//     console.log("# of bars in training data:", train_data_onsets.length * 2);
+//     reportNumberOfBars();
+//     vae.loadAndTrain(train_data_onsets, train_data_velocities, train_data_timeshifts);
+// });
+
 Max.addHandler("train", ()=>{
     if (vae.isTraining()){
         utils.error_status("Failed to start training. There is already an ongoing training process.");
