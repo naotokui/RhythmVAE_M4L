@@ -70,13 +70,14 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 93.0, 59.5, 213.0, 62.0 ],
-					"text" : "\"Detroit:/MIDI_DATASET/800000_Drum_Percussion_MIDI_Archive/GM MIDI/GM - Electronic/GM - Electronic GA/House/\""
+					"text" : "\"Detroit:/MIDI_DATASET/800000_Drum_Percussion_MIDI_Archive/GM MIDI/GM - Electronic/GM - Electronic GA/Old Skool/\""
 				}
 
 			}
 , 			{
 				"box" : 				{
 					"activebgcolor" : [ 0.454959, 0.684788, 0.824976, 1.0 ],
+					"hidden" : 1,
 					"id" : "obj-83",
 					"maxclass" : "live.numbox",
 					"numinlets" : 1,
@@ -105,7 +106,6 @@
 , 			{
 				"box" : 				{
 					"activebgcolor" : [ 0.345098, 0.513725, 0.572549, 1.0 ],
-					"hidden" : 1,
 					"id" : "obj-123",
 					"maxclass" : "live.numbox",
 					"numinlets" : 1,
@@ -878,7 +878,6 @@
 , 			{
 				"box" : 				{
 					"bgcolor" : [ 0.717647058823529, 0.717647058823529, 0.717647058823529, 1.0 ],
-					"hidden" : 1,
 					"id" : "obj-136",
 					"maxclass" : "multislider",
 					"numinlets" : 1,
@@ -890,7 +889,7 @@
 					"presentation_rect" : [ 216.966102000000006, 99.635035999999999, 85.0, 61.993609999999997 ],
 					"setminmax" : [ 0.0, 200.0 ],
 					"setstyle" : 1,
-					"size" : 150,
+					"size" : 400,
 					"slidercolor" : [ 0.345098, 0.513725, 0.572549, 1.0 ]
 				}
 
@@ -1993,7 +1992,7 @@
 											}
 , 											{
 												"key" : 1,
-												"value" : [ "snare_drum", 1 ]
+												"value" : [ "snare_drum", 38 ]
 											}
 , 											{
 												"key" : 2,
@@ -2001,27 +2000,27 @@
 											}
 , 											{
 												"key" : 3,
-												"value" : [ "open_hihat", 9 ]
+												"value" : [ "open_hihat", 46 ]
 											}
 , 											{
 												"key" : 4,
-												"value" : [ "low_tom", 5 ]
+												"value" : [ "low_tom", 41 ]
 											}
 , 											{
 												"key" : 5,
-												"value" : [ "mid_tom", 6 ]
+												"value" : [ "mid_tom", 45 ]
 											}
 , 											{
 												"key" : 6,
-												"value" : [ "high_tom", 7 ]
+												"value" : [ "high_tom", 48 ]
 											}
 , 											{
 												"key" : 7,
-												"value" : [ "hand_clap", 3 ]
+												"value" : [ "hand_clap", 39 ]
 											}
 , 											{
 												"key" : 8,
-												"value" : [ "rim_shot", 2 ]
+												"value" : [ "rim_shot", 37 ]
 											}
  ]
 									}
@@ -2308,7 +2307,7 @@
 							}
 , 							{
 								"key" : 1,
-								"value" : [ "snare_drum", 1 ]
+								"value" : [ "snare_drum", 38 ]
 							}
 , 							{
 								"key" : 2,
@@ -2316,27 +2315,27 @@
 							}
 , 							{
 								"key" : 3,
-								"value" : [ "open_hihat", 9 ]
+								"value" : [ "open_hihat", 46 ]
 							}
 , 							{
 								"key" : 4,
-								"value" : [ "low_tom", 5 ]
+								"value" : [ "low_tom", 41 ]
 							}
 , 							{
 								"key" : 5,
-								"value" : [ "mid_tom", 6 ]
+								"value" : [ "mid_tom", 45 ]
 							}
 , 							{
 								"key" : 6,
-								"value" : [ "high_tom", 7 ]
+								"value" : [ "high_tom", 48 ]
 							}
 , 							{
 								"key" : 7,
-								"value" : [ "hand_clap", 3 ]
+								"value" : [ "hand_clap", 39 ]
 							}
 , 							{
 								"key" : 8,
-								"value" : [ "rim_shot", 2 ]
+								"value" : [ "rim_shot", 37 ]
 							}
  ]
 					}
@@ -2608,7 +2607,7 @@
 					"numoutlets" : 1,
 					"offset" : [ 0.0, 0.0 ],
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 530.5, 471.5, 350.0, 251.0 ],
+					"patching_rect" : [ 530.5, 471.5, 400.0, 220.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -4240,6 +4239,7 @@
 , 			{
 				"box" : 				{
 					"bgcolor" : [ 0.847058823529412, 0.847058823529412, 0.847058823529412, 1.0 ],
+					"hidden" : 1,
 					"id" : "obj-91",
 					"maxclass" : "multislider",
 					"numinlets" : 1,
@@ -4251,7 +4251,7 @@
 					"presentation_rect" : [ 216.966102361679077, 99.635036496350352, 85.0, 61.993610354235585 ],
 					"setminmax" : [ 0.0, 20.0 ],
 					"setstyle" : 1,
-					"size" : 150,
+					"size" : 400,
 					"slidercolor" : [ 0.454959, 0.684788, 0.824976, 1.0 ]
 				}
 
@@ -4739,7 +4739,6 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-2",
@@ -5582,7 +5581,7 @@
 															}
 , 															{
 																"key" : 1,
-																"value" : [ "snare_drum", 1 ]
+																"value" : [ "snare_drum", 38 ]
 															}
 , 															{
 																"key" : 2,
@@ -5590,27 +5589,27 @@
 															}
 , 															{
 																"key" : 3,
-																"value" : [ "open_hihat", 9 ]
+																"value" : [ "open_hihat", 46 ]
 															}
 , 															{
 																"key" : 4,
-																"value" : [ "low_tom", 5 ]
+																"value" : [ "low_tom", 41 ]
 															}
 , 															{
 																"key" : 5,
-																"value" : [ "mid_tom", 6 ]
+																"value" : [ "mid_tom", 45 ]
 															}
 , 															{
 																"key" : 6,
-																"value" : [ "high_tom", 7 ]
+																"value" : [ "high_tom", 48 ]
 															}
 , 															{
 																"key" : 7,
-																"value" : [ "hand_clap", 3 ]
+																"value" : [ "hand_clap", 39 ]
 															}
 , 															{
 																"key" : 8,
-																"value" : [ "rim_shot", 2 ]
+																"value" : [ "rim_shot", 37 ]
 															}
  ]
 													}
@@ -6218,7 +6217,7 @@
 															}
 , 															{
 																"key" : 1,
-																"value" : [ "snare_drum", 1 ]
+																"value" : [ "snare_drum", 38 ]
 															}
 , 															{
 																"key" : 2,
@@ -6226,27 +6225,27 @@
 															}
 , 															{
 																"key" : 3,
-																"value" : [ "open_hihat", 9 ]
+																"value" : [ "open_hihat", 46 ]
 															}
 , 															{
 																"key" : 4,
-																"value" : [ "low_tom", 5 ]
+																"value" : [ "low_tom", 41 ]
 															}
 , 															{
 																"key" : 5,
-																"value" : [ "mid_tom", 6 ]
+																"value" : [ "mid_tom", 45 ]
 															}
 , 															{
 																"key" : 6,
-																"value" : [ "high_tom", 7 ]
+																"value" : [ "high_tom", 48 ]
 															}
 , 															{
 																"key" : 7,
-																"value" : [ "hand_clap", 3 ]
+																"value" : [ "hand_clap", 39 ]
 															}
 , 															{
 																"key" : 8,
-																"value" : [ "rim_shot", 2 ]
+																"value" : [ "rim_shot", 37 ]
 															}
  ]
 													}
@@ -7648,6 +7647,7 @@
 					"patching_rect" : [ 291.25, 557.0, 164.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 6.0, 141.868613138686129, 142.0, 18.0 ],
+					"text" : "Start training...",
 					"textcolor" : [ 0.999999284744263, 0.999974429607391, 0.999991297721863, 1.0 ],
 					"textjustification" : 1
 				}
@@ -8061,8 +8061,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,

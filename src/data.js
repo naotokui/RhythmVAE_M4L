@@ -52,12 +52,12 @@ class DataHandler {
     const batchArray = [];
     for (let i = 0; i < batchSize; i++) {
       const idx = index();
-      // training data is stored in (NUM_DRUM_CLASSES, LOOP_DURATION) array. 
-      // you need to transpose them into (LOOP_DURATION, NUM_DRUM_CLASSES) to feed them into LSTM layers.
-      batchArray.push(data[idx].transpose().reshape([1, LOOP_DURATION, NUM_DRUM_CLASSES]));
+      // training data is stored in (1, NUM_DRUM_CLASSES, LOOP_DURATION) array. 
+      // you need to transpose them into (1, LOOP_DURATION, NUM_DRUM_CLASSES) to feed them into LSTM layers.
+      const a = data[idx].transpose();
+      batchArray.push(a);
     }
-    const axis = 0;
-    const xs = tf.concat(batchArray, axis);
+    const xs = tf.stack(batchArray);
     return {xs};
   }
 }

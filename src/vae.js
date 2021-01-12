@@ -20,7 +20,7 @@ const LATENT_DIM = 2;
 const BATCH_SIZE = 16;
 const TEST_BATCH_SIZE = 16;
 
-const ONSET_LOSS_COEF = 1.0;  // weight for onset loss
+const ONSET_LOSS_COEF = 4.0;  // weight for onset loss
 const VEL_LOSS_COEF = 1.0;  // weight for velocity loss
 const TS_LOSS_COEF = 1.0;  // weight for timeshift loss
 
@@ -68,7 +68,7 @@ async function initModel(){
     trainConfig:{
       batchSize: BATCH_SIZE,
       testBatchSize: TEST_BATCH_SIZE,
-      epochs: numEpochs,
+      // epochs: numEpochs,
       optimizer: tf.train.adam()
     }
   });
@@ -182,19 +182,19 @@ class ConditionalVAE {
     // Timeshift input
     const encoderInputsTS= tf.input({shape: [LOOP_DURATION, NUM_DRUM_CLASSES]});
     
-    // Bidirectional LSTM
-    const xOn  = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT})}).apply(encoderInputsOn)
-    const xVel = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT})}).apply(encoderInputsVel)
-    const xTS  = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT})}).apply(encoderInputsTS)
+    // // Bidirectional LSTM
+    // const xOn  = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT})}).apply(encoderInputsOn)
+    // const xVel = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT})}).apply(encoderInputsVel)
+    // const xTS  = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT})}).apply(encoderInputsTS)
 
 
     // Merged
     const concatLayer = tf.layers.concatenate();
-    const x2 = concatLayer.apply([xOn, xVel, xTS]); // (None, 32, 27) 
+    const x1 = concatLayer.apply([encoderInputsOn, encoderInputsVel, encoderInputsTS]); // (None, 32, 27) 
   
 
-    // // Bidirectional LSTM
-    // const x2 = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT}), mergeMode: 'concat'}).apply(x1)
+    // Bidirectional LSTM
+    const x2 = tf.layers.bidirectional({layer: tf.layers.lstm({units: ENCODER_LSTM_UNIT}), mergeMode: 'concat'}).apply(x1)
 
     // VAE Z
     const zMean = tf.layers.dense({units: latentDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x2);
@@ -249,8 +249,13 @@ class ConditionalVAE {
     return tf.tidy(() => {
       let reconstruction_loss;
       reconstruction_loss = tf.metrics.binaryCrossentropy(yTrue, yPred);
-      reconstruction_loss = reconstruction_loss.mul(tf.scalar(yPred.shape[1]));
-      reconstruction_loss = tf.mean(reconstruction_loss, -1);
+      
+      // reconstruction_loss = reconstruction_loss.mul(tf.scalar(yPred.shape[1]));
+      
+      // console.log(reconstruction_loss.shape)
+
+
+      reconstruction_loss = tf.sum(reconstruction_loss, -1);
       return reconstruction_loss;
     });
   }
@@ -258,8 +263,8 @@ class ConditionalVAE {
   mseLoss(yTrue, yPred) {
     return tf.tidy(() => {
       let mse_loss = tf.metrics.meanSquaredError(yTrue, yPred);
-      mse_loss = mse_loss.mul(tf.scalar(yPred.shape[1]));
-      mse_loss = tf.mean(mse_loss, -1);
+      // mse_loss = mse_loss.mul(tf.scalar(yPred.shape[1]));
+      mse_loss = tf.sum(mse_loss, -1);
       return mse_loss;
     });
   }
@@ -280,7 +285,7 @@ class ConditionalVAE {
       const [z_mean, z_log_var, y] = yPred;
       const [yOn, yVel, yTS] = y;
 
-      const onset_loss = this.reconstructionLoss(yTrueOn, yOn);
+      let onset_loss = this.reconstructionLoss(yTrueOn, yOn);
       onset_loss = onset_loss.mul(ONSET_LOSS_COEF);
       let velocity_loss = this.mseLoss(yTrueVel, yVel);
       velocity_loss = velocity_loss.mul(VEL_LOSS_COEF);
@@ -314,7 +319,7 @@ class ConditionalVAE {
 
     const batchSize = config.batchSize;
     const numBatch = Math.floor(dataHandlerOnset.getDataSize() / batchSize);
-    const epochs = config.epochs;
+    const epochs = numEpochs;
     const testBatchSize = config.testBatchSize;
     const optimizer = config.optimizer;
     const logMessage = console.log;
@@ -354,15 +359,15 @@ class ConditionalVAE {
       Max.outlet("loss", epochLoss);
 
       // Validation 
-      // testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, inputDim[0], inputDim[1]]);
-      // testBatchInputVel = dataHandlerVelocity.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, inputDim[0], inputDim[1]]);
-      // testBatchInputTS = dataHandlerTimeshift.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, inputDim[0], inputDim[1]]);
-      // valLoss = this.vaeLoss([testBatchInputOn, testBatchInputVel, testBatchInputTS], 
-      //                           this.apply([testBatchInputOn, testBatchInputVel, testBatchInputTS]));
-      // valLoss = Number(valLoss.dataSync());
+      testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize).xs;
+      testBatchInputVel = dataHandlerVelocity.nextTestBatch(testBatchSize).xs;
+      testBatchInputTS = dataHandlerTimeshift.nextTestBatch(testBatchSize).xs;
+      valLoss = this.vaeLoss([testBatchInputOn, testBatchInputVel, testBatchInputTS], 
+                                this.apply([testBatchInputOn, testBatchInputVel, testBatchInputTS]));
+      valLoss = Number(valLoss.dataSync());
 
-      // logMessage(`\tVal Loss: ${valLoss.toFixed(3)}. Epoch ${i} / ${epochs}\n`);
-      // Max.outlet("val_loss", valLoss);
+      logMessage(`\tVal Loss: ${valLoss.toFixed(3)}. Epoch ${i} / ${epochs}\n`);
+      Max.outlet("val_loss", valLoss);
 
       //  await tf.nextFrame();
     }
