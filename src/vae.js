@@ -63,7 +63,6 @@ function initModel(){
     trainConfig:{
       batchSize: BATCH_SIZE,
       testBatchSize: TEST_BATCH_SIZE,
-      epochs: numEpochs,
       optimizer: tf.train.adam()
     }
   });
@@ -214,7 +213,7 @@ class ConditionalVAE {
 
     // build decoder model
     const decoderInputs = tf.input({shape: [latentDim]});
-    const x3Linear = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(decoderInputs);
+    const x3Linear = tf.layers.dense({units: intermediateDim * 2.0, useBias: true, kernelInitializer: 'glorotNormal'}).apply(decoderInputs);
     const x3Normalised = tf.layers.batchNormalization({axis: 1}).apply(x3Linear);
     const x3 = tf.layers.leakyReLU().apply(x3Normalised);
 
@@ -312,7 +311,7 @@ class ConditionalVAE {
 
     const batchSize = config.batchSize;
     const numBatch = Math.floor(dataHandlerOnset.getDataSize() / batchSize);
-    const epochs = config.epochs;
+    const epochs = numEpochs;
     const testBatchSize = config.testBatchSize;
     const optimizer = config.optimizer;
     const logMessage = console.log;
