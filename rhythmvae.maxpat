@@ -77,7 +77,6 @@
 , 			{
 				"box" : 				{
 					"activebgcolor" : [ 0.454959, 0.684788, 0.824976, 1.0 ],
-					"hidden" : 1,
 					"id" : "obj-83",
 					"maxclass" : "live.numbox",
 					"numinlets" : 1,
@@ -106,6 +105,7 @@
 , 			{
 				"box" : 				{
 					"activebgcolor" : [ 0.345098, 0.513725, 0.572549, 1.0 ],
+					"hidden" : 1,
 					"id" : "obj-123",
 					"maxclass" : "live.numbox",
 					"numinlets" : 1,
@@ -878,6 +878,7 @@
 , 			{
 				"box" : 				{
 					"bgcolor" : [ 0.717647058823529, 0.717647058823529, 0.717647058823529, 1.0 ],
+					"hidden" : 1,
 					"id" : "obj-136",
 					"maxclass" : "multislider",
 					"numinlets" : 1,
@@ -1992,7 +1993,7 @@
 											}
 , 											{
 												"key" : 1,
-												"value" : [ "snare_drum", 38 ]
+												"value" : [ "snare_drum", 1 ]
 											}
 , 											{
 												"key" : 2,
@@ -2000,27 +2001,27 @@
 											}
 , 											{
 												"key" : 3,
-												"value" : [ "open_hihat", 46 ]
+												"value" : [ "open_hihat", 9 ]
 											}
 , 											{
 												"key" : 4,
-												"value" : [ "low_tom", 41 ]
+												"value" : [ "low_tom", 5 ]
 											}
 , 											{
 												"key" : 5,
-												"value" : [ "mid_tom", 45 ]
+												"value" : [ "mid_tom", 6 ]
 											}
 , 											{
 												"key" : 6,
-												"value" : [ "high_tom", 48 ]
+												"value" : [ "high_tom", 7 ]
 											}
 , 											{
 												"key" : 7,
-												"value" : [ "hand_clap", 39 ]
+												"value" : [ "hand_clap", 3 ]
 											}
 , 											{
 												"key" : 8,
-												"value" : [ "rim_shot", 37 ]
+												"value" : [ "rim_shot", 2 ]
 											}
  ]
 									}
@@ -2307,7 +2308,7 @@
 							}
 , 							{
 								"key" : 1,
-								"value" : [ "snare_drum", 38 ]
+								"value" : [ "snare_drum", 1 ]
 							}
 , 							{
 								"key" : 2,
@@ -2315,27 +2316,27 @@
 							}
 , 							{
 								"key" : 3,
-								"value" : [ "open_hihat", 46 ]
+								"value" : [ "open_hihat", 9 ]
 							}
 , 							{
 								"key" : 4,
-								"value" : [ "low_tom", 41 ]
+								"value" : [ "low_tom", 5 ]
 							}
 , 							{
 								"key" : 5,
-								"value" : [ "mid_tom", 45 ]
+								"value" : [ "mid_tom", 6 ]
 							}
 , 							{
 								"key" : 6,
-								"value" : [ "high_tom", 48 ]
+								"value" : [ "high_tom", 7 ]
 							}
 , 							{
 								"key" : 7,
-								"value" : [ "hand_clap", 39 ]
+								"value" : [ "hand_clap", 3 ]
 							}
 , 							{
 								"key" : 8,
-								"value" : [ "rim_shot", 37 ]
+								"value" : [ "rim_shot", 2 ]
 							}
  ]
 					}
@@ -4239,7 +4240,6 @@
 , 			{
 				"box" : 				{
 					"bgcolor" : [ 0.847058823529412, 0.847058823529412, 0.847058823529412, 1.0 ],
-					"hidden" : 1,
 					"id" : "obj-91",
 					"maxclass" : "multislider",
 					"numinlets" : 1,
@@ -5581,7 +5581,7 @@
 															}
 , 															{
 																"key" : 1,
-																"value" : [ "snare_drum", 38 ]
+																"value" : [ "snare_drum", 1 ]
 															}
 , 															{
 																"key" : 2,
@@ -5589,27 +5589,27 @@
 															}
 , 															{
 																"key" : 3,
-																"value" : [ "open_hihat", 46 ]
+																"value" : [ "open_hihat", 9 ]
 															}
 , 															{
 																"key" : 4,
-																"value" : [ "low_tom", 41 ]
+																"value" : [ "low_tom", 5 ]
 															}
 , 															{
 																"key" : 5,
-																"value" : [ "mid_tom", 45 ]
+																"value" : [ "mid_tom", 6 ]
 															}
 , 															{
 																"key" : 6,
-																"value" : [ "high_tom", 48 ]
+																"value" : [ "high_tom", 7 ]
 															}
 , 															{
 																"key" : 7,
-																"value" : [ "hand_clap", 39 ]
+																"value" : [ "hand_clap", 3 ]
 															}
 , 															{
 																"key" : 8,
-																"value" : [ "rim_shot", 37 ]
+																"value" : [ "rim_shot", 2 ]
 															}
  ]
 													}
@@ -6217,7 +6217,7 @@
 															}
 , 															{
 																"key" : 1,
-																"value" : [ "snare_drum", 38 ]
+																"value" : [ "snare_drum", 1 ]
 															}
 , 															{
 																"key" : 2,
@@ -6225,27 +6225,27 @@
 															}
 , 															{
 																"key" : 3,
-																"value" : [ "open_hihat", 46 ]
+																"value" : [ "open_hihat", 9 ]
 															}
 , 															{
 																"key" : 4,
-																"value" : [ "low_tom", 41 ]
+																"value" : [ "low_tom", 5 ]
 															}
 , 															{
 																"key" : 5,
-																"value" : [ "mid_tom", 45 ]
+																"value" : [ "mid_tom", 6 ]
 															}
 , 															{
 																"key" : 6,
-																"value" : [ "high_tom", 48 ]
+																"value" : [ "high_tom", 7 ]
 															}
 , 															{
 																"key" : 7,
-																"value" : [ "hand_clap", 39 ]
+																"value" : [ "hand_clap", 3 ]
 															}
 , 															{
 																"key" : 8,
-																"value" : [ "rim_shot", 37 ]
+																"value" : [ "rim_shot", 2 ]
 															}
  ]
 													}
@@ -7637,7 +7637,7 @@
 			}
 , 			{
 				"box" : 				{
-					"bgcolor" : [ 0.0, 0.0, 0.0, 1.0 ],
+					"bgcolor" : [ 255.0, 0.0, 0.0, 1.0 ],
 					"fontname" : "Ableton Sans Light",
 					"fontsize" : 10.0,
 					"id" : "obj-19",
@@ -7647,7 +7647,7 @@
 					"patching_rect" : [ 291.25, 557.0, 164.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 6.0, 141.868613138686129, 142.0, 18.0 ],
-					"text" : "Start training...",
+					"text" : "Model is not trained yet",
 					"textcolor" : [ 0.999999284744263, 0.999974429607391, 0.999991297721863, 1.0 ],
 					"textjustification" : 1
 				}
