@@ -361,4 +361,15 @@ Max.addHandler("bend", (noise_range = 0.0)=>{
     }
 });
 
+// Generate a rhythm pattern
+Max.addHandler("export", async ()=>{
+    try {
+        await vae.exportAll();
+    } catch(error) {
+        console.log(error);
+        utils.error_status("export failed");
+    }
+});
+
+
 Max.outlet("loaded");

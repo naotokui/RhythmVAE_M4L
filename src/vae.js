@@ -3,6 +3,7 @@
 
 const Max = require('max-api');
 const tf = require('@tensorflow/tfjs-node');
+var fs = require('fs');
 
 const utils = require('./utils.js')
 const data = require('./data.js')
@@ -88,6 +89,37 @@ function isReadyToGenerate(){
 function setEpochs(e){
   numEpochs = e;
   Max.outlet("epoch", 0, numEpochs);
+}
+
+function exportAll(){
+  const exportRange = 100;
+  const threshold = 0.5;
+
+  let results = [];
+  for (let x = -exportRange; x <= exportRange; x++){
+    for (let y = -exportRange; y <= exportRange; y++){
+      let z1 = x / 50;
+      let z2 = y / 50;
+
+      // generate!
+      let [onsets, velocities, timeshifts] = generatePattern(z1, z2);
+
+      for (var i=0; i< NUM_DRUM_CLASSES; i++){
+        for (var j=0; j < LOOP_DURATION; j++){
+            if (onsets[i][j] > threshold) onsets[i][j] = 1.0;
+            else onsets[i][j] = 0.0;
+        }
+      }
+      
+      let dict = {};
+      dict["z1"] = z1;
+      dict["z2"] = z2;
+      dict["onsets"] = onsets;
+      results.push(dict);
+    }
+    console.log(x);
+  }
+  fs.writeFileSync('./export_all.json', JSON.stringify(results));
 }
 
 function generatePattern(z1, z2, noise_range=0.0){
@@ -447,4 +479,4 @@ exports.isReadyToGenerate = isReadyToGenerate;
 exports.isTraining = isTraining;
 exports.setEpochs = setEpochs;
 exports.bendModel = bendModel;
-
+exports.exportAll = exportAll;
