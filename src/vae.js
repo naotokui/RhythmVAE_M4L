@@ -105,8 +105,8 @@ function exportAll(){
       let [onsets, velocities, timeshifts] = generatePattern(z1, z2);
 
       let tracks = [];
-      let track = [];
       for (var i=0; i< NUM_DRUM_CLASSES; i++){
+        let track = [];
         for (var j=0; j < LOOP_DURATION; j++){
             if (onsets[i][j] > threshold) track.push(1.0);
             else track.push(0.0);
