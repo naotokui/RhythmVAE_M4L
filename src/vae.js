@@ -104,17 +104,20 @@ function exportAll(){
       // generate!
       let [onsets, velocities, timeshifts] = generatePattern(z1, z2);
 
+      let tracks = [];
+      let track = [];
       for (var i=0; i< NUM_DRUM_CLASSES; i++){
         for (var j=0; j < LOOP_DURATION; j++){
-            if (onsets[i][j] > threshold) onsets[i][j] = 1.0;
-            else onsets[i][j] = 0.0;
+            if (onsets[i][j] > threshold) track.push(1.0);
+            else track.push(0.0);
         }
+        tracks.push({ 'note': track})
       }
       
       let dict = {};
       dict["z1"] = z1;
       dict["z2"] = z2;
-      dict["onsets"] = onsets;
+      dict["onsets"] = tracks;
       results.push(dict);
     }
     console.log(x);
