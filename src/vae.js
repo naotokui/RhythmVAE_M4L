@@ -92,14 +92,15 @@ function setEpochs(e){
 }
 
 function exportAll(){
-  const exportRange = 100;
+  const exportRange = 200;
+  const exportResolution = 50;
   const threshold = 0.5;
 
   let results = [];
   for (let x = -exportRange; x <= exportRange; x++){
     for (let y = -exportRange; y <= exportRange; y++){
-      let z1 = x / 50;
-      let z2 = y / 50;
+      let z1 = x / exportResolution;
+      let z2 = y / exportResolution;
 
       // generate!
       let [onsets, velocities, timeshifts] = generatePattern(z1, z2);
@@ -108,8 +109,10 @@ function exportAll(){
       for (var i=0; i< NUM_DRUM_CLASSES; i++){
         let track = [];
         for (var j=0; j < LOOP_DURATION; j++){
-            if (onsets[i][j] > threshold) track.push(1.0);
-            else track.push(0.0);
+            if (onsets[i][j] > threshold) {
+              let vel = Math.floor(velocities[i][j]*127. + 1);
+              track.push(vel);
+            }else track.push(0);
         }
         tracks.push({ 'note': track})
       }
@@ -122,7 +125,8 @@ function exportAll(){
     }
     console.log(x);
   }
-  fs.writeFileSync('./export_all.json', JSON.stringify(results));
+  let range = exportRange /exportResolution;
+  fs.writeFileSync('./export_all-'+range+'.json', JSON.stringify(results));
 }
 
 function generatePattern(z1, z2, noise_range=0.0){

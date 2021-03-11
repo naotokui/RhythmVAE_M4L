@@ -17,6 +17,7 @@ const BEAT_RESOLUTION = require('./src/constants.js').BEAT_RESOLUTION;
 // VAE model and Utilities
 const utils = require('./src/utils.js');
 const vae = require('./src/vae.js');
+const { util } = require('@tensorflow/tfjs-node');
 
 // This will be printed directly to the Max console
 Max.post(`Loaded the ${path.basename(__filename)} script`);
@@ -365,6 +366,7 @@ Max.addHandler("bend", (noise_range = 0.0)=>{
 Max.addHandler("export", async ()=>{
     try {
         await vae.exportAll();
+        utils.log_status("exporting done!");
     } catch(error) {
         console.log(error);
         utils.error_status("export failed");
