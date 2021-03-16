@@ -2,7 +2,7 @@
 	"name" : "M4L.RhythmVAE",
 	"version" : 1,
 	"creationdate" : 3672837233,
-	"modificationdate" : 3695568438,
+	"modificationdate" : 3698760989,
 	"viewrect" : [ 25.0, 104.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -17,6 +17,19 @@
 				"singleton" : 				{
 					"bootpath" : "~/git/RhythmVAE_M4L",
 					"projectrelativepath" : ".."
+				}
+
+			}
+
+		}
+,
+		"media" : 		{
+			"vae_tex_210315_data.png" : 			{
+				"kind" : "imagefile",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Dropbox (Qosmo)/Qosmo チーム フォルダ/Projects (On Going)/Q21-NVIDIA_GTC/_shared/plugin-design/20210315",
+					"projectrelativepath" : "../../../Dropbox (Qosmo)/Qosmo チーム フォルダ/Projects (On Going)/Q21-NVIDIA_GTC/_shared/plugin-design/20210315"
 				}
 
 			}
