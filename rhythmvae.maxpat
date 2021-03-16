@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"openrect" : [ 27.0, 83.0, 1375.0, 163.0 ],
+		"openrect" : [ 27.0, 83.0, 1449.0, 163.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -31,7 +31,7 @@
 		"boxanimatetime" : 200,
 		"enablehscroll" : 1,
 		"enablevscroll" : 1,
-		"devicewidth" : 1375.0,
+		"devicewidth" : 1449.0,
 		"description" : "",
 		"digest" : "",
 		"tags" : "",
@@ -1505,7 +1505,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 428.25, -95.128646850585938, 72.0, 22.0 ],
-					"restore" : [ -165, 309 ],
+					"restore" : [ -133, 267 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
@@ -2161,39 +2161,39 @@
 																		"count" : 9,
 																		"data" : [ 																			{
 																				"key" : 0,
-																				"value" : [ "bass_drum", 0 ]
+																				"value" : [ "bass_drum", 36 ]
 																			}
 , 																			{
 																				"key" : 1,
-																				"value" : [ "snare_drum", 1 ]
+																				"value" : [ "snare_drum", 38 ]
 																			}
 , 																			{
 																				"key" : 2,
-																				"value" : [ "closed_hihat", 8 ]
+																				"value" : [ "closed_hihat", 42 ]
 																			}
 , 																			{
 																				"key" : 3,
-																				"value" : [ "open_hihat", 9 ]
+																				"value" : [ "open_hihat", 46 ]
 																			}
 , 																			{
 																				"key" : 4,
-																				"value" : [ "low_tom", 5 ]
+																				"value" : [ "low_tom", 41 ]
 																			}
 , 																			{
 																				"key" : 5,
-																				"value" : [ "mid_tom", 6 ]
+																				"value" : [ "mid_tom", 45 ]
 																			}
 , 																			{
 																				"key" : 6,
-																				"value" : [ "high_tom", 7 ]
+																				"value" : [ "high_tom", 48 ]
 																			}
 , 																			{
 																				"key" : 7,
-																				"value" : [ "hand_clap", 3 ]
+																				"value" : [ "hand_clap", 39 ]
 																			}
 , 																			{
 																				"key" : 8,
-																				"value" : [ "rim_shot", 2 ]
+																				"value" : [ "rim_shot", 37 ]
 																			}
  ]
 																	}
@@ -2808,39 +2808,39 @@
 																		"count" : 9,
 																		"data" : [ 																			{
 																				"key" : 0,
-																				"value" : [ "bass_drum", 0 ]
+																				"value" : [ "bass_drum", 36 ]
 																			}
 , 																			{
 																				"key" : 1,
-																				"value" : [ "snare_drum", 1 ]
+																				"value" : [ "snare_drum", 38 ]
 																			}
 , 																			{
 																				"key" : 2,
-																				"value" : [ "closed_hihat", 8 ]
+																				"value" : [ "closed_hihat", 42 ]
 																			}
 , 																			{
 																				"key" : 3,
-																				"value" : [ "open_hihat", 9 ]
+																				"value" : [ "open_hihat", 46 ]
 																			}
 , 																			{
 																				"key" : 4,
-																				"value" : [ "low_tom", 5 ]
+																				"value" : [ "low_tom", 41 ]
 																			}
 , 																			{
 																				"key" : 5,
-																				"value" : [ "mid_tom", 6 ]
+																				"value" : [ "mid_tom", 45 ]
 																			}
 , 																			{
 																				"key" : 6,
-																				"value" : [ "high_tom", 7 ]
+																				"value" : [ "high_tom", 48 ]
 																			}
 , 																			{
 																				"key" : 7,
-																				"value" : [ "hand_clap", 3 ]
+																				"value" : [ "hand_clap", 39 ]
 																			}
 , 																			{
 																				"key" : 8,
-																				"value" : [ "rim_shot", 2 ]
+																				"value" : [ "rim_shot", 37 ]
 																			}
  ]
 																	}
@@ -6658,7 +6658,6 @@
 , 			{
 				"box" : 				{
 					"activebgcolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ],
-					"hidden" : 1,
 					"id" : "obj-83",
 					"maxclass" : "live.numbox",
 					"numinlets" : 1,
@@ -6688,6 +6687,7 @@
 , 			{
 				"box" : 				{
 					"activebgcolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ],
+					"hidden" : 1,
 					"id" : "obj-123",
 					"maxclass" : "live.numbox",
 					"numinlets" : 1,
@@ -7461,6 +7461,7 @@
 , 			{
 				"box" : 				{
 					"bgcolor" : [ 0.483607888221741, 0.483681797981262, 0.483572363853455, 1.0 ],
+					"hidden" : 1,
 					"id" : "obj-136",
 					"maxclass" : "multislider",
 					"numinlets" : 1,
@@ -8571,39 +8572,39 @@
 										"count" : 9,
 										"data" : [ 											{
 												"key" : 0,
-												"value" : [ "bass_drum", 0 ]
+												"value" : [ "bass_drum", 36 ]
 											}
 , 											{
 												"key" : 1,
-												"value" : [ "snare_drum", 1 ]
+												"value" : [ "snare_drum", 38 ]
 											}
 , 											{
 												"key" : 2,
-												"value" : [ "closed_hihat", 8 ]
+												"value" : [ "closed_hihat", 42 ]
 											}
 , 											{
 												"key" : 3,
-												"value" : [ "open_hihat", 9 ]
+												"value" : [ "open_hihat", 46 ]
 											}
 , 											{
 												"key" : 4,
-												"value" : [ "low_tom", 5 ]
+												"value" : [ "low_tom", 41 ]
 											}
 , 											{
 												"key" : 5,
-												"value" : [ "mid_tom", 6 ]
+												"value" : [ "mid_tom", 45 ]
 											}
 , 											{
 												"key" : 6,
-												"value" : [ "high_tom", 7 ]
+												"value" : [ "high_tom", 48 ]
 											}
 , 											{
 												"key" : 7,
-												"value" : [ "hand_clap", 3 ]
+												"value" : [ "hand_clap", 39 ]
 											}
 , 											{
 												"key" : 8,
-												"value" : [ "rim_shot", 2 ]
+												"value" : [ "rim_shot", 37 ]
 											}
  ]
 									}
@@ -8886,39 +8887,39 @@
 						"count" : 9,
 						"data" : [ 							{
 								"key" : 0,
-								"value" : [ "bass_drum", 0 ]
+								"value" : [ "bass_drum", 36 ]
 							}
 , 							{
 								"key" : 1,
-								"value" : [ "snare_drum", 1 ]
+								"value" : [ "snare_drum", 38 ]
 							}
 , 							{
 								"key" : 2,
-								"value" : [ "closed_hihat", 8 ]
+								"value" : [ "closed_hihat", 42 ]
 							}
 , 							{
 								"key" : 3,
-								"value" : [ "open_hihat", 9 ]
+								"value" : [ "open_hihat", 46 ]
 							}
 , 							{
 								"key" : 4,
-								"value" : [ "low_tom", 5 ]
+								"value" : [ "low_tom", 41 ]
 							}
 , 							{
 								"key" : 5,
-								"value" : [ "mid_tom", 6 ]
+								"value" : [ "mid_tom", 45 ]
 							}
 , 							{
 								"key" : 6,
-								"value" : [ "high_tom", 7 ]
+								"value" : [ "high_tom", 48 ]
 							}
 , 							{
 								"key" : 7,
-								"value" : [ "hand_clap", 3 ]
+								"value" : [ "hand_clap", 39 ]
 							}
 , 							{
 								"key" : 8,
-								"value" : [ "rim_shot", 2 ]
+								"value" : [ "rim_shot", 37 ]
 							}
  ]
 					}
@@ -10929,7 +10930,6 @@
 , 			{
 				"box" : 				{
 					"bgcolor" : [ 0.483607888221741, 0.483681797981262, 0.483572363853455, 1.0 ],
-					"hidden" : 1,
 					"id" : "obj-91",
 					"maxclass" : "multislider",
 					"numinlets" : 1,
@@ -12824,8 +12824,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -12930,7 +12928,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 1987.66666666666697, 310.0, 128.0, 128.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 347.132373148754141, 0.0, 1097.971397999999908, 166.0 ],
+					"presentation_rect" : [ 351.132372736930847, 0.0, 1097.971397999999908, 166.0 ],
 					"proportion" : 0.5,
 					"rounded" : 15
 				}
@@ -12974,7 +12972,7 @@
 					"patching_rect" : [ 712.0, 307.0, 100.140000000000001, 10.0 ],
 					"pic" : "Macintosh HD:/Users/nao/git/RhythmVAE_M4L/images/ui-background1.png",
 					"presentation" : 1,
-					"presentation_rect" : [ -34.978898000000001, 0.0, 1679.1400000000001, 169.0 ]
+					"presentation_rect" : [ -34.978898000000001, 0.0, 1519.806821000000127, 169.0 ]
 				}
 
 			}
