@@ -97,8 +97,8 @@ function exportAll(){
   const threshold = 0.5;
 
   let results = [];
-  for (let x = -exportRange; x <= exportRange; x++){
-    for (let y = -exportRange; y <= exportRange; y++){
+  for (let x = -exportRange; x <= exportRange; x+=2){
+    for (let y = -exportRange; y <= exportRange; y+=2){
       let z1 = x / exportResolution;
       let z2 = y / exportResolution;
 
