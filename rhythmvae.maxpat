@@ -76,7 +76,7 @@
 					"patching_rect" : [ 2242.0, 177.464918481676193, 43.0, 87.131578947368411 ],
 					"pic" : "Macintosh HD:/Users/nao/git/RhythmVAE_M4L/images/vae_tex_210315_data.png",
 					"presentation" : 1,
-					"presentation_rect" : [ 6.91627037525177, 8.976560496274175, 58.625, 118.792763157894726 ]
+					"presentation_rect" : [ 2.0, 4.342331973122391, 65.54127037525177, 132.807311023536471 ]
 				}
 
 			}
@@ -90,9 +90,9 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 233.0, 259.0, 135.0, 18.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 16.16627037525177, 139.792198208996837, 40.0, 18.0 ],
+					"presentation_rect" : [ 17.22877037525177, 144.792198208996837, 40.0, 18.0 ],
 					"text" : "v0.80",
-					"textcolor" : [ 0.67843137254902, 0.67843137254902, 0.67843137254902, 1.0 ]
+					"textcolor" : [ 0.483607888221741, 0.483681797981262, 0.483572363853455, 1.0 ]
 				}
 
 			}
@@ -218,7 +218,7 @@
 					}
 ,
 					"spacing" : 0.0,
-					"stepcolor" : [ 1.0, 1.0, 1.0, 1.0 ],
+					"stepcolor" : [ 1.0, 1.0, 1.0, 0.67 ],
 					"varname" : "live.grid"
 				}
 
@@ -259,7 +259,7 @@
 					}
 ,
 					"spacing" : 0.0,
-					"stepcolor" : [ 1.0, 1.0, 1.0, 1.0 ],
+					"stepcolor" : [ 1.0, 1.0, 1.0, 0.67 ],
 					"varname" : "live.grid[1]"
 				}
 
@@ -1568,7 +1568,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 428.25, -95.128646850585938, 72.0, 22.0 ],
-					"restore" : [ -309, -280 ],
+					"restore" : [ 313, -411 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
@@ -12873,8 +12873,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -12997,7 +12995,7 @@
 , 			{
 				"box" : 				{
 					"angle" : 269.577713564497685,
-					"bgcolor" : [ 0.976470588235294, 1.0, 0.988235294117647, 1.0 ],
+					"bgcolor" : [ 0.854067504405975, 0.854198098182678, 0.854004979133606, 1.0 ],
 					"id" : "obj-133",
 					"maxclass" : "panel",
 					"mode" : 0,
