@@ -92,8 +92,8 @@ function setEpochs(e){
 }
 
 function exportAll(){
-  const exportRange = 200;
-  const exportResolution = 50;
+  const exportRange = 75;
+  const exportResolution = 25;
   const threshold = 0.5;
 
   let results = [];
