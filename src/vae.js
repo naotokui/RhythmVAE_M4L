@@ -92,13 +92,13 @@ function setEpochs(e){
 }
 
 function exportAll(){
-  const exportRange = 75;
-  const exportResolution = 25;
+  const exportRange = 24;
+  const exportResolution = 8;
   const threshold = 0.5;
 
   let results = [];
-  for (let x = -exportRange; x <= exportRange; x+=2){
-    for (let y = -exportRange; y <= exportRange; y+=2){
+  for (let x = -exportRange; x <= exportRange; x+=1){
+    for (let y = -exportRange; y <= exportRange; y+=1){
       let z1 = x / exportResolution;
       let z2 = y / exportResolution;
 
