@@ -1,7 +1,7 @@
 # M4L.RhythmVAE
 Max for Live(M4L) Rhythm generator using Variational Autoencoder(VAE) 
 
-<img src="./images/ui_screenshot_ise.png" width="400px">
+<img src="./images/ui_screenshot_ise.png" width="800px">
 
 
 ## Help me!!
