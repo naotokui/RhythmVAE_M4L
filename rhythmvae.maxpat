@@ -91,7 +91,7 @@
 					"patching_rect" : [ 233.0, 259.0, 135.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 17.22877037525177, 144.792198208996837, 40.0, 18.0 ],
-					"text" : "v0.80",
+					"text" : "v0.81",
 					"textcolor" : [ 0.483607888221741, 0.483681797981262, 0.483572363853455, 1.0 ]
 				}
 
@@ -12873,6 +12873,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
