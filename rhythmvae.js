@@ -115,15 +115,8 @@ function processPianoroll(midiFile, midi_map){
     //         }
     //     }
     // }
-    
-    // 2D array to tf.tensor2d
-    for (var i=0; i < onsets.length; i++){
-        if (getNumOfDrumOnsets(onsets[i]) > MIN_ONSETS_THRESHOLD){
-            train_data_onsets.push(tf.tensor2d(onsets[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
-            train_data_velocities.push(tf.tensor2d(velocities[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
-            train_data_timeshifts.push(tf.tensor2d(timeshifts[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
-        }
-    }
+
+    return [onsets, velocities, timeshifts];
 }
 
 function processMidiFile(filename, mapping = 0){
@@ -136,16 +129,21 @@ function processMidiFile(filename, mapping = 0){
         return false;
     }
 
-    var tempo = getTempo(midiFile);
-    // console.log("tempo:", tempo);
-    // console.log("signature:", midiFile.header.timeSignatures);
-
     // select mapping
     if (mapping == 0) midi_map = MIDI_DRUM_MAP_STRICT; 
     else midi_map = MIDI_DRUM_MAP;
 
-    processPianoroll(midiFile, midi_map);
-    // console.log("processed:", filename);
+    // process midifile
+    let [onsets, velocities, timeshifts] = processPianoroll(midiFile, midi_map);
+
+    // 2D array to tf.tensor2d -> store training dataset
+    for (var i=0; i < onsets.length; i++){
+        if (getNumOfDrumOnsets(onsets[i]) > MIN_ONSETS_THRESHOLD){
+            train_data_onsets.push(tf.tensor2d(onsets[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+            train_data_velocities.push(tf.tensor2d(velocities[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+            train_data_timeshifts.push(tf.tensor2d(timeshifts[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+        }
+    }
     return true;
 }
 
@@ -292,10 +290,6 @@ Max.addHandler("encode_add", (pitch, time, duration, velocity, muted, mapping) =
 });
 
 Max.addHandler("encode_done", () =>  {
-    utils.post(input_onset);
-    utils.post(input_velocity);
-    utils.post(input_timeshift);
-
     // Encoding!
     var inputOn     = tf.tensor2d(input_onset, [NUM_DRUM_CLASSES, LOOP_DURATION])
     var inputVel    = tf.tensor2d(input_velocity, [NUM_DRUM_CLASSES, LOOP_DURATION])
@@ -306,6 +300,38 @@ Max.addHandler("encode_done", () =>  {
     utils.post(zs)
     Max.outlet("zs", zs[0], zs[1]);  
 });
+
+Max.addHandler("encode_midi", (filename, mapping = 0) => {
+    utils.post("encode_midi", filename);
+
+    // // Read MIDI file into a buffer
+    var input = fs.readFileSync(filename)
+    var midiFile = new Midi(input);  
+    if (isValidMIDIFile(midiFile) == false){
+        utils.error("Invalid MIDI file: " + filename);
+        return false;
+    }
+
+    // select mapping
+    if (mapping == 0) midi_map = MIDI_DRUM_MAP_STRICT; 
+    else midi_map = MIDI_DRUM_MAP;
+
+    // process midifile
+    let [onsets, velocities, timeshifts] = processPianoroll(midiFile, midi_map);
+
+    // convert to tensor2d - here we are only interested in the first loop
+    let inputOn = tf.tensor2d(onsets[0], [NUM_DRUM_CLASSES, LOOP_DURATION])
+    let inputVel    = tf.tensor2d(velocities[0], [NUM_DRUM_CLASSES, LOOP_DURATION])
+    let inputTS     = tf.tensor2d(timeshifts[0], [NUM_DRUM_CLASSES, LOOP_DURATION])
+    
+    // Encode!
+    let zs = vae.encodePattern(inputOn, inputVel, inputTS);
+    
+    // output encoded z vector
+    utils.post(zs)
+    Max.outlet("zs", zs[0], zs[1]);  
+});
+
 
 // Clear training data 
 Max.addHandler("clear_train", ()=>{
