@@ -344,8 +344,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 238.0, 200.0, 634.0, 35.0 ],
-					"text" : "nseq 9, nstep 48, mode 0, loopruler 0, usestepcolor2 1, pitch_active 1, velocity_active 1, duration_active 1, loop 1 48, display_seq 1, target_seq 1"
+					"patching_rect" : [ 238.0, 200.0, 714.0, 35.0 ],
+					"text" : "nseq 9, nstep 16, mode 0, loopruler 0, usestepcolor2 1, pitch_active 1, velocity_active 1, duration_active 1, loop 1 16, display_seq 1, target_seq 1"
 				}
 
 			}
