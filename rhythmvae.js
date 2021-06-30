@@ -203,45 +203,70 @@ Max.addHandler("generate", (z1, z2, threshold, noise_range = 0.0)=>{
     }
 });
 
-async function generatePattern(z1, z2, threshold, noise_range){
-    if (vae.isReadyToGenerate()){    
-      if (isGenerating) return;
-  
-      isGenerating = true;
-      let [onsets, velocities, timeshifts] = vae.generatePattern(z1, z2, noise_range);
-      Max.outlet("matrix_clear", 1); // clear all
-      for (var i=0; i< NUM_DRUM_CLASSES; i++){
-          var sequence = []; // for velocity
-          var sequenceTS = []; // for timeshift
-          // output for matrix view
-          for (var j=0; j < LOOP_DURATION; j++){
-              // if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
-              if (onsets[i][j] > threshold){
-                Max.outlet("matrix_output", j + 1, i + 1, 1); // index for live.grid starts from 1
-           
-                // for live.step
-                sequence.push(Math.floor(velocities[i][j]*127. + 1)); // 0-1 -> 1-127
-                sequenceTS.push(Math.floor(utils.scale(timeshifts[i][j], -1., 1, 0, 127))); // -1 - 1 -> 0 - 127
-              } else {
-                sequence.push(0);
-                sequenceTS.push(64);
-              }
-          }
-  
-          // output for live.step object
-          Max.outlet("seq_output", i+1, sequence.join(" "));
-          Max.outlet("timeshift_output", i+1, sequenceTS.join(" "));
-      }
-      Max.outlet("generated", 1);
-      utils.log_status("");
-      isGenerating = false;
-  } else {
-    if (vae.isTraining()){
-        utils.error_status("Still training...");
-    } else {
-        utils.error_status("Model is not trained yet");
+// Generate a rhythm pattern
+Max.addHandler("generate_grid", (z1, z2, threshold, step = 0.05)=>{
+    try {
+        generatePatternGrid(z1, z2, threshold, step);
+    } catch(error) {
+        utils.error_status(error);
     }
-  }
+});
+
+
+async function generatePatternGrid(z1, z2, threshold, step){
+    if (isGenerating) return;
+    let [onsetGrid, zGrid] = vae.generatePatternGrid(z1, z2, step);
+    
+    Max.outlet("grid_matrix_clear", 1); // clear 
+    for (var g=0; g < onsetGrid.length; g++){
+        let onsets = onsetGrid[g];
+        let z = zGrid[g];
+        Max.outlet("grid_matrix_z", g, z[0], z[1]); // latent vector z of the grid
+        for (var i=0; i< NUM_DRUM_CLASSES; i++){
+            // output for matrix view
+            for (var j=0; j < LOOP_DURATION; j++){
+                if (onsets[i][j] > threshold){
+                    Max.outlet("grid_matrix_output", g, 'setcell', j + 1, i + 1, 1); // index for live.grid starts from 1
+                }
+            }
+        }
+    }
+    Max.outlet("grid_generated", 1);
+    isGenerating = false;
+}
+
+
+async function generatePattern(z1, z2, threshold, noise_range){ 
+    if (isGenerating) return;
+
+    isGenerating = true;
+    let [onsets, velocities, timeshifts] = vae.generatePattern(z1, z2, noise_range);
+    Max.outlet("matrix_clear", 1); // clear all
+    for (var i=0; i< NUM_DRUM_CLASSES; i++){
+        var sequence = []; // for velocity
+        var sequenceTS = []; // for timeshift
+        // output for matrix view
+        for (var j=0; j < LOOP_DURATION; j++){
+            // if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
+            if (onsets[i][j] > threshold){
+            Max.outlet("matrix_output", j + 1, i + 1, 1); // index for live.grid starts from 1
+        
+            // for live.step
+            sequence.push(Math.floor(velocities[i][j]*127. + 1)); // 0-1 -> 1-127
+            sequenceTS.push(Math.floor(utils.scale(timeshifts[i][j], -1., 1, 0, 127))); // -1 - 1 -> 0 - 127
+            } else {
+            sequence.push(0);
+            sequenceTS.push(64);
+            }
+        }
+
+        // output for live.step object
+        Max.outlet("seq_output", i+1, sequence.join(" "));
+        Max.outlet("timeshift_output", i+1, sequenceTS.join(" "));
+    }
+    Max.outlet("generated", 1);
+    utils.log_status("");
+    isGenerating = false;
 }
 
 

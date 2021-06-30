@@ -90,7 +90,25 @@ function setEpochs(e){
   Max.outlet("epoch", 0, numEpochs);
 }
 
+// Generate 3 x 3 matrix
+function generatePatternGrid(z1, z2, step){
+  let onsetGrids = [];
+  let zGrid = [];
+  for  (let y = -1; y <= 1; y++){
+    for  (let x = -1; x <= 1; x++){
+      z1_ = z1 + x * step;
+      z2_ = z2 + y * step;
+      let [onsets, velocities, timeshifts] = generatePattern(z1_, z2_, 0.0);
+      onsetGrids.push(onsets);
+      zGrid.push([z1_, z2_]);
+    }
+  }
+  return [onsetGrids, zGrid];
+}
+
 function generatePattern(z1, z2, noise_range=0.0){
+  if (!checkIfModelReady()) return;
+
   var zs;
   if (z1 === 'undefined' || z2 === 'undefined'){
     zs = tf.randomNormal([1, 2]);
@@ -436,11 +454,24 @@ function range(start, edge, step) {
   return ret;
 }
 
+function checkIfModelReady(){
+  if (isReadyToGenerate()) return true;
+  else {
+    if (isTraining()){
+        utils.error_status("Still training...");
+    } else {
+        utils.error_status("Model is not trained yet");
+    }
+    throw Error("Model is not ready to generate.");
+  }
+}
+
 exports.loadAndTrain = loadAndTrain;
 exports.saveModel = saveModel;
 exports.loadModel = loadModel;
 exports.clearModel = clearModel;
 exports.generatePattern = generatePattern;
+exports.generatePatternGrid = generatePatternGrid;
 exports.encodePattern = encodePattern;
 exports.stopTraining = stopTraining;
 exports.isReadyToGenerate = isReadyToGenerate;
