@@ -462,7 +462,8 @@ function checkIfModelReady(){
     } else {
         utils.error_status("Model is not trained yet");
     }
-    throw Error("Model is not ready to generate.");
+    // throw Error("Model is not ready to generate.");
+    return false;
   }
 }
 

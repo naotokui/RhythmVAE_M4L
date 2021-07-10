@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 8,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 867.0, 335.0, 973.0, 427.0 ],
+		"rect" : [ 34.0, 335.0, 1806.0, 750.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -61,7 +61,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -165,19 +165,19 @@
 											}
 , 											{
 												"key" : 1,
-												"value" : [ "snare_drum", 38 ]
+												"value" : [ "snare_drum", 49 ]
 											}
 , 											{
 												"key" : 2,
-												"value" : [ "closed_hihat", 42 ]
+												"value" : [ "closed_hihat", 43 ]
 											}
 , 											{
 												"key" : 3,
-												"value" : [ "open_hihat", 46 ]
+												"value" : [ "open_hihat", 44 ]
 											}
 , 											{
 												"key" : 4,
-												"value" : [ "low_tom", 41 ]
+												"value" : [ "low_tom", 40 ]
 											}
 , 											{
 												"key" : 5,
@@ -189,11 +189,11 @@
 											}
 , 											{
 												"key" : 7,
-												"value" : [ "hand_clap", 39 ]
+												"value" : [ "hand_clap", 45 ]
 											}
 , 											{
 												"key" : 8,
-												"value" : [ "rim_shot", 37 ]
+												"value" : [ "rim_shot", 42 ]
 											}
  ]
 									}
@@ -339,13 +339,12 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-25",
-					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 238.0, 200.0, 714.0, 35.0 ],
-					"text" : "nseq 9, nstep 16, mode 0, loopruler 0, usestepcolor2 1, pitch_active 1, velocity_active 1, duration_active 1, loop 1 16, display_seq 1, target_seq 1"
+					"patching_rect" : [ 238.0, 200.0, 781.0, 22.0 ],
+					"text" : "nseq 9, nstep 32, mode 0, loopruler 0, usestepcolor2 1, pitch_active 1, velocity_active 1, duration_active 1, loop 1 32, display_seq 1, target_seq 1"
 				}
 
 			}

@@ -100,7 +100,7 @@ const MIDI_DRUM_MAP_STRICT = {
 
 const NUM_DRUM_CLASSES = DRUM_CLASSES.length;
 const BEAT_RESOLUTION = 4;
-const LOOP_DURATION = BEAT_RESOLUTION * 4 * 1; // 2bars x 16th note
+const LOOP_DURATION = BEAT_RESOLUTION * 4 * 2; // 2bars x 16th note
 
 const MIN_ONSETS_THRESHOLD = 5; // ignore loops with onsets less than this num
 
