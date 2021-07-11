@@ -17,6 +17,7 @@ const BEAT_RESOLUTION = require('./src/constants.js').BEAT_RESOLUTION;
 // VAE model and Utilities
 const utils = require('./src/utils.js');
 const vae = require('./src/vae.js');
+const { assert } = require('console');
 
 // This will be printed directly to the Max console
 Max.post(`Loaded the ${path.basename(__filename)} script`);
@@ -26,6 +27,9 @@ var train_data_onsets = [];
 var train_data_velocities = []; 
 var train_data_timeshifts = [];
 var isGenerating = false;
+
+let currentOnsets, currentVels, currentTS = null;
+let currentThreshold = 0.5;
 
 function isValidMIDIFile(midiFile){
     if (midiFile.header.tempos.length > 1){
@@ -240,7 +244,14 @@ async function generatePattern(z1, z2, threshold, noise_range){
     if (isGenerating) return;
 
     isGenerating = true;
-    let [onsets, velocities, timeshifts] = vae.generatePattern(z1, z2, noise_range);
+    [currentOnsets, currentVels, currentTS] = vae.generatePattern(z1, z2, noise_range);
+    currentThreshold = threshold;
+
+    outputPattern(currentOnsets, currentVels, currentTS, threshold);
+    isGenerating = false;
+}
+
+function outputPattern(onsets, velocities, timeshifts, threshold){
     Max.outlet("matrix_clear", 1); // clear all
     for (var i=0; i< NUM_DRUM_CLASSES; i++){
         var sequence = []; // for velocity
@@ -266,9 +277,19 @@ async function generatePattern(z1, z2, threshold, noise_range){
     }
     Max.outlet("generated", 1);
     utils.log_status("");
-    isGenerating = false;
 }
 
+// Generate a rhythm pattern
+Max.addHandler("add_onset", (seq_index, vel, ts, beat_index)=>{
+    assert( seq_index >= 0 && beat_index >= 0 && seq_index < NUM_DRUM_CLASSES && beat_index < LOOP_DURATION) 
+    if (!currentOnsets) return;
+
+    currentOnsets[seq_index][beat_index] = 1;
+    currentVels[seq_index][beat_index] = vel;
+    currentTS[seq_index][beat_index] = ts;
+
+    outputPattern(currentOnsets, currentVels, currentTS, currentThreshold);
+});
 
 
 // Start encoding... reset input matrix
