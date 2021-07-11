@@ -279,7 +279,7 @@ function outputPattern(onsets, velocities, timeshifts, threshold){
     utils.log_status("");
 }
 
-// Generate a rhythm pattern
+// Record input manually
 Max.addHandler("add_onset", (seq_index, vel, ts, beat_index)=>{
     assert( seq_index >= 0 && beat_index >= 0 && seq_index < NUM_DRUM_CLASSES && beat_index < LOOP_DURATION) 
     if (!currentOnsets) return;
@@ -291,6 +291,19 @@ Max.addHandler("add_onset", (seq_index, vel, ts, beat_index)=>{
     outputPattern(currentOnsets, currentVels, currentTS, currentThreshold);
 });
 
+// Project the current rhythm into the latent space
+Max.addHandler("encode_current", () =>  {
+    // Encoding!
+    var inputOn     = tf.tensor2d(currentOnsets, [NUM_DRUM_CLASSES, LOOP_DURATION])
+    var inputVel    = tf.tensor2d(currentVels, [NUM_DRUM_CLASSES, LOOP_DURATION])
+    var inputTS     = tf.tensor2d(currentTS, [NUM_DRUM_CLASSES, LOOP_DURATION])
+    let zs = vae.encodePattern(inputOn, inputVel, inputTS);
+    if (zs == null) return;
+
+    // output encoded z vector
+    utils.post(zs)
+    Max.outlet("zs", zs[0], zs[1]);  
+});
 
 // Start encoding... reset input matrix
 var input_onset;
@@ -407,6 +420,24 @@ Max.addHandler("loadmodel", (path)=>{
     filepath = "file://" + path;
     vae.loadModel(filepath);
     utils.log_status("Model loaded!");
+});
+
+
+Max.addHandler("savemodel_encoder", (path)=>{
+    // check if already trained or not
+    if (vae.isReadyToGenerate()){
+        filepath = "file://" + path;
+        vae.saveEncoderModel(filepath);
+        utils.log_status("Encoder Model saved.");
+    } else {
+        utils.error_status("Train a model first!");
+    }
+});
+
+Max.addHandler("loadmodel_encoder", (path)=>{
+    filepath = "file://" + path;
+    vae.loadEncoderModel(filepath);
+    utils.log_status("Encoder Model loaded!");
 });
 
 Max.addHandler("clearmodel", ()=>{

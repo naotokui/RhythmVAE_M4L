@@ -137,6 +137,16 @@ async function loadModel(filepath){
   model.loadModel(filepath);
 }
 
+async function saveEncoderModel(filepath){
+  model.saveEncoderModel(filepath);
+}
+
+async function loadEncoderModel(filepath){
+  if (!model) initModel();
+  model.loadEncoderModel(filepath);
+}
+
+
 function clearModel(){
   model = null;
 }
@@ -171,7 +181,10 @@ class sampleLayer extends tf.layers.Layer {
   getClassName() {
     return 'sampleLayer';
   }
+
+  static className = "sampleLayer";
 }
+tf.serialization.registerClass(sampleLayer);
 
   
 class ConditionalVAE {
@@ -320,6 +333,7 @@ class ConditionalVAE {
 
   async train(data, trainConfig) {
     this.isTrained = false;
+    this.isTrainedEncoder = false;
     this.isTraining = true;
     this.shouldStopTraining = false;
     if (trainConfig != undefined){
@@ -379,6 +393,7 @@ class ConditionalVAE {
       await tf.nextFrame();
     }
     this.isTrained = true;
+    this.isTrainedEncoder = true;
     this.isTraining = false;
     Max.outlet("training", 0);
     utils.log_status("Training finished!");
@@ -417,10 +432,21 @@ class ConditionalVAE {
     this.isTrained = true;
   }
 
+  async saveEncoderModel(path){
+    const saved = await this.encoder.save(path);
+    utils.post(saved);
+  }
+
+  async loadEncoderModel(path){
+    this.encoder = await tf.loadLayersModel(path);
+    this.isTrainedEncoder = true;
+    utils.post("Encoder loaded");
+  }
+
   encode(inputOn, inputVel, inputTS){
-    if (!this.encoder) {
-      utils.error_status("Model is not trained yet");
-      return;
+    if (!this.isTrainedEncoder || !this.encoder) {
+      utils.error_status("EncoderModel is not trained yet");
+      return null;
     }
 
     // reshaping...
@@ -470,6 +496,8 @@ function checkIfModelReady(){
 exports.loadAndTrain = loadAndTrain;
 exports.saveModel = saveModel;
 exports.loadModel = loadModel;
+exports.saveEncoderModel = saveEncoderModel;
+exports.loadEncoderModel = loadEncoderModel;
 exports.clearModel = clearModel;
 exports.generatePattern = generatePattern;
 exports.generatePatternGrid = generatePatternGrid;
