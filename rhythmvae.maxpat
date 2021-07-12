@@ -5931,13 +5931,13 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-11",
-									"linecount" : 3,
+									"linecount" : 2,
 									"maxclass" : "message",
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 526.0, 584.0, 51.0, 49.0 ],
-									"text" : "set -468 -472"
+									"patching_rect" : [ 526.0, 584.0, 51.0, 35.0 ],
+									"text" : "set -232 13"
 								}
 
 							}
@@ -6512,7 +6512,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 417.0, -95.128646850585938, 72.0, 22.0 ],
-					"restore" : [ -468, -472 ],
+					"restore" : [ -232, 13 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
@@ -15626,7 +15626,7 @@
 									"numoutlets" : 3,
 									"outlettype" : [ "", "", "" ],
 									"patching_rect" : [ 717.0, 238.0, 128.0, 22.0 ],
-									"restore" : [ "/Users/nao/Documents/GitHub/RhythmVAE_M4L/release/models/32_step_models/encoder_house_2021711_10424.model/model.json" ],
+									"restore" : [ "/Users/nao/Documents/GitHub/RhythmVAE_M4L/release/models/32_step_models/all_encoder_2021711_144612.model/model.json" ],
 									"saved_object_attributes" : 									{
 										"parameter_enable" : 0,
 										"parameter_mappable" : 0
@@ -19828,8 +19828,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
