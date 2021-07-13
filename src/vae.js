@@ -13,11 +13,11 @@ const LOOP_DURATION = require('./constants.js').LOOP_DURATION;
 
 const ORIGINAL_DIM = require('./constants.js').ORIGINAL_DIM;
 const INTERMEDIATE_DIM = 512;
-const LATENT_DIM = 2;
+const LATENT_DIM = 4;
 
 const BATCH_SIZE = 64;
 const TEST_BATCH_SIZE = 128;
-const TS_LOSS_COEF = 5.0;  // coef for timeshift loss
+const TS_LOSS_COEF = 2.0;  // coef for timeshift loss
 const VEL_LOSS_COEF = 2.5;  // coef for velocity loss
 
 
@@ -25,7 +25,7 @@ let dataHandlerOnset;
 let dataHandlerVelocity;
 let dataHandlerTimeshift;
 let model = null;
-let numEpochs = 150; // default # of epochs
+let numEpochs = 300; // default # of epochs
 
 async function loadAndTrain(train_data_onset, train_data_velocity, train_data_timeshift) {
   console.assert(train_data_onset.length == train_data_velocity.length && train_data_velocity.length == train_data_timeshift.length);
@@ -210,31 +210,35 @@ class ConditionalVAE {
 
     // Onset input
     const encoderInputsOn = tf.input({shape: [originalDim]});
-    const x1LinearOn = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsOn);
+    const x1LinearOn = tf.layers.dense({units: 256, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsOn);
     const x1NormalisedOn = tf.layers.batchNormalization({axis: 1}).apply(x1LinearOn);
     const x1On = tf.layers.leakyReLU().apply(x1NormalisedOn);
     
     // Velocity input
     const encoderInputsVel = tf.input({shape: [originalDim]});
-    const x1LinearVel = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsVel);
+    const x1LinearVel = tf.layers.dense({units: 256, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsVel);
     const x1NormalisedVel = tf.layers.batchNormalization({axis: 1}).apply(x1LinearVel);
     const x1Vel = tf.layers.leakyReLU().apply(x1NormalisedVel);
 
     // Timeshift input
     const encoderInputsTS= tf.input({shape: [originalDim]});
-    const x1LinearTS = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsTS);
+    const x1LinearTS = tf.layers.dense({units: 256, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsTS);
     const x1NormalisedTS = tf.layers.batchNormalization({axis: 1}).apply(x1LinearTS);
     const x1TS = tf.layers.leakyReLU().apply(x1NormalisedTS);
 
     // Merged
     const concatLayer = tf.layers.concatenate();
     const x1Merged = concatLayer.apply([x1On, x1Vel, x1TS]);
-    const x2Linear = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x1Merged);
+    const x2Linear = tf.layers.dense({units: 512, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x1Merged);
     const x2Normalised = tf.layers.batchNormalization({axis: 1}).apply(x2Linear);
     const x2 = tf.layers.leakyReLU().apply(x2Normalised);
 
-    const zMean = tf.layers.dense({units: latentDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x2);
-    const zLogVar = tf.layers.dense({units: latentDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x2);
+    const x3Linear2 = tf.layers.dense({units: 512, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x2);
+    const x3Normalised2 = tf.layers.batchNormalization({axis: 1}).apply(x3Linear2);
+    const x32 = tf.layers.leakyReLU().apply(x3Normalised2);
+
+    const zMean = tf.layers.dense({units: latentDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x32);
+    const zLogVar = tf.layers.dense({units: latentDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x32);
     const z = new sampleLayer().apply([zMean, zLogVar]);
 
     const encoderInputs = [encoderInputsOn, encoderInputsVel, encoderInputsTS];
@@ -244,24 +248,29 @@ class ConditionalVAE {
 
     // build decoder model
     const decoderInputs = tf.input({shape: [latentDim]});
-    const x3Linear = tf.layers.dense({units: intermediateDim * 2.0, useBias: true, kernelInitializer: 'glorotNormal'}).apply(decoderInputs);
+
+    const x3Linear = tf.layers.dense({units: 512, useBias: true, kernelInitializer: 'glorotNormal'}).apply(decoderInputs);
     const x3Normalised = tf.layers.batchNormalization({axis: 1}).apply(x3Linear);
     const x3 = tf.layers.leakyReLU().apply(x3Normalised);
 
+    const x3Linear3 = tf.layers.dense({units: 512, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
+    const x3Normalised3 = tf.layers.batchNormalization({axis: 1}).apply(x3Linear3);
+    const x33 = tf.layers.leakyReLU().apply(x3Normalised3);
+
     // Decoder for onsets
-    const x4LinearOn = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
+    const x4LinearOn = tf.layers.dense({units: 512, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
     const x4NormalisedOn = tf.layers.batchNormalization({axis: 1}).apply(x4LinearOn);
     const x4On = tf.layers.leakyReLU().apply(x4NormalisedOn);
     const decoderOutputsOn = tf.layers.dense({units: originalDim, activation: 'sigmoid'}).apply(x4On);
 
     // Decoder for velocity
-    const x4LinearVel = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
+    const x4LinearVel = tf.layers.dense({units: 512, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
     const x4NormalisedVel = tf.layers.batchNormalization({axis: 1}).apply(x4LinearVel);
     const x4Vel = tf.layers.leakyReLU().apply(x4NormalisedVel);
     const decoderOutputsVel = tf.layers.dense({units: originalDim, activation: 'sigmoid'}).apply(x4Vel);
 
     // Decoder for timeshift
-    const x4LinearTS = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
+    const x4LinearTS = tf.layers.dense({units: 512, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
     const x4NormalisedTS = tf.layers.batchNormalization({axis: 1}).apply(x4LinearTS);
     const x4TS = tf.layers.leakyReLU().apply(x4NormalisedTS);
     const decoderOutputsTS = tf.layers.dense({units: originalDim, activation: 'tanh'}).apply(x4TS);
@@ -321,11 +330,11 @@ class ConditionalVAE {
       let timeshift_loss = this.mseLoss(yTrueTS, yTS);
       timeshift_loss = timeshift_loss.mul(TS_LOSS_COEF);
 
-      const kl_loss = this.klLoss(z_mean, z_log_var);
-      // console.log("onset_loss", tf.mean(onset_loss).dataSync());
-      // console.log("velocity_loss",  tf.mean(velocity_loss).dataSync());
-      // console.log("timeshift_loss",  tf.mean(timeshift_loss).dataSync());
-      // console.log("kl_loss",  tf.mean(kl_loss).dataSync());
+      let kl_loss = this.klLoss(z_mean, z_log_var);
+      // utils.post("onset_loss: " + tf.mean(onset_loss).dataSync());
+      // utils.post("velocity_loss: " +  tf.mean(velocity_loss).dataSync());
+      // utils.post("timeshift_loss: " +  tf.mean(timeshift_loss).dataSync());
+      // utils.post("kl_loss: " +  tf.mean(kl_loss).dataSync());
       const total_loss = tf.mean(onset_loss.add(velocity_loss).add(timeshift_loss).add(kl_loss)); // averaged in the batch
       return total_loss;
     });
