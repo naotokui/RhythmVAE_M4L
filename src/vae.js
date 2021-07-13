@@ -20,16 +20,16 @@ const LATENT_DIM = 2;
 const BATCH_SIZE = 16;
 const TEST_BATCH_SIZE = 16;
 
-const ONSET_LOSS_COEF = 4.0;  // weight for onset loss
-const VEL_LOSS_COEF = 1.0;  // weight for velocity loss
-const TS_LOSS_COEF = 1.0;  // weight for timeshift loss
+const ONSET_LOSS_COEF = 1.0;  // weight for onset loss
+const VEL_LOSS_COEF = 2.5;  // weight for velocity loss
+const TS_LOSS_COEF = 2.0;  // weight for timeshift loss
 
 
 let dataHandlerOnset; 
 let dataHandlerVelocity;
 let dataHandlerTimeshift;
 let model;
-let numEpochs = 150; // default # of epochs
+let numEpochs = 300; // default # of epochs
 
 async function loadAndTrain(train_data_onset, train_data_velocity, train_data_timeshift) {
   console.assert(train_data_onset.length == train_data_velocity.length && train_data_velocity.length == train_data_timeshift.length);
@@ -294,7 +294,8 @@ class ConditionalVAE {
 
       const kl_loss = this.klLoss(z_mean, z_log_var);
 
-      // console.log("onset_loss", onset_loss.shape);
+      const batch_size = onset_loss.shape[0]; // averaged by batch size
+      // console.log("onset_loss", );
       // console.log("velocity_loss", velocity_loss.shape);
       // console.log("timeshift_loss", timeshift_loss.shape);
       // console.log("kl_loss", kl_loss.shape);
@@ -303,7 +304,8 @@ class ConditionalVAE {
       // console.log("velocity_loss",  tf.mean(velocity_loss).dataSync());
       // console.log("timeshift_loss",  tf.mean(timeshift_loss).dataSync());
       // console.log("kl_loss",  tf.mean(kl_loss).dataSync());
-      const total_loss = tf.mean(onset_loss.add(velocity_loss).add(timeshift_loss).add(kl_loss)); // averaged in the batch
+      let total_loss = tf.mean(onset_loss.add(velocity_loss).add(timeshift_loss).add(kl_loss)); // averaged in the batch
+      total_loss = total_loss.mul(1.0/batch_size);
       return total_loss;
     });
   }
