@@ -263,6 +263,7 @@ class ConditionalVAE {
   mseLoss(yTrue, yPred) {
     return tf.tidy(() => {
       let mse_loss = tf.metrics.meanSquaredError(yTrue, yPred);
+      // console.log(mse_loss.shape);
       // mse_loss = mse_loss.mul(tf.scalar(yPred.shape[1]));
       mse_loss = tf.sum(mse_loss, -1);
       return mse_loss;
@@ -293,8 +294,6 @@ class ConditionalVAE {
       timeshift_loss = timeshift_loss.mul(TS_LOSS_COEF);
 
       const kl_loss = this.klLoss(z_mean, z_log_var);
-
-      const batch_size = onset_loss.shape[0]; // averaged by batch size
       // console.log("onset_loss", );
       // console.log("velocity_loss", velocity_loss.shape);
       // console.log("timeshift_loss", timeshift_loss.shape);
@@ -305,7 +304,6 @@ class ConditionalVAE {
       // console.log("timeshift_loss",  tf.mean(timeshift_loss).dataSync());
       // console.log("kl_loss",  tf.mean(kl_loss).dataSync());
       let total_loss = tf.mean(onset_loss.add(velocity_loss).add(timeshift_loss).add(kl_loss)); // averaged in the batch
-      total_loss = total_loss.mul(1.0/batch_size);
       return total_loss;
     });
   }

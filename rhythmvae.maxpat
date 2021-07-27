@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 8,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -64,13 +64,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-140",
-					"linecount" : 4,
+					"linecount" : 3,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 93.0, 59.5, 213.0, 62.0 ],
-					"text" : "\"Detroit:/MIDI_DATASET/800000_Drum_Percussion_MIDI_Archive/GM MIDI/GM - Electronic/GM - Electronic GA/Old Skool/\""
+					"patching_rect" : [ 93.0, 59.5, 213.0, 49.0 ],
+					"text" : "\"Untitled 5:/Users/nao/Desktop/GM - Electronic GM/Single Track/Test_sets/\""
 				}
 
 			}
@@ -155,7 +155,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -381,7 +381,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -888,9 +888,9 @@
 					"patching_rect" : [ 256.666666666666629, 716.0, 140.0, 119.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 216.966102000000006, 99.635035999999999, 85.0, 61.993609999999997 ],
-					"setminmax" : [ 0.0, 200.0 ],
+					"setminmax" : [ 0.0, 30.0 ],
 					"setstyle" : 1,
-					"size" : 400,
+					"size" : 150,
 					"slidercolor" : [ 0.345098, 0.513725, 0.572549, 1.0 ]
 				}
 
@@ -1281,7 +1281,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1877,7 +1877,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1989,39 +1989,39 @@
 										"count" : 9,
 										"data" : [ 											{
 												"key" : 0,
-												"value" : [ "bass_drum", 0 ]
+												"value" : [ "bass_drum", 36 ]
 											}
 , 											{
 												"key" : 1,
-												"value" : [ "snare_drum", 1 ]
+												"value" : [ "snare_drum", 38 ]
 											}
 , 											{
 												"key" : 2,
-												"value" : [ "closed_hihat", 8 ]
+												"value" : [ "closed_hihat", 42 ]
 											}
 , 											{
 												"key" : 3,
-												"value" : [ "open_hihat", 9 ]
+												"value" : [ "open_hihat", 46 ]
 											}
 , 											{
 												"key" : 4,
-												"value" : [ "low_tom", 5 ]
+												"value" : [ "low_tom", 41 ]
 											}
 , 											{
 												"key" : 5,
-												"value" : [ "mid_tom", 6 ]
+												"value" : [ "mid_tom", 45 ]
 											}
 , 											{
 												"key" : 6,
-												"value" : [ "high_tom", 7 ]
+												"value" : [ "high_tom", 48 ]
 											}
 , 											{
 												"key" : 7,
-												"value" : [ "hand_clap", 3 ]
+												"value" : [ "hand_clap", 39 ]
 											}
 , 											{
 												"key" : 8,
-												"value" : [ "rim_shot", 2 ]
+												"value" : [ "rim_shot", 37 ]
 											}
  ]
 									}
@@ -2304,39 +2304,39 @@
 						"count" : 9,
 						"data" : [ 							{
 								"key" : 0,
-								"value" : [ "bass_drum", 0 ]
+								"value" : [ "bass_drum", 36 ]
 							}
 , 							{
 								"key" : 1,
-								"value" : [ "snare_drum", 1 ]
+								"value" : [ "snare_drum", 38 ]
 							}
 , 							{
 								"key" : 2,
-								"value" : [ "closed_hihat", 8 ]
+								"value" : [ "closed_hihat", 42 ]
 							}
 , 							{
 								"key" : 3,
-								"value" : [ "open_hihat", 9 ]
+								"value" : [ "open_hihat", 46 ]
 							}
 , 							{
 								"key" : 4,
-								"value" : [ "low_tom", 5 ]
+								"value" : [ "low_tom", 41 ]
 							}
 , 							{
 								"key" : 5,
-								"value" : [ "mid_tom", 6 ]
+								"value" : [ "mid_tom", 45 ]
 							}
 , 							{
 								"key" : 6,
-								"value" : [ "high_tom", 7 ]
+								"value" : [ "high_tom", 48 ]
 							}
 , 							{
 								"key" : 7,
-								"value" : [ "hand_clap", 3 ]
+								"value" : [ "hand_clap", 39 ]
 							}
 , 							{
 								"key" : 8,
-								"value" : [ "rim_shot", 2 ]
+								"value" : [ "rim_shot", 37 ]
 							}
  ]
 					}
@@ -2788,7 +2788,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2846,7 +2846,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -3438,7 +3438,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -3743,7 +3743,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -4249,9 +4249,9 @@
 					"patching_rect" : [ 108.666666666666657, 716.0, 140.0, 119.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 216.966102361679077, 99.635036496350352, 85.0, 61.993610354235585 ],
-					"setminmax" : [ 0.0, 20.0 ],
+					"setminmax" : [ 0.0, 30.0 ],
 					"setstyle" : 1,
-					"size" : 400,
+					"size" : 150,
 					"slidercolor" : [ 0.454959, 0.684788, 0.824976, 1.0 ]
 				}
 
@@ -4398,7 +4398,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -4705,7 +4705,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -5171,7 +5171,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -5217,7 +5217,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -5275,7 +5275,7 @@
 														"appversion" : 														{
 															"major" : 8,
 															"minor" : 1,
-															"revision" : 8,
+															"revision" : 11,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -5577,39 +5577,39 @@
 														"count" : 9,
 														"data" : [ 															{
 																"key" : 0,
-																"value" : [ "bass_drum", 0 ]
+																"value" : [ "bass_drum", 36 ]
 															}
 , 															{
 																"key" : 1,
-																"value" : [ "snare_drum", 1 ]
+																"value" : [ "snare_drum", 38 ]
 															}
 , 															{
 																"key" : 2,
-																"value" : [ "closed_hihat", 8 ]
+																"value" : [ "closed_hihat", 42 ]
 															}
 , 															{
 																"key" : 3,
-																"value" : [ "open_hihat", 9 ]
+																"value" : [ "open_hihat", 46 ]
 															}
 , 															{
 																"key" : 4,
-																"value" : [ "low_tom", 5 ]
+																"value" : [ "low_tom", 41 ]
 															}
 , 															{
 																"key" : 5,
-																"value" : [ "mid_tom", 6 ]
+																"value" : [ "mid_tom", 45 ]
 															}
 , 															{
 																"key" : 6,
-																"value" : [ "high_tom", 7 ]
+																"value" : [ "high_tom", 48 ]
 															}
 , 															{
 																"key" : 7,
-																"value" : [ "hand_clap", 3 ]
+																"value" : [ "hand_clap", 39 ]
 															}
 , 															{
 																"key" : 8,
-																"value" : [ "rim_shot", 2 ]
+																"value" : [ "rim_shot", 37 ]
 															}
  ]
 													}
@@ -5853,7 +5853,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -5911,7 +5911,7 @@
 														"appversion" : 														{
 															"major" : 8,
 															"minor" : 1,
-															"revision" : 8,
+															"revision" : 11,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -6213,39 +6213,39 @@
 														"count" : 9,
 														"data" : [ 															{
 																"key" : 0,
-																"value" : [ "bass_drum", 0 ]
+																"value" : [ "bass_drum", 36 ]
 															}
 , 															{
 																"key" : 1,
-																"value" : [ "snare_drum", 1 ]
+																"value" : [ "snare_drum", 38 ]
 															}
 , 															{
 																"key" : 2,
-																"value" : [ "closed_hihat", 8 ]
+																"value" : [ "closed_hihat", 42 ]
 															}
 , 															{
 																"key" : 3,
-																"value" : [ "open_hihat", 9 ]
+																"value" : [ "open_hihat", 46 ]
 															}
 , 															{
 																"key" : 4,
-																"value" : [ "low_tom", 5 ]
+																"value" : [ "low_tom", 41 ]
 															}
 , 															{
 																"key" : 5,
-																"value" : [ "mid_tom", 6 ]
+																"value" : [ "mid_tom", 45 ]
 															}
 , 															{
 																"key" : 6,
-																"value" : [ "high_tom", 7 ]
+																"value" : [ "high_tom", 48 ]
 															}
 , 															{
 																"key" : 7,
-																"value" : [ "hand_clap", 3 ]
+																"value" : [ "hand_clap", 39 ]
 															}
 , 															{
 																"key" : 8,
-																"value" : [ "rim_shot", 2 ]
+																"value" : [ "rim_shot", 37 ]
 															}
  ]
 													}
@@ -6499,7 +6499,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -6594,7 +6594,7 @@
 														"appversion" : 														{
 															"major" : 8,
 															"minor" : 1,
-															"revision" : 8,
+															"revision" : 11,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -7444,7 +7444,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -7637,7 +7637,7 @@
 			}
 , 			{
 				"box" : 				{
-					"bgcolor" : [ 255.0, 0.0, 0.0, 1.0 ],
+					"bgcolor" : [ 0.0, 0.0, 0.0, 1.0 ],
 					"fontname" : "Ableton Sans Light",
 					"fontsize" : 10.0,
 					"id" : "obj-19",
@@ -7647,7 +7647,7 @@
 					"patching_rect" : [ 291.25, 557.0, 164.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 6.0, 141.868613138686129, 142.0, 18.0 ],
-					"text" : "Model is not trained yet",
+					"text" : "Start training...",
 					"textcolor" : [ 0.999999284744263, 0.999974429607391, 0.999991297721863, 1.0 ],
 					"textjustification" : 1
 				}
@@ -7699,7 +7699,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -8061,6 +8061,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -9240,35 +9242,35 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "rhythmvae.js",
-				"bootpath" : "~/git/RhythmVAE_M4L",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "makenote_for_me.maxpat",
-				"bootpath" : "~/git/RhythmVAE_M4L/subpatches",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "setup_1_16.maxpat",
-				"bootpath" : "~/git/RhythmVAE_M4L/subpatches",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "shuffle_metro.maxpat",
-				"bootpath" : "~/git/RhythmVAE_M4L/subpatches",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "count_for_me.maxpat",
-				"bootpath" : "~/git/RhythmVAE_M4L/subpatches",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
