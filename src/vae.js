@@ -13,7 +13,7 @@ const LOOP_DURATION = require('./constants.js').LOOP_DURATION;
 
 const ORIGINAL_DIM = require('./constants.js').ORIGINAL_DIM;
 const INTERMEDIATE_DIM = 512;
-const LATENT_DIM = 4;
+const LATENT_DIM = 512;
 
 const BATCH_SIZE = 64;
 const TEST_BATCH_SIZE = 128;
@@ -106,22 +106,28 @@ function generatePatternGrid(z1, z2, step){
   return [onsetGrids, zGrid];
 }
 
+let prevZ = null;
+
 function generatePattern(z1, z2, noise_range=0.0){
   if (!checkIfModelReady()) return;
 
-  var zs;
-  if (z1 === 'undefined' || z2 === 'undefined'){
-    zs = tf.randomNormal([1, 2]);
-  } else {
-    zs = tf.tensor2d([[z1, z2]]);
+  if (prevZ == null || noise_range == 0){
+    prevZ = tf.mul(tf.randomNormal([1, LATENT_DIM]), 1.0);
   }
 
+  let zs = tf.mul(tf.randomNormal([1, LATENT_DIM]), noise_range);
+  prevZ = tf.add(prevZ, zs);
+  // if (z1 === 'undefined' || z2 === 'undefined'){
+  //   zs = tf.randomNormal([1, 2]);
+  // } else {
+  //   zs = tf.tensor2d([[z1, z2]]);
+  // }
   // noise
-  if (noise_range > 0.0){
-    var noise = tf.randomNormal([1, 2]);
-    zs = zs.add(noise.mul(tf.scalar(noise_range)));
-  }
-  return model.generate(zs);
+  // if (noise_range > 0.0){
+  //   var noise = tf.randomNormal([1, 2]);
+  //   zs = zs.add(noise.mul(tf.scalar(noise_range)));
+  // }
+  return model.generate(prevZ);
 }
 
 function encodePattern(inputOn, inputVel, inputTS){
@@ -408,12 +414,12 @@ class ConditionalVAE {
     utils.log_status("Training finished!");
   }
   
-  generate(zs){
+  async generate(zs){
     let [outputsOn, outputsVel, outputsTS] = this.decoder.apply(zs);
 
-    outputsOn = outputsOn.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);   
-    outputsVel = outputsVel.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);    
-    outputsTS = outputsTS.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]); // timshift output
+    outputsOn = tf.transpose(tf.squeeze(outputsOn)); 
+    outputsVel = tf.transpose(tf.squeeze(outputsVel));
+    outputsTS = tf.transpose(tf.squeeze(outputsTS));
 
     return [outputsOn.arraySync(), outputsVel.arraySync(), outputsTS.arraySync()];
   }
@@ -438,6 +444,7 @@ class ConditionalVAE {
 
   async loadModel(path){
     this.decoder = await tf.loadLayersModel(path);
+    //this.decoder = await tf.loadGraphModel(path);
     this.isTrained = true;
   }
 

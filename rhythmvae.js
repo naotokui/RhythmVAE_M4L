@@ -244,7 +244,8 @@ async function generatePattern(z1, z2, threshold, noise_range){
     if (isGenerating) return;
 
     isGenerating = true;
-    [currentOnsets, currentVels, currentTS] = vae.generatePattern(z1, z2, noise_range);
+    [currentOnsets, currentVels, currentTS] = await vae.generatePattern(z1, z2, noise_range);
+
     currentThreshold = threshold;
 
     outputPattern(currentOnsets, currentVels, currentTS, threshold);
