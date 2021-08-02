@@ -59,18 +59,19 @@ let prevZ;
 function generatePattern(z1, z2, c_kick, c_kick_44, c_hat, c_others, noise_range=0.0){
   if (!checkIfModelReady()) return;
 
-  if (prevZ == null || noise_range == 0){
-    prevZ = tf.mul(tf.randomNormal([1, LATENT_DIM]), 1.0);
-  }
-
-  let zs = tf.mul(tf.randomNormal([1, LATENT_DIM]), noise_range);
-  prevZ = tf.add(prevZ, zs);
-  // let zs, z512;
-  // if (z1 === 'undefined' || z2 === 'undefined'){
-  //   zs = tf.randomNormal([1, 2]);
-  // } else {
-  //   zs = tf.tensor2d([[z1 * 2.0, z2 * 2.0]]);
+  // if (prevZ == null || noise_range == 0){
+  //   prevZ = tf.mul(tf.randomNormal([1, LATENT_DIM]), 1.0);
   // }
+
+  // let zs = tf.mul(tf.randomNormal([1, LATENT_DIM]), noise_range);
+  // prevZ = tf.add(prevZ, zs);
+
+  let zs, z512;
+  if (z1 === 'undefined' || z2 === 'undefined'){
+    zs = tf.randomNormal([1, 2]);
+  } else {
+    zs = tf.tensor2d([[z1 , z2]]);
+  }
   // noise
   // if (noise_range > 0.0){
   //   var noise = tf.randomNormal([1, 2]);
@@ -78,11 +79,10 @@ function generatePattern(z1, z2, c_kick, c_kick_44, c_hat, c_others, noise_range
   // }
 
   // Deccode 2D z into 512D
-  // z512 = model.generate_z(zs, c_kick, c_kick_44, c_hat, c_others,);
-  // console.log(z512);
+  z512 = model.generate_z(zs, c_kick, c_kick_44, c_hat, c_others);
 
   // Generate rhythm
-  return model.generate(prevZ, c_kick, c_kick_44, c_hat, c_others);
+  return model.generate(z512, c_kick, c_kick_44, c_hat, c_others);
 }
 
 function encodePattern(inputOn, inputVel, inputTS){
