@@ -418,9 +418,9 @@ Max.addHandler("savemodel", (path)=>{
 });
 
 Max.addHandler("loadmodel", (path)=>{
-    filepath = "file://" + path;
-    vae.loadModel(filepath);
-    utils.log_status("Model loaded!");
+    // filepath = "file://" + path;
+    // vae.loadModel(filepath);
+    // utils.log_status("Model loaded!");
 });
 
 
@@ -464,5 +464,7 @@ Max.addHandler("bend", (noise_range = 0.0)=>{
         utils.error_status("model bending failed");
     }
 });
+
+vae.initModel();
 
 Max.outlet("loaded");

@@ -2,7 +2,7 @@
 	"name" : "M4L.RhythmVAE",
 	"version" : 1,
 	"creationdate" : 3672837233,
-	"modificationdate" : 3703682046,
+	"modificationdate" : 3710746613,
 	"viewrect" : [ 25.0, 104.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -32,10 +32,6 @@
 		}
 ,
 		"code" : 		{
-
-		}
-,
-		"other" : 		{
 
 		}
 
@@ -76,6 +72,15 @@
 		"3" : 		{
 			"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
 			"projectrelativepath" : "../images",
+			"label" : "",
+			"recursive" : 1,
+			"enabled" : 1,
+			"includeincollective" : 1
+		}
+,
+		"4" : 		{
+			"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/aidj_models",
+			"projectrelativepath" : "../aidj_models",
 			"label" : "",
 			"recursive" : 1,
 			"enabled" : 1,

@@ -4,77 +4,25 @@
 const Max = require('max-api');
 const tf = require('@tensorflow/tfjs-node');
 
-const utils = require('./utils.js')
-const data = require('./data.js')
+const utils = require('./utils.js');
+const data = require('./data.js');
+require('./sampleLayer.js');
 
 // Constants
 const NUM_DRUM_CLASSES = require('./constants.js').NUM_DRUM_CLASSES;
 const LOOP_DURATION = require('./constants.js').LOOP_DURATION;
 
 const ORIGINAL_DIM = require('./constants.js').ORIGINAL_DIM;
-const INTERMEDIATE_DIM = 512;
 const LATENT_DIM = 512;
 
-const BATCH_SIZE = 64;
-const TEST_BATCH_SIZE = 128;
-const TS_LOSS_COEF = 2.0;  // coef for timeshift loss
-const VEL_LOSS_COEF = 2.5;  // coef for velocity loss
+const AIDJ_DECODER_Z512 = "file://" + __dirname + '/../aidj_models/decoder_z512_conditioned/model.json';
+const AIDJ_DECODER_Z2 = "file://" + __dirname + '/../aidj_models/decoder_z2/model.json';
 
-
-let dataHandlerOnset; 
-let dataHandlerVelocity;
-let dataHandlerTimeshift;
 let model = null;
 let numEpochs = 300; // default # of epochs
 
-async function loadAndTrain(train_data_onset, train_data_velocity, train_data_timeshift) {
-  console.assert(train_data_onset.length == train_data_velocity.length && train_data_velocity.length == train_data_timeshift.length);
-  
-  // shuffle in sync
-  const total_num = train_data_onset.length;
-  shuffled_indices = tf.util.createShuffledIndices(total_num);
-  train_data_onset = utils.shuffle_with_indices(train_data_onset,shuffled_indices);
-  train_data_velocity = utils.shuffle_with_indices(train_data_velocity,shuffled_indices);
-  train_data_timeshift = utils.shuffle_with_indices(train_data_timeshift,shuffled_indices);
-
-  // synced indices
-  const num_trains = Math.floor(data.TRAIN_TEST_RATIO * total_num);
-  const num_tests  = total_num - num_trains;
-  const train_indices = tf.util.createShuffledIndices(num_trains);
-  const test_indices = tf.util.createShuffledIndices(num_tests);
-
-  // create data handlers
-  dataHandlerOnset = new data.DataHandler(train_data_onset, train_indices, test_indices); // data utility fo onset
-  dataHandlerVelocity = new data.DataHandler(train_data_velocity, train_indices, test_indices); // data utility for velocity
-  dataHandlerTimeshift = new data.DataHandler(train_data_timeshift, train_indices, test_indices); // data utility for duration
-
-  // start training!
-  if (!model) initModel(); // initializing model class
-  startTraining(); // start the actual training process with the given training data
-}
-
 function initModel(){
-  model = new ConditionalVAE({
-    modelConfig:{
-      originalDim: ORIGINAL_DIM,
-      intermediateDim: INTERMEDIATE_DIM,
-      latentDim: LATENT_DIM
-    },
-    trainConfig:{
-      batchSize: BATCH_SIZE,
-      testBatchSize: TEST_BATCH_SIZE,
-      optimizer: tf.train.adam()
-    }
-  });
-}
-
-async function startTraining(){
-  await model.train();
-}
-
-function stopTraining(){
-  model.shouldStopTraining = true;
-  utils.log_status("Stopping training...");
+  model = new ConditionalVAE(AIDJ_DECODER_Z512, AIDJ_DECODER_Z2);
 }
 
 function isTraining(){
@@ -106,7 +54,7 @@ function generatePatternGrid(z1, z2, step){
   return [onsetGrids, zGrid];
 }
 
-let prevZ = null;
+let prevZ;
 
 function generatePattern(z1, z2, c_kick, c_kick_44, c_hat, c_others, noise_range=0.0){
   if (!checkIfModelReady()) return;
@@ -117,17 +65,24 @@ function generatePattern(z1, z2, c_kick, c_kick_44, c_hat, c_others, noise_range
 
   let zs = tf.mul(tf.randomNormal([1, LATENT_DIM]), noise_range);
   prevZ = tf.add(prevZ, zs);
+  // let zs, z512;
   // if (z1 === 'undefined' || z2 === 'undefined'){
   //   zs = tf.randomNormal([1, 2]);
   // } else {
-  //   zs = tf.tensor2d([[z1, z2]]);
+  //   zs = tf.tensor2d([[z1 * 2.0, z2 * 2.0]]);
   // }
   // noise
   // if (noise_range > 0.0){
   //   var noise = tf.randomNormal([1, 2]);
   //   zs = zs.add(noise.mul(tf.scalar(noise_range)));
   // }
-  return model.generate(prevZ, c_kick, c_kick_44, c_hat, c_others,);
+
+  // Deccode 2D z into 512D
+  // z512 = model.generate_z(zs, c_kick, c_kick_44, c_hat, c_others,);
+  // console.log(z512);
+
+  // Generate rhythm
+  return model.generate(prevZ, c_kick, c_kick_44, c_hat, c_others);
 }
 
 function encodePattern(inputOn, inputVel, inputTS){
@@ -161,257 +116,20 @@ function bendModel(noise_range){
   model.bendModel(noise_range)
 }
 
-// Sampling Z 
-class sampleLayer extends tf.layers.Layer {
-  constructor(args) {
-    super({});
-  }
-
-  computeOutputShape(inputShape) {
-    return inputShape[0];
-  }
-
-  call(inputs, kwargs) {
-    return tf.tidy(() => {
-      const [zMean, zLogVar] = inputs;
-      const batch = zMean.shape[0];
-      const dim = zMean.shape[1];
-      const epsilon = tf.randomNormal([batch, dim]);
-      const half = tf.scalar(0.5);
-      const temp = zLogVar.mul(half).exp().mul(epsilon);
-      const sample = zMean.add(temp);
-      return sample;
-    });
-  }
-
-  getClassName() {
-    return 'sampleLayer';
-  }
-
-  static className = "sampleLayer";
-}
-tf.serialization.registerClass(sampleLayer);
-
-  
 class ConditionalVAE {
-  constructor(config) {
-    this.modelConfig = config.modelConfig;
-    this.trainConfig = config.trainConfig;
-    [this.encoder, this.decoder, this.apply] = this.build();
+  constructor(path512, path2) {
+    this.loadAIDJModels(path512, path2);
     this.isTrained = false;
   }
 
-  build(modelConfig) {
-    if (modelConfig != undefined){
-      this.modelConfig = modelConfig;
-    }
-    const config = this.modelConfig;
-
-    const originalDim = config.originalDim;
-    const intermediateDim = config.intermediateDim;
-    const latentDim = config.latentDim;
-
-    // VAE model = encoder + decoder
-    // build encoder model
-
-    // Onset input
-    const encoderInputsOn = tf.input({shape: [originalDim]});
-    const x1LinearOn = tf.layers.dense({units: 256, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsOn);
-    const x1NormalisedOn = tf.layers.batchNormalization({axis: 1}).apply(x1LinearOn);
-    const x1On = tf.layers.leakyReLU().apply(x1NormalisedOn);
+  generate_z(zs, c_kick, c_kick_44, c_hat, c_others){
+    c_kick = tf.tensor2d([[c_kick]]);
+    c_kick_44 = tf.tensor2d([[c_kick_44]]);
+    c_hat = tf.tensor2d([[c_hat]]);
+    c_others = tf.tensor2d([[c_others]]);
     
-    // Velocity input
-    const encoderInputsVel = tf.input({shape: [originalDim]});
-    const x1LinearVel = tf.layers.dense({units: 256, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsVel);
-    const x1NormalisedVel = tf.layers.batchNormalization({axis: 1}).apply(x1LinearVel);
-    const x1Vel = tf.layers.leakyReLU().apply(x1NormalisedVel);
-
-    // Timeshift input
-    const encoderInputsTS= tf.input({shape: [originalDim]});
-    const x1LinearTS = tf.layers.dense({units: 256, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsTS);
-    const x1NormalisedTS = tf.layers.batchNormalization({axis: 1}).apply(x1LinearTS);
-    const x1TS = tf.layers.leakyReLU().apply(x1NormalisedTS);
-
-    // Merged
-    const concatLayer = tf.layers.concatenate();
-    const x1Merged = concatLayer.apply([x1On, x1Vel, x1TS]);
-    const x2Linear = tf.layers.dense({units: 512, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x1Merged);
-    const x2Normalised = tf.layers.batchNormalization({axis: 1}).apply(x2Linear);
-    const x2 = tf.layers.leakyReLU().apply(x2Normalised);
-
-    const x3Linear2 = tf.layers.dense({units: 512, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x2);
-    const x3Normalised2 = tf.layers.batchNormalization({axis: 1}).apply(x3Linear2);
-    const x32 = tf.layers.leakyReLU().apply(x3Normalised2);
-
-    const zMean = tf.layers.dense({units: latentDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x32);
-    const zLogVar = tf.layers.dense({units: latentDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x32);
-    const z = new sampleLayer().apply([zMean, zLogVar]);
-
-    const encoderInputs = [encoderInputsOn, encoderInputsVel, encoderInputsTS];
-    const encoderOutputs = [zMean, zLogVar, z];
-
-    const encoder = tf.model({inputs: encoderInputs, outputs: encoderOutputs, name: "encoder"})
-
-    // build decoder model
-    const decoderInputs = tf.input({shape: [latentDim]});
-
-    const x3Linear = tf.layers.dense({units: 512, useBias: true, kernelInitializer: 'glorotNormal'}).apply(decoderInputs);
-    const x3Normalised = tf.layers.batchNormalization({axis: 1}).apply(x3Linear);
-    const x3 = tf.layers.leakyReLU().apply(x3Normalised);
-
-    const x3Linear3 = tf.layers.dense({units: 512, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
-    const x3Normalised3 = tf.layers.batchNormalization({axis: 1}).apply(x3Linear3);
-    const x33 = tf.layers.leakyReLU().apply(x3Normalised3);
-
-    // Decoder for onsets
-    const x4LinearOn = tf.layers.dense({units: 512, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
-    const x4NormalisedOn = tf.layers.batchNormalization({axis: 1}).apply(x4LinearOn);
-    const x4On = tf.layers.leakyReLU().apply(x4NormalisedOn);
-    const decoderOutputsOn = tf.layers.dense({units: originalDim, activation: 'sigmoid'}).apply(x4On);
-
-    // Decoder for velocity
-    const x4LinearVel = tf.layers.dense({units: 512, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
-    const x4NormalisedVel = tf.layers.batchNormalization({axis: 1}).apply(x4LinearVel);
-    const x4Vel = tf.layers.leakyReLU().apply(x4NormalisedVel);
-    const decoderOutputsVel = tf.layers.dense({units: originalDim, activation: 'sigmoid'}).apply(x4Vel);
-
-    // Decoder for timeshift
-    const x4LinearTS = tf.layers.dense({units: 512, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
-    const x4NormalisedTS = tf.layers.batchNormalization({axis: 1}).apply(x4LinearTS);
-    const x4TS = tf.layers.leakyReLU().apply(x4NormalisedTS);
-    const decoderOutputsTS = tf.layers.dense({units: originalDim, activation: 'tanh'}).apply(x4TS);
-    const decoderOutputs = [decoderOutputsOn, decoderOutputsVel, decoderOutputsTS];
-
-    // Decoder model
-    const decoder = tf.model({inputs: decoderInputs, outputs: decoderOutputs, name: "decoder"})
-
-    // build VAE model
-    const vae = (inputs) => {
-      return tf.tidy(() => {
-        const [zMean, zLogVar, z] = this.encoder.apply(inputs);
-        const outputs = this.decoder.apply(z);
-        return [zMean, zLogVar, outputs];
-      });
-    }
-
-    return [encoder, decoder, vae];
-  }
-
-  reconstructionLoss(yTrue, yPred) {
-    return tf.tidy(() => {
-      let reconstruction_loss;
-      reconstruction_loss = tf.metrics.binaryCrossentropy(yTrue, yPred);
-      reconstruction_loss = reconstruction_loss.mul(tf.scalar(yPred.shape[1]));
-      return reconstruction_loss;
-    });
-  }
-
-  mseLoss(yTrue, yPred) {
-    return tf.tidy(() => {
-      let mse_loss = tf.metrics.meanSquaredError(yTrue, yPred);
-      mse_loss = mse_loss.mul(tf.scalar(yPred.shape[1]));
-      return mse_loss;
-    });
-  }
-
-  klLoss(z_mean, z_log_var) {
-    return tf.tidy(() => {
-      let kl_loss;
-      kl_loss = tf.scalar(1).add(z_log_var).sub(z_mean.square()).sub(z_log_var.exp());
-      kl_loss = tf.sum(kl_loss, -1);
-      kl_loss = kl_loss.mul(tf.scalar(-0.5));
-      return kl_loss;
-    });
-  }
-
-  vaeLoss(yTrue, yPred) {
-    return tf.tidy(() => {
-      const [yTrueOn, yTrueVel, yTrueTS] = yTrue;
-      const [z_mean, z_log_var, y] = yPred;
-      const [yOn, yVel, yTS] = y;
-
-      const onset_loss = this.reconstructionLoss(yTrueOn, yOn);
-      let velocity_loss = this.mseLoss(yTrueVel, yVel);
-      velocity_loss = velocity_loss.mul(VEL_LOSS_COEF);
-      let timeshift_loss = this.mseLoss(yTrueTS, yTS);
-      timeshift_loss = timeshift_loss.mul(TS_LOSS_COEF);
-
-      let kl_loss = this.klLoss(z_mean, z_log_var);
-      // utils.post("onset_loss: " + tf.mean(onset_loss).dataSync());
-      // utils.post("velocity_loss: " +  tf.mean(velocity_loss).dataSync());
-      // utils.post("timeshift_loss: " +  tf.mean(timeshift_loss).dataSync());
-      // utils.post("kl_loss: " +  tf.mean(kl_loss).dataSync());
-      const total_loss = tf.mean(onset_loss.add(velocity_loss).add(timeshift_loss).add(kl_loss)); // averaged in the batch
-      return total_loss;
-    });
-  }
-
-  async train(data, trainConfig) {
-    this.isTrained = false;
-    this.isTrainedEncoder = false;
-    this.isTraining = true;
-    this.shouldStopTraining = false;
-    if (trainConfig != undefined){
-      this.trainConfig = trainConfig;
-    }
-    const config = this.trainConfig;
-
-    const batchSize = config.batchSize;
-    const numBatch = Math.floor(dataHandlerOnset.getDataSize() / batchSize);
-    const epochs = numEpochs;
-    const testBatchSize = config.testBatchSize;
-    const optimizer = config.optimizer;
-    const logMessage = console.log;
-
-    const originalDim = this.modelConfig.originalDim;
-
-    Max.outlet("training", 1);
-    for (let i = 0; i < epochs; i++) {
-      if (this.shouldStopTraining) break;
-
-      let batchInputOn,batchInputVel,batchInputTS;
-      let testBatchInputOn,testBatchInputVel,testBatchInputTS;
-      let trainLoss; // for a training batch
-      let epochLoss, valLoss;
-
-      logMessage(`[Epoch ${i + 1}]\n`);
-      Max.outlet("epoch", i + 1, epochs);
-      epochLoss = 0;
-
-      // Training 
-      for (let j = 0; j < numBatch; j++) {
-        batchInputOn = dataHandlerOnset.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
-        batchInputVel = dataHandlerVelocity.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
-        batchInputTS = dataHandlerTimeshift.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
-        trainLoss = await optimizer.minimize(() => this.vaeLoss([batchInputOn, batchInputVel, batchInputTS],
-           this.apply([batchInputOn, batchInputVel, batchInputTS])), true);
-        trainLoss = Number(trainLoss.dataSync());
-        epochLoss = epochLoss + trainLoss;
-
-        await tf.nextFrame();
-      }
-      epochLoss = epochLoss / numBatch; // average
-      logMessage(`\t[Average] Training Loss: ${epochLoss.toFixed(3)}. Epoch ${i} / ${epochs} \n`);
-      Max.outlet("loss", epochLoss);
-
-      // Validation 
-      testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
-      testBatchInputVel = dataHandlerVelocity.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
-      testBatchInputTS = dataHandlerTimeshift.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
-      valLoss = this.vaeLoss([testBatchInputOn, testBatchInputVel, testBatchInputTS], 
-                                this.apply([testBatchInputOn, testBatchInputVel, testBatchInputTS]));
-      valLoss = Number(valLoss.dataSync());
-
-      logMessage(`\tVal Loss: ${valLoss.toFixed(3)}. Epoch ${i} / ${epochs}\n`);
-      Max.outlet("val_loss", valLoss);
-
-      await tf.nextFrame();
-    }
-    this.isTrained = true;
-    this.isTrainedEncoder = true;
-    this.isTraining = false;
-    Max.outlet("training", 0);
-    utils.log_status("Training finished!");
+    let z512 = this.decoder_z2.apply([zs, c_kick, c_kick_44, c_hat, c_others]);
+    return z512;
   }
   
   async generate(zs, c_kick, c_kick_44, c_hat, c_others){
@@ -419,7 +137,9 @@ class ConditionalVAE {
     c_kick_44 = tf.tensor2d([[c_kick_44]]);
     c_hat = tf.tensor2d([[c_hat]]);
     c_others = tf.tensor2d([[c_others]]);
-    
+
+    console.log(zs);
+
     let [outputsOn, outputsVel, outputsTS] = this.decoder.apply([zs, c_kick, c_kick_44, c_hat, c_others]);
 
     outputsOn = tf.transpose(tf.squeeze(outputsOn)); 
@@ -448,9 +168,20 @@ class ConditionalVAE {
   }
 
   async loadModel(path){
-    this.decoder = await tf.loadLayersModel(path);
-    utils.post(this.decoder.summary());
-    //this.decoder = await tf.loadGraphModel(path);
+    // this.decoder = await tf.loadLayersModel(path);
+    // utils.post(this.decoder.summary());
+    // //this.decoder = await tf.loadGraphModel(path);
+    // this.isTrained = true;
+  }
+
+  async loadAIDJModels(path512, path2){
+    utils.post(path512);
+    this.decoder  = await tf.loadLayersModel(path512);
+    this.decoder.summary();
+
+    this.decoder_z2 = await tf.loadLayersModel(path2);
+    this.decoder_z2.summary();
+
     this.isTrained = true;
   }
 
@@ -515,16 +246,13 @@ function checkIfModelReady(){
   }
 }
 
-exports.loadAndTrain = loadAndTrain;
-exports.saveModel = saveModel;
-exports.loadModel = loadModel;
+exports.initModel = initModel;
 exports.saveEncoderModel = saveEncoderModel;
 exports.loadEncoderModel = loadEncoderModel;
 exports.clearModel = clearModel;
 exports.generatePattern = generatePattern;
 exports.generatePatternGrid = generatePatternGrid;
 exports.encodePattern = encodePattern;
-exports.stopTraining = stopTraining;
 exports.isReadyToGenerate = isReadyToGenerate;
 exports.isTraining = isTraining;
 exports.setEpochs = setEpochs;
