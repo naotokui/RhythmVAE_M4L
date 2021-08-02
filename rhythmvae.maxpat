@@ -1324,7 +1324,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 251.884643137454987, 562.479784801666256, 50.0, 22.0 ],
-									"text" : "88 0"
+									"text" : "83 0"
 								}
 
 							}
@@ -1360,7 +1360,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 295.757774397987305, 506.034509301185608, 50.0, 22.0 ],
-									"text" : "nth 8 8"
+									"text" : "nth 8 3"
 								}
 
 							}
@@ -6068,13 +6068,13 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-11",
-									"linecount" : 2,
+									"linecount" : 3,
 									"maxclass" : "message",
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 526.0, 584.0, 51.0, 35.0 ],
-									"text" : "set 251 -118"
+									"patching_rect" : [ 526.0, 584.0, 37.0, 49.0 ],
+									"text" : "set 43 33"
 								}
 
 							}
@@ -6649,7 +6649,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 417.0, -95.128646850585938, 72.0, 22.0 ],
-					"restore" : [ 251, -118 ],
+					"restore" : [ 43, 33 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
@@ -10254,12 +10254,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-185",
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 626.0, 297.446617126464844, 71.0, 22.0 ],
-					"text" : "bend 0.05"
+					"patching_rect" : [ 626.0, 297.446617126464844, 71.0, 35.0 ],
+					"text" : "bend 0.07874"
 				}
 
 			}
@@ -19113,6 +19114,7 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
+						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"comment" : "",
@@ -19860,7 +19862,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 508.0, 210.030707955360413, 237.0, 22.0 ],
+					"patching_rect" : [ 508.0, 210.030707955360413, 175.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -19868,7 +19870,7 @@
 						"tags" : ""
 					}
 ,
-					"text" : "p @speedlim 300 @range 200."
+					"text" : "p @speedlim 300 @range 100."
 				}
 
 			}
@@ -20606,7 +20608,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-20", 3 ],
-					"midpoints" : [ 818.0, 180.981368839740753, 582.899999999999977, 180.981368839740753 ],
+					"midpoints" : [ 818.0, 180.981368839740753, 564.299999999999955, 180.981368839740753 ],
 					"source" : [ "obj-154", 0 ]
 				}
 
