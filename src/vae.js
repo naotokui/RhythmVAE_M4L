@@ -108,7 +108,7 @@ function generatePatternGrid(z1, z2, step){
 
 let prevZ = null;
 
-function generatePattern(z1, z2, noise_range=0.0){
+function generatePattern(z1, z2, c_kick, c_kick_44, c_hat, c_others, noise_range=0.0){
   if (!checkIfModelReady()) return;
 
   if (prevZ == null || noise_range == 0){
@@ -127,7 +127,7 @@ function generatePattern(z1, z2, noise_range=0.0){
   //   var noise = tf.randomNormal([1, 2]);
   //   zs = zs.add(noise.mul(tf.scalar(noise_range)));
   // }
-  return model.generate(prevZ);
+  return model.generate(prevZ, c_kick, c_kick_44, c_hat, c_others,);
 }
 
 function encodePattern(inputOn, inputVel, inputTS){
@@ -414,8 +414,13 @@ class ConditionalVAE {
     utils.log_status("Training finished!");
   }
   
-  async generate(zs){
-    let [outputsOn, outputsVel, outputsTS] = this.decoder.apply(zs);
+  async generate(zs, c_kick, c_kick_44, c_hat, c_others){
+    c_kick = tf.tensor2d([[c_kick]]);
+    c_kick_44 = tf.tensor2d([[c_kick_44]]);
+    c_hat = tf.tensor2d([[c_hat]]);
+    c_others = tf.tensor2d([[c_others]]);
+    
+    let [outputsOn, outputsVel, outputsTS] = this.decoder.apply([zs, c_kick, c_kick_44, c_hat, c_others]);
 
     outputsOn = tf.transpose(tf.squeeze(outputsOn)); 
     outputsVel = tf.transpose(tf.squeeze(outputsVel));
@@ -444,6 +449,7 @@ class ConditionalVAE {
 
   async loadModel(path){
     this.decoder = await tf.loadLayersModel(path);
+    utils.post(this.decoder.summary());
     //this.decoder = await tf.loadGraphModel(path);
     this.isTrained = true;
   }

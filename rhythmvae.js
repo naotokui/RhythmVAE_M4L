@@ -199,9 +199,9 @@ Max.addHandler("train", ()=>{
 });
 
 // Generate a rhythm pattern
-Max.addHandler("generate", (z1, z2, threshold, noise_range = 0.0)=>{
+Max.addHandler("generate", (z1, z2, threshold, noise_range = 0.0, c_kick = 0.0, c_kick_44 = 0.0, c_hat = 0.0, c_others = 0.0)=>{
     try {
-        generatePattern(z1, z2, threshold, noise_range);
+        generatePattern(z1, z2, threshold, noise_range, c_kick, c_kick_44, c_hat, c_others);
     } catch(error) {
         utils.error_status(error);
     }
@@ -240,11 +240,11 @@ async function generatePatternGrid(z1, z2, threshold, step){
 }
 
 
-async function generatePattern(z1, z2, threshold, noise_range){ 
+async function generatePattern(z1, z2, threshold, noise_range, c_kick, c_kick_44, c_hat, c_others){ 
     if (isGenerating) return;
 
     isGenerating = true;
-    [currentOnsets, currentVels, currentTS] = await vae.generatePattern(z1, z2, noise_range);
+    [currentOnsets, currentVels, currentTS] = await vae.generatePattern(z1, z2, c_kick, c_kick_44, c_hat, c_others, noise_range);
 
     currentThreshold = threshold;
 
