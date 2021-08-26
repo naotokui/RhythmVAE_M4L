@@ -2,7 +2,7 @@
 	"name" : "ClipCreation",
 	"version" : 1,
 	"creationdate" : 3712833639,
-	"modificationdate" : 3712833889,
+	"modificationdate" : 3712842509,
 	"viewrect" : [ 90.0, 334.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -14,6 +14,14 @@
 				"kind" : "patcher",
 				"local" : 1,
 				"toplevel" : 1
+			}
+
+		}
+,
+		"code" : 		{
+			"clip-test.js" : 			{
+				"kind" : "javascript",
+				"local" : 1
 			}
 
 		}
