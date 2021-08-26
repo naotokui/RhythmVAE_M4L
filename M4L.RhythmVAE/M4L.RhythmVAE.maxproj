@@ -2,7 +2,7 @@
 	"name" : "M4L.RhythmVAE",
 	"version" : 1,
 	"creationdate" : 3672837233,
-	"modificationdate" : 3710746613,
+	"modificationdate" : 3712854051,
 	"viewrect" : [ 25.0, 104.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -32,6 +32,15 @@
 		}
 ,
 		"code" : 		{
+			"clip-creation.js" : 			{
+				"kind" : "javascript",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/src",
+					"projectrelativepath" : "../src"
+				}
+
+			}
 
 		}
 

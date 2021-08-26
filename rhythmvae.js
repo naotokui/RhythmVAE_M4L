@@ -254,6 +254,9 @@ async function generatePattern(z1, z2, threshold, noise_range, c_kick, c_kick_44
 
 function outputPattern(onsets, velocities, timeshifts, threshold){
     Max.outlet("matrix_clear", 1); // clear all
+    
+    // Internal Sequencer / Visualizer
+    let onset_count = 0;
     for (var i=0; i< NUM_DRUM_CLASSES; i++){
         var sequence = []; // for velocity
         var sequenceTS = []; // for timeshift
@@ -261,14 +264,15 @@ function outputPattern(onsets, velocities, timeshifts, threshold){
         for (var j=0; j < LOOP_DURATION; j++){
             // if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
             if (onsets[i][j] > threshold){
-            Max.outlet("matrix_output", j + 1, i + 1, 1); // index for live.grid starts from 1
+                Max.outlet("matrix_output", j + 1, i + 1, 1); // index for live.grid starts from 1
         
-            // for live.step
-            sequence.push(Math.floor(velocities[i][j]*127. + 1)); // 0-1 -> 1-127
-            sequenceTS.push(Math.floor(utils.scale(timeshifts[i][j], -1., 1, 0, 127))); // -1 - 1 -> 0 - 127
+                // for live.step
+                sequence.push(Math.floor(velocities[i][j]*127. + 1)); // 0-1 -> 1-127
+                sequenceTS.push(Math.floor(utils.scale(timeshifts[i][j], -1., 1, 0, 127))); // -1 - 1 -> 0 - 127
+                onset_count++;
             } else {
-            sequence.push(0);
-            sequenceTS.push(64);
+                sequence.push(0);
+                sequenceTS.push(64);
             }
         }
 
@@ -276,6 +280,24 @@ function outputPattern(onsets, velocities, timeshifts, threshold){
         Max.outlet("seq_output", i+1, sequence.join(" "));
         Max.outlet("timeshift_output", i+1, sequenceTS.join(" "));
     }
+
+    // Live Clip
+    Max.outlet("clip_start", 1);
+    Max.outlet("clip_num_onsets", onset_count);
+    for (var i=0; i< NUM_DRUM_CLASSES; i++){
+        // output for matrix view
+        for (var j=0; j < LOOP_DURATION; j++){
+            // if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
+            if (onsets[i][j] > threshold){
+                let velocity = Math.floor(velocities[i][j]*127. + 1);
+                let time = (j + timeshifts[i][j] * 0.5) * (1.0/BEAT_RESOLUTION);
+                let duration = 0.25;
+                Max.outlet("clip_add_note", i, time, duration, velocity, 0);
+            } 
+        }
+    }
+    Max.outlet("clip_done", 1);
+
     Max.outlet("generated", 1);
     utils.log_status("");
 }
