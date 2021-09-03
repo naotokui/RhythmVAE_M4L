@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 8,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 649.0, 800.0, 813.0, 592.0 ],
+		"rect" : [ 696.0, 462.0, 813.0, 592.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -69,8 +69,8 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 385.0, 438.0, 139.0, 22.0 ],
-					"text" : "s --to_matrix_grid_coord"
+					"patching_rect" : [ 385.0, 438.0, 143.0, 22.0 ],
+					"text" : "s ---to_matrix_grid_coord"
 				}
 
 			}
@@ -129,7 +129,7 @@
 				"box" : 				{
 					"comment" : "",
 					"id" : "obj-8",
-					"index" : 0,
+					"index" : 1,
 					"maxclass" : "outlet",
 					"numinlets" : 1,
 					"numoutlets" : 0,
@@ -156,8 +156,8 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 143.0, 50.0, 100.0, 22.0 ],
-					"text" : "r --to_matrix_grid"
+					"patching_rect" : [ 143.0, 50.0, 104.0, 22.0 ],
+					"text" : "r ---to_matrix_grid"
 				}
 
 			}
@@ -212,7 +212,7 @@
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_invisible" : 1,
-							"parameter_longname" : "live.grid[1]",
+							"parameter_longname" : "live.grid[10]",
 							"parameter_shortname" : "live.grid",
 							"parameter_type" : 3
 						}
@@ -322,17 +322,6 @@
 
 			}
  ],
-		"parameters" : 		{
-			"obj-18" : [ "live.grid[1]", "live.grid", 0 ],
-			"parameterbanks" : 			{
-
-			}
-,
-			"inherited_shortname" : 1
-		}
-,
-		"dependency_cache" : [  ],
-		"autosave" : 0,
 		"styles" : [ 			{
 				"name" : "tap",
 				"default" : 				{
