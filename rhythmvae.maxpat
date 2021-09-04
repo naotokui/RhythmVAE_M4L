@@ -56,7 +56,7 @@
 					"numinlets" : 6,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 871.0, 1023.0, 159.0, 22.0 ],
+					"patching_rect" : [ 861.799999999999955, 966.0, 159.0, 22.0 ],
 					"text" : "pack s 0 0. 0. 0 0"
 				}
 
@@ -68,7 +68,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 6,
 					"outlettype" : [ "", "int", "float", "float", "int", "int" ],
-					"patching_rect" : [ 871.0, 939.0, 159.0, 22.0 ],
+					"patching_rect" : [ 861.799999999999955, 882.0, 159.0, 22.0 ],
 					"text" : "unpack s 0 0. 0. 0 0"
 				}
 
@@ -80,7 +80,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "int", "int" ],
-					"patching_rect" : [ 896.5, 995.317185311503408, 67.0, 22.0 ],
+					"patching_rect" : [ 887.299999999999955, 938.317185311503408, 67.0, 22.0 ],
 					"text" : "unpack 0 0"
 				}
 
@@ -133,7 +133,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 4,
 					"outlettype" : [ "", "", "", "" ],
-					"patching_rect" : [ 896.5, 968.674478322066307, 159.0, 22.0 ],
+					"patching_rect" : [ 887.299999999999955, 911.674478322066307, 159.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"embed" : 1,
 						"precision" : 6
@@ -150,7 +150,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 711.0, 1070.0, 97.0, 22.0 ],
+					"patching_rect" : [ 710.799999999999955, 1012.0, 97.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"filename" : "clip-creation.js",
 						"parameter_enable" : 0
@@ -21962,6 +21962,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -22935,20 +22937,6 @@
 					"destination" : [ "obj-60", 0 ],
 					"midpoints" : [ 517.5, 149.341014862060547, 517.5, 149.341014862060547 ],
 					"source" : [ "obj-22", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-237", 0 ],
-					"source" : [ "obj-220", 3 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-237", 0 ],
-					"source" : [ "obj-220", 1 ]
 				}
 
 			}
