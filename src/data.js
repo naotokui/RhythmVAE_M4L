@@ -55,6 +55,7 @@ class DataHandler {
   // Create batch from an array of tf.tensor2d
   nextBatch(batchSize, data, index) {
     const batchArray = [];
+    const indices = [];
     for (let i = 0; i < batchSize; i++) {
       const idx = index();
       batchArray.push(tf.tensor2d(data[idx],[NUM_DRUM_CLASSES, LOOP_DURATION]).reshape([1, ORIGINAL_DIM]));
