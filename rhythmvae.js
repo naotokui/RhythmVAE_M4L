@@ -25,7 +25,6 @@ Max.post(`Loaded the ${path.basename(__filename)} script`);
 var train_data_onsets = []; 
 var train_data_velocities = []; 
 var train_data_timeshifts = [];
-var isGenerating = false;
 
 function isValidMIDIFile(midiFile){
     if (midiFile.header.tempos.length > 1){
@@ -204,10 +203,10 @@ Max.addHandler("generate", (z1, z2, threshold, noise_range = 0.0)=>{
 });
 
 async function generatePattern(z1, z2, threshold, noise_range){
-    if (vae.isReadyToGenerate()){    
-      if (isGenerating) return;
-  
-      isGenerating = true;
+    if (!vae.isReadyToGenerate()){
+        utils.post("Not ready to generate");
+        return; 
+    }
       let [onsets, velocities, timeshifts] = vae.generatePattern(z1, z2, noise_range);
       Max.outlet("matrix_clear", 1); // clear all
       for (var i=0; i< NUM_DRUM_CLASSES; i++){
@@ -232,16 +231,24 @@ async function generatePattern(z1, z2, threshold, noise_range){
           Max.outlet("seq_output", i+1, sequence.join(" "));
           Max.outlet("timeshift_output", i+1, sequenceTS.join(" "));
       }
-      Max.outlet("generated", 1);
-      utils.log_status("");
-      isGenerating = false;
-  } else {
-    if (vae.isTraining()){
-        utils.error_status("Still training...");
-    } else {
-        utils.error_status("Model is not trained yet");
+
+      // Live Clip
+    Max.outlet("clip_start", 1);
+    for (var i=0; i< NUM_DRUM_CLASSES; i++){
+        // output for matrix view
+        for (var j=0; j < LOOP_DURATION; j++){
+            // if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
+            if (onsets[i][j] > threshold){
+                let velocity = Math.floor(velocities[i][j]*127. + 1);
+                let time = (j + timeshifts[i][j] * 0.5) * (1.0/BEAT_RESOLUTION);
+                let duration = 0.25;
+                Max.outlet("clip_add_note", i, time, duration, velocity, 0);
+            } 
+        }
     }
-  }
+    Max.outlet("clip_done", 1);
+    Max.outlet("generated", 1);
+    utils.log_status("");
 }
 
 
