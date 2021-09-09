@@ -151,6 +151,7 @@ async function generatePattern(z1, z2, kick, hats, onoff, threshold, noise_range
             if (onsets[i][j] > threshold){
                 let velocity = Math.floor(velocities[i][j]*127. + 1);
                 let time = (j + timeshifts[i][j] * 0.5) * (1.0/BEAT_RESOLUTION);
+                time = utils.limit(time, 0.0, 8.0);
                 let duration = 0.25;
                 Max.outlet("clip_add_note", i, time, duration, velocity, 0);
             } 

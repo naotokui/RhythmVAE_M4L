@@ -30,6 +30,10 @@ function scale(value, minIn, maxIn, minOut, maxOut){
     return value;
 }
 
+function limit(value, minOut, maxOut){
+    return Math.min(Math.max(value, minOut), maxOut);
+}
+
 function shuffle(a) {
     var j, x, i;
     for (i = a.length - 1; i > 0; i--) {
@@ -80,6 +84,7 @@ function error_status(message){
 exports.create2DArray = create2DArray;
 exports.getRandomInt = getRandomInt;
 exports.scale = scale;
+exports.limit = limit;
 exports.shuffle = shuffle;
 exports.shuffle_with_indices = shuffle_with_indices;
 exports.post = post;
