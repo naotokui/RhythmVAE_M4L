@@ -17,6 +17,7 @@ const BEAT_RESOLUTION = require('./src/constants.js').BEAT_RESOLUTION;
 // VAE model and Utilities
 const utils = require('./src/utils.js');
 const vae = require('./src/vae.js');
+const data = require('./src/data.js');
 
 // This will be printed directly to the Max console
 Max.post(`Loaded the ${path.basename(__filename)} script`);
@@ -26,104 +27,12 @@ var train_data_onsets = [];
 var train_data_velocities = []; 
 var train_data_timeshifts = [];
 
-function isValidMIDIFile(midiFile){
-    if (midiFile.header.tempos.length > 1){
-        utils.error("not compatible with midi files containing multiple tempo changes")
-        return false;
-    }
-    return true;
-}
-
-function getTempo(midiFile){
-    if (midiFile.header.tempos.length == 0) return 120.0 // no tempo info, then use 120.0 
-    return midiFile.header.tempos[0].bpm;  // use the first tempo info and ignore tempo changes in MIDI file
-}
-
-// Get location of a note in pianoroll
-function getNoteIndexAndTimeshift(note, tempo){
-    const unit = (60.0 / tempo) / BEAT_RESOLUTION; // the duration of 16th note
-    const half_unit = unit * 0.5;
-
-    const index = Math.max(0, Math.floor((note.time + half_unit) / unit)) // centering 
-    const timeshift = (note.time - unit * index)/half_unit; // normalized
-
-    return [index, timeshift];
-}
-
-function getNumOfDrumOnsets(onsets){
-    var count = 0;
-    for (var i = 0; i < NUM_DRUM_CLASSES; i++){
-        for (var j=0; j < LOOP_DURATION; j++){
-            if (onsets[i][j] > 0) count += 1;
-        }
-    }
-    return count;
-}
-
-
-
-// Convert midi into pianoroll matrix
-function processPianoroll(midiFile, midi_map){
-    const tempo = getTempo(midiFile);
-
-    // data array
-    var onsets = [];
-    var velocities = [];
-    var timeshifts = [];
-
-    midiFile.tracks.forEach(track => {
-    
-        //notes are an array
-        const notes = track.notes
-        notes.forEach(note => {
-            if ((note.midi in midi_map)){
-                let timing = getNoteIndexAndTimeshift(note, tempo);
-                let index = timing[0];
-                let timeshift = timing[1];
-                
-                // add new array
-                while (Math.floor(index / LOOP_DURATION) >= onsets.length){
-                    onsets.push(utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION));
-                    velocities.push(utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION));
-                    timeshifts.push(utils.create2DArray(NUM_DRUM_CLASSES, LOOP_DURATION));
-                }
-
-                // store velocity
-                let drum_id = midi_map[note.midi];
-
-                let matrix = onsets[Math.floor(index / LOOP_DURATION)];
-                matrix[drum_id][index % LOOP_DURATION] = 1;    // 1 for onsets
-
-                matrix = velocities[Math.floor(index / LOOP_DURATION)];
-                matrix[drum_id][index % LOOP_DURATION] = note.velocity;    // normalized 0 - 1
-                
-                // store timeshift
-                matrix = timeshifts[Math.floor(index / LOOP_DURATION)];
-                matrix[drum_id][index % LOOP_DURATION] = timeshift;    // normalized -1 - 1
-            }
-        })
-    })
-
-    /*    for debug - output pianoroll */
-    // if (velocities.length > 0){ 
-    //     var index = utils.getRandomInt(velocities.length); 
-    //     let x = velocities[index];
-    //     for (var i=0; i< NUM_DRUM_CLASSES; i++){
-    //         for (var j=0; j < LOOP_DURATION; j++){
-    //             Max.outlet("matrix_output", j, i, Math.ceil(x[i][j]));
-    //         }
-    //     }
-    // }
-
-    return [onsets, velocities, timeshifts];
-}
-
 function processMidiFile(filename, mapping = 0){
     // // Read MIDI file into a buffer
     var input = fs.readFileSync(filename)
 
     var midiFile = new Midi(input);  
-    if (isValidMIDIFile(midiFile) == false){
+    if (data.isValidMIDIFile(midiFile) == false){
         utils.error("Invalid MIDI file: " + filename);
         return false;
     }
@@ -133,11 +42,11 @@ function processMidiFile(filename, mapping = 0){
     else midi_map = MIDI_DRUM_MAP;
 
     // process midifile
-    let [onsets, velocities, timeshifts] = processPianoroll(midiFile, midi_map);
+    let [onsets, velocities, timeshifts] = data.processPianoroll(midiFile, midi_map);
 
     // 2D array to tf.tensor2d -> store training dataset
     for (var i=0; i < onsets.length; i++){
-        if (getNumOfDrumOnsets(onsets[i]) > MIN_ONSETS_THRESHOLD){
+        if (data.getNumOfDrumOnsets(onsets[i]) > MIN_ONSETS_THRESHOLD){
             train_data_onsets.push(tf.tensor2d(onsets[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
             train_data_velocities.push(tf.tensor2d(velocities[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
             train_data_timeshifts.push(tf.tensor2d(timeshifts[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
@@ -314,7 +223,7 @@ Max.addHandler("encode_midi", (filename, mapping = 0) => {
     // // Read MIDI file into a buffer
     var input = fs.readFileSync(filename)
     var midiFile = new Midi(input);  
-    if (isValidMIDIFile(midiFile) == false){
+    if (data.isValidMIDIFile(midiFile) == false){
         utils.error("Invalid MIDI file: " + filename);
         return false;
     }
