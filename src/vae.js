@@ -40,6 +40,10 @@ async function loadAndTrain(train_data_onset, train_data_velocity, train_data_ti
   onsets_std = tf.add(onsets_std, tf.scalar(0.00001)); // avoid dividing by zero
   let onsets_z = tf.div(tf.sub(onsets_sum, onsets_means), onsets_std);
 
+
+  let batchInputHatsZ = tf.mean(tf.gather(onsets_z, [2,3], axis=1), axis=1);
+  utils.post(batchInputHatsZ.dataSync());
+
   // shuffle in sync
   const total_num = train_data_onset.length;
   shuffled_indices = tf.util.createShuffledIndices(total_num);
@@ -223,12 +227,15 @@ class ConditionalVAE {
     const encoder = tf.model({inputs: encoderInputs, outputs: encoderOutputs, name: "encoder"})
 
     // build decoder model
-    const decoderInputs = tf.input({shape: [latentDim]});
-    const x3Linear = tf.layers.dense({units: 32, useBias: true, kernelInitializer: 'glorotNormal'}).apply(decoderInputs);
-    
+    const decoderInputs = tf.input({shape: [latentDim]});    
     const decoderCondKick = tf.input({shape: [1]});
-    const x3LinearMerged = tf.layers.concatenate().apply([x3Linear, decoderCondKick]);
+   const deccoderMerged = tf.layers.concatenate().apply([decoderInputs, decoderCondKick]);
 
+    const zLinear = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(deccoderMerged);
+    const zNormalised = tf.layers.batchNormalization({axis: 1}).apply(zLinear);
+    const zNormalizedRelu = tf.layers.leakyReLU().apply(zNormalised);
+
+    const x3Linear = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(zNormalizedRelu);
     const x3Normalised = tf.layers.batchNormalization({axis: 1}).apply(x3Linear);
     const x3 = tf.layers.leakyReLU().apply(x3Normalised);
 
@@ -350,14 +357,14 @@ class ConditionalVAE {
       for (let j = 0; j < numBatch; j++) {
         let batchOnset = dataHandlerOnset.nextTrainBatch(batchSize);
         batchInputOn = batchOnset.xs.reshape([batchSize, originalDim]);
-        let batchInputOnset = tf.gather(dataOnsetZ, batchOnset.indices);
-        batchInputOnset = tf.gather(batchInputOnset, 0, axis=1);
+        let batchInputOnsetZ = tf.gather(dataOnsetZ, batchOnset.indices);
+        let batchInputKickZ = tf.gather(batchInputOnsetZ, 0, axis=1).expandDims(axis=1);
 
         batchInputVel = dataHandlerVelocity.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
         batchInputTS = dataHandlerTimeshift.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
 
         trainLoss = await optimizer.minimize(() => this.vaeLoss([batchInputOn, batchInputVel, batchInputTS],
-           this.apply([batchInputOn, batchInputVel, batchInputTS, batchInputOnset])), true);
+           this.apply([batchInputOn, batchInputVel, batchInputTS, batchInputKickZ])), true);
 
         trainLoss = Number(trainLoss.dataSync());
         epochLoss = epochLoss + trainLoss;
@@ -368,16 +375,20 @@ class ConditionalVAE {
       logMessage(`\t[Average] Training Loss: ${epochLoss.toFixed(3)}. Epoch ${i} / ${epochs} \n`);
       Max.outlet("loss", epochLoss);
 
-      // // Validation 
-      // testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
-      // testBatchInputVel = dataHandlerVelocity.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
-      // testBatchInputTS = dataHandlerTimeshift.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
-      // valLoss = this.vaeLoss([testBatchInputOn, testBatchInputVel, testBatchInputTS], 
-      //                           this.apply([testBatchInputOn, testBatchInputVel, testBatchInputTS]));
-      // valLoss = Number(valLoss.dataSync());
+      // Validation 
+      testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize);      
+      let batchInputOnsetZ = tf.gather(dataOnsetZ, testBatchInputOn.indices);
+      let batchInputKickZ  = tf.gather(batchInputOnsetZ, 0, axis=1).expandDims(axis=1);
 
-      // logMessage(`\tVal Loss: ${valLoss.toFixed(3)}. Epoch ${i} / ${epochs}\n`);
-      // Max.outlet("val_loss", valLoss);
+      testBatchInputOn = testBatchInputOn.xs.reshape([testBatchSize, originalDim]);
+      testBatchInputVel = dataHandlerVelocity.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
+      testBatchInputTS = dataHandlerTimeshift.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
+      valLoss = this.vaeLoss([testBatchInputOn, testBatchInputVel, testBatchInputTS], 
+                                this.apply([testBatchInputOn, testBatchInputVel, testBatchInputTS, batchInputKickZ]));
+      valLoss = Number(valLoss.dataSync());
+
+      logMessage(`\tVal Loss: ${valLoss.toFixed(3)}. Epoch ${i} / ${epochs}\n`);
+      Max.outlet("val_loss", valLoss);
 
       await tf.nextFrame();
     }

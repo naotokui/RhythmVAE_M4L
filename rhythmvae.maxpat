@@ -53,8 +53,8 @@
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "kick",
-							"parameter_mmax" : 3.0,
-							"parameter_mmin" : -3.0,
+							"parameter_mmax" : 5.0,
+							"parameter_mmin" : -5.0,
 							"parameter_shortname" : "kick",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 1
@@ -77,7 +77,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 184.303234501347674, 117.0, 91.0, 89.0 ],
-					"text" : "midi /Users/nao/git/AIDJ_ver2/rhythm_generation/data/GM-Electronic/Jungle/ 0"
+					"text" : "midi /Users/nao/git/AIDJ_ver2/rhythm_generation/data/GM-Electronic/Jungle/ 1"
 				}
 
 			}
@@ -1463,6 +1463,7 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
+						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-18",
@@ -1726,7 +1727,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 417.0, -95.128646850585938, 72.0, 22.0 ],
-					"restore" : [ -42, -332 ],
+					"restore" : [ 10, -300 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
@@ -7758,6 +7759,7 @@
 , 			{
 				"box" : 				{
 					"activebgcolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ],
+					"hidden" : 1,
 					"id" : "obj-83",
 					"maxclass" : "live.numbox",
 					"numinlets" : 1,
@@ -7787,7 +7789,6 @@
 , 			{
 				"box" : 				{
 					"activebgcolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ],
-					"hidden" : 1,
 					"id" : "obj-123",
 					"maxclass" : "live.numbox",
 					"numinlets" : 1,
@@ -8561,7 +8562,6 @@
 , 			{
 				"box" : 				{
 					"bgcolor" : [ 0.483607888221741, 0.483681797981262, 0.483572363853455, 1.0 ],
-					"hidden" : 1,
 					"id" : "obj-136",
 					"maxclass" : "multislider",
 					"numinlets" : 1,
@@ -8573,7 +8573,7 @@
 					"presentation_rect" : [ 285.30895984172821, 97.55862156666106, 99.285714507102938, 61.993610000000004 ],
 					"setminmax" : [ 0.0, 200.0 ],
 					"setstyle" : 1,
-					"size" : 150,
+					"size" : 350,
 					"slidercolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ]
 				}
 
@@ -12006,6 +12006,7 @@
 , 			{
 				"box" : 				{
 					"bgcolor" : [ 0.483607888221741, 0.483681797981262, 0.483572363853455, 1.0 ],
+					"hidden" : 1,
 					"id" : "obj-91",
 					"maxclass" : "multislider",
 					"numinlets" : 1,
@@ -12017,7 +12018,7 @@
 					"presentation_rect" : [ 285.30895984172821, 97.55862156666106, 99.285714507102966, 61.993610354235585 ],
 					"setminmax" : [ 0.0, 200.0 ],
 					"setstyle" : 1,
-					"size" : 150,
+					"size" : 350,
 					"slidercolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ]
 				}
 
@@ -13278,7 +13279,7 @@
 					"patching_rect" : [ 273.666666666666629, 538.916671752929688, 164.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 87.04127037525177, 139.792198208996837, 142.0, 18.0 ],
-					"text" : "Training finished!",
+					"text" : "Start training...",
 					"textcolor" : [ 0.999999284744263, 0.999974429607391, 0.999991297721863, 1.0 ],
 					"textjustification" : 1
 				}
