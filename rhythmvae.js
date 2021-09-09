@@ -47,7 +47,8 @@ function processMidiFile(filename, mapping = 0){
     // 2D array to tf.tensor2d -> store training dataset
     for (var i=0; i < onsets.length; i++){
         if (data.getNumOfDrumOnsets(onsets[i]) > MIN_ONSETS_THRESHOLD){
-            train_data_onsets.push(tf.tensor2d(onsets[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+            //train_data_onsets.push(tf.tensor2d(onsets[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+            train_data_onsets.push(onsets[i]);
             train_data_velocities.push(tf.tensor2d(velocities[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
             train_data_timeshifts.push(tf.tensor2d(timeshifts[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
         }

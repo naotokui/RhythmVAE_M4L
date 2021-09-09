@@ -29,7 +29,15 @@ let numEpochs = 150; // default # of epochs
 
 async function loadAndTrain(train_data_onset, train_data_velocity, train_data_timeshift) {
   console.assert(train_data_onset.length == train_data_velocity.length && train_data_velocity.length == train_data_timeshift.length);
-  
+
+  // Count onsets for conditioning
+  let onsets = tf.greater(tf.tensor3d(train_data_onset, [train_data_onset.length, NUM_DRUM_CLASSES, LOOP_DURATION]), 0.5);
+  let onsets_sum = tf.sum(onsets, axis=2); // for each instruments
+  let onsets_means = tf.mean(onsets_sum, axis=0); // for each instance
+  let onsets_std = tf.moments(onsets_sum, axis=0).variance.sqrt();
+  onsets_std = tf.add(onsets_std, tf.scalar(0.00001)); // avoid dividing by zero
+  let onsets_z = tf.div(tf.sub(onsets_sum, onsets_means), onsets_std);
+
   // shuffle in sync
   const total_num = train_data_onset.length;
   shuffled_indices = tf.util.createShuffledIndices(total_num);
