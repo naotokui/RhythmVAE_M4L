@@ -460,7 +460,8 @@ class ConditionalVAE {
     inputTS = inputTS.reshape([1, ORIGINAL_DIM]);
     
     let [zMean, zLogVar, zs] = this.encoder.apply([inputOn, inputVel, inputTS]);
-    this.generate(zs); // generate rhythm pattern with the encoded z
+
+    // this.generate(zs); // generate rhythm pattern with the encoded z
     zs = zs.arraySync();
     return zs[0]; 
   }

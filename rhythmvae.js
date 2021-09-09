@@ -104,15 +104,15 @@ Max.addHandler("train", ()=>{
 });
 
 // Generate a rhythm pattern
-Max.addHandler("generate", (z1, z2, kick, hats, onoff, threshold, noise_range = 0.0)=>{
+Max.addHandler("generate", (z1, z2, kick, hats, onoff, timeshift_coef = 1.0, threshold = 0.5, noise_range = 0.0)=>{
     try {
-        generatePattern(z1, z2, kick, hats, onoff, threshold, noise_range);
+        generatePattern(z1, z2, kick, hats, onoff, timeshift_coef, threshold, noise_range);
     } catch(error) {
         utils.error_status(error);
     }
 });
 
-async function generatePattern(z1, z2, kick, hats, onoff, threshold, noise_range){
+async function generatePattern(z1, z2, kick, hats, onoff, timeshift_coef, threshold, noise_range){
     if (!vae.isReadyToGenerate()){
         utils.post("Not ready to generate");
         return; 
@@ -150,7 +150,7 @@ async function generatePattern(z1, z2, kick, hats, onoff, threshold, noise_range
             // if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
             if (onsets[i][j] > threshold){
                 let velocity = Math.floor(velocities[i][j]*127. + 1);
-                let time = (j + timeshifts[i][j] * 0.5) * (1.0/BEAT_RESOLUTION);
+                let time = (j + timeshifts[i][j] * 0.5 * timeshift_coef) * (1.0/BEAT_RESOLUTION);
                 time = utils.limit(time, 0.0, 8.0);
                 let duration = 0.25;
                 Max.outlet("clip_add_note", i, time, duration, velocity, 0);
