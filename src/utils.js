@@ -50,7 +50,6 @@ function shuffle_with_indices(a, indices){
     return b;
 }
 
-
 function does_post(message, is_error){
     if (is_error) Max.post(message, Max.POST_LEVELS.ERROR);
     else Max.post(message);

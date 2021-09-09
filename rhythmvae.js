@@ -49,8 +49,8 @@ function processMidiFile(filename, mapping = 0){
         if (data.getNumOfDrumOnsets(onsets[i]) > MIN_ONSETS_THRESHOLD){
             //train_data_onsets.push(tf.tensor2d(onsets[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
             train_data_onsets.push(onsets[i]);
-            train_data_velocities.push(tf.tensor2d(velocities[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
-            train_data_timeshifts.push(tf.tensor2d(timeshifts[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
+            train_data_velocities.push(velocities[i]);//, [NUM_DRUM_CLASSES, LOOP_DURATION]));
+            train_data_timeshifts.push(timeshifts[i]);//, [NUM_DRUM_CLASSES, LOOP_DURATION]));
         }
     }
     return true;
@@ -104,20 +104,20 @@ Max.addHandler("train", ()=>{
 });
 
 // Generate a rhythm pattern
-Max.addHandler("generate", (z1, z2, threshold, noise_range = 0.0)=>{
+Max.addHandler("generate", (z1, z2, kick, threshold, noise_range = 0.0)=>{
     try {
-        generatePattern(z1, z2, threshold, noise_range);
+        generatePattern(z1, z2, kick, threshold, noise_range);
     } catch(error) {
         utils.error_status(error);
     }
 });
 
-async function generatePattern(z1, z2, threshold, noise_range){
+async function generatePattern(z1, z2, kick, threshold, noise_range){
     if (!vae.isReadyToGenerate()){
         utils.post("Not ready to generate");
         return; 
     }
-      let [onsets, velocities, timeshifts] = vae.generatePattern(z1, z2, noise_range);
+      let [onsets, velocities, timeshifts] = vae.generatePattern(z1, z2, kick, noise_range);
       Max.outlet("matrix_clear", 1); // clear all
       for (var i=0; i< NUM_DRUM_CLASSES; i++){
           var sequence = []; // for velocity

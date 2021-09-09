@@ -40,6 +40,49 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"activefgdialcolor" : [ 0.556862745098039, 0.549019607843137, 0.549019607843137, 1.0 ],
+					"id" : "obj-131",
+					"maxclass" : "live.dial",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "float" ],
+					"parameter_enable" : 1,
+					"patching_rect" : [ 748.0, 138.871353149414062, 41.0, 48.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 573.0, 24.987908495603683, 41.0, 48.0 ],
+					"saved_attribute_attributes" : 					{
+						"valueof" : 						{
+							"parameter_longname" : "kick",
+							"parameter_mmax" : 3.0,
+							"parameter_mmin" : -3.0,
+							"parameter_shortname" : "kick",
+							"parameter_type" : 0,
+							"parameter_unitstyle" : 1
+						}
+
+					}
+,
+					"textcolor" : [ 1.0, 0.984313725490196, 0.984313725490196, 1.0 ],
+					"tricolor" : [ 0.850980392156863, 0.8, 0.8, 1.0 ],
+					"varname" : "live.dial[1]"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-64",
+					"linecount" : 6,
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 184.303234501347674, 117.0, 91.0, 89.0 ],
+					"text" : "midi /Users/nao/git/AIDJ_ver2/rhythm_generation/data/GM-Electronic/Jungle/ 0"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-224",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -1683,7 +1726,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 417.0, -95.128646850585938, 72.0, 22.0 ],
-					"restore" : [ -112, 144 ],
+					"restore" : [ -42, -332 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
@@ -1774,7 +1817,6 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"comment" : "",
@@ -13236,6 +13278,7 @@
 					"patching_rect" : [ 273.666666666666629, 538.916671752929688, 164.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 87.04127037525177, 139.792198208996837, 142.0, 18.0 ],
+					"text" : "Training finished!",
 					"textcolor" : [ 0.999999284744263, 0.999974429607391, 0.999991297721863, 1.0 ],
 					"textjustification" : 1
 				}
@@ -13279,7 +13322,7 @@
 				"box" : 				{
 					"id" : "obj-20",
 					"maxclass" : "newobj",
-					"numinlets" : 5,
+					"numinlets" : 6,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patcher" : 					{
@@ -13322,6 +13365,19 @@
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
 						"boxes" : [ 							{
+								"box" : 								{
+									"comment" : "",
+									"id" : "obj-5",
+									"index" : 3,
+									"maxclass" : "inlet",
+									"numinlets" : 0,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"patching_rect" : [ 194.0, 61.0, 30.0, 30.0 ]
+								}
+
+							}
+, 							{
 								"box" : 								{
 									"id" : "obj-22",
 									"maxclass" : "comment",
@@ -13421,7 +13477,7 @@
 								"box" : 								{
 									"comment" : "",
 									"id" : "obj-4",
-									"index" : 5,
+									"index" : 6,
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
@@ -13434,7 +13490,7 @@
 								"box" : 								{
 									"comment" : "",
 									"id" : "obj-3",
-									"index" : 4,
+									"index" : 5,
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
@@ -13447,11 +13503,11 @@
 								"box" : 								{
 									"id" : "obj-2",
 									"maxclass" : "newobj",
-									"numinlets" : 4,
+									"numinlets" : 5,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 50.0, 243.0, 247.0, 22.0 ],
-									"text" : "pack 0. 0. 0.5 0."
+									"patching_rect" : [ 50.0, 243.0, 307.0, 22.0 ],
+									"text" : "pack 0. 0. 0. 0.5 0."
 								}
 
 							}
@@ -13459,12 +13515,12 @@
 								"box" : 								{
 									"comment" : "",
 									"id" : "obj-1",
-									"index" : 3,
+									"index" : 4,
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 202.0, 61.0, 30.0, 30.0 ]
+									"patching_rect" : [ 237.0, 61.0, 30.0, 30.0 ]
 								}
 
 							}
@@ -13487,7 +13543,7 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "float" ],
-									"patching_rect" : [ 126.0, 181.0, 41.0, 22.0 ],
+									"patching_rect" : [ 123.0, 181.0, 41.0, 22.0 ],
 									"text" : "/ 100."
 								}
 
@@ -13526,7 +13582,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "int" ],
-									"patching_rect" : [ 126.0, 61.0, 30.0, 30.0 ]
+									"patching_rect" : [ 123.0, 61.0, 30.0, 30.0 ]
 								}
 
 							}
@@ -13545,7 +13601,7 @@
  ],
 						"lines" : [ 							{
 								"patchline" : 								{
-									"destination" : [ "obj-2", 2 ],
+									"destination" : [ "obj-2", 3 ],
 									"source" : [ "obj-1", 0 ]
 								}
 
@@ -13562,7 +13618,7 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-25", 1 ],
-									"midpoints" : [ 451.5, 154.0, 157.5, 154.0 ],
+									"midpoints" : [ 451.5, 154.0, 154.5, 154.0 ],
 									"order" : 0,
 									"source" : [ "obj-13", 0 ]
 								}
@@ -13613,7 +13669,7 @@
 							}
 , 							{
 								"patchline" : 								{
-									"destination" : [ "obj-2", 3 ],
+									"destination" : [ "obj-2", 4 ],
 									"source" : [ "obj-3", 0 ]
 								}
 
@@ -13630,6 +13686,13 @@
 									"destination" : [ "obj-2", 0 ],
 									"midpoints" : [ 352.5, 215.5, 59.5, 215.5 ],
 									"source" : [ "obj-4", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-2", 2 ],
+									"source" : [ "obj-5", 0 ]
 								}
 
 							}
@@ -13671,7 +13734,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 508.0, 210.030707955360413, 237.0, 22.0 ],
+					"patching_rect" : [ 508.0, 204.5625, 237.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -13850,6 +13913,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -14136,7 +14201,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-231", 1 ],
-					"midpoints" : [ 1230.66666666666697, 459.5, 1377.833333333333258, 459.5 ],
+					"midpoints" : [ 1230.66666666666697, 459.5, 1365.5, 459.5 ],
 					"source" : [ "obj-122", 0 ]
 				}
 
@@ -15017,6 +15082,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-27", 0 ],
+					"order" : 1,
 					"source" : [ "obj-47", 0 ]
 				}
 
@@ -15122,6 +15188,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-20", 1 ],
+					"midpoints" : [ 576.75, 197.049339115619659, 561.100000000000023, 197.049339115619659 ],
 					"source" : [ "obj-60", 1 ]
 				}
 
@@ -15345,6 +15412,29 @@
 				}
 
 			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-20", 2 ],
+					"midpoints" : [ 757.5, 197.951030552387238, 604.700000000000045, 197.951030552387238 ],
+					"source" : [ "obj-131", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-64", 1 ],
+					"order" : 0,
+					"source" : [ "obj-47", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-27", 0 ],
+					"source" : [ "obj-64", 0 ]
+				}
+
+			}
  ],
 		"parameters" : 		{
 			"obj-1" : [ "live.step[1]", "live.step", 0 ],
@@ -15353,6 +15443,7 @@
 			"obj-116" : [ "live.menu[1]", "live.menu", 0 ],
 			"obj-122" : [ "live.menu[2]", "live.menu", 0 ],
 			"obj-123" : [ "live.numbox[14]", "live.numbox", 0 ],
+			"obj-131" : [ "kick", "kick", 0 ],
 			"obj-142" : [ "live.tab[2]", "live.tab[2]", 0 ],
 			"obj-144" : [ "live.tab[1]", "live.tab[1]", 0 ],
 			"obj-15" : [ "live.menu", "live.menu", 0 ],
@@ -15407,42 +15498,42 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "bg3.png",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
-				"patcherrelativepath" : "./images",
+				"bootpath" : "~/git/RhythmVAE_M4L/images",
+				"patcherrelativepath" : "../RhythmVAE_M4L/images",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "bg2.png",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
-				"patcherrelativepath" : "./images",
+				"bootpath" : "~/git/RhythmVAE_M4L/images",
+				"patcherrelativepath" : "../RhythmVAE_M4L/images",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "bg1.png",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
-				"patcherrelativepath" : "./images",
+				"bootpath" : "~/git/RhythmVAE_M4L/images",
+				"patcherrelativepath" : "../RhythmVAE_M4L/images",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "rhythmvae.js",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L",
+				"bootpath" : "~/git/RhythmVAE_M4L_simple",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "makenote_for_me.maxpat",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
+				"bootpath" : "~/git/RhythmVAE_M4L_simple/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "shuffle_metro.maxpat",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
+				"bootpath" : "~/git/RhythmVAE_M4L_simple/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
@@ -15473,28 +15564,28 @@
 			}
 , 			{
 				"name" : "setup_1_16.maxpat",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
+				"bootpath" : "~/git/RhythmVAE_M4L_simple/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "list_dup.maxpat",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
+				"bootpath" : "~/git/RhythmVAE_M4L_simple/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "vae_tex_210315_data.png",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
-				"patcherrelativepath" : "./images",
+				"bootpath" : "~/git/RhythmVAE_M4L/images",
+				"patcherrelativepath" : "../RhythmVAE_M4L/images",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "clip-creation.js",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/src",
+				"bootpath" : "~/git/RhythmVAE_M4L_simple/src",
 				"patcherrelativepath" : "./src",
 				"type" : "TEXT",
 				"implicit" : 1

@@ -57,11 +57,12 @@ class DataHandler {
     const batchArray = [];
     for (let i = 0; i < batchSize; i++) {
       const idx = index();
-      batchArray.push(data[idx].reshape([1, ORIGINAL_DIM]));
+      batchArray.push(tf.tensor2d(data[idx],[NUM_DRUM_CLASSES, LOOP_DURATION]).reshape([1, ORIGINAL_DIM]));
+      indices.push(idx);
     }
     const axis = 0;
     const xs = tf.concat(batchArray, axis);
-    return {xs};
+    return {xs: xs, indices: tf.tensor1d(indices, 'int32')};
   }
 }
 
