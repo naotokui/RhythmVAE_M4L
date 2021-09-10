@@ -25,7 +25,7 @@ const TS_LOSS_COEF = 5.0;  // coef for timeshift loss
 const VEL_LOSS_COEF = 2.5;  // coef for velocity loss
 
 
-let dataHandlerOnset; 
+let dataHandlerOnset;
 let dataHandlerVelocity;
 let dataHandlerTimeshift;
 let dataOnsetZ, dataOnOffRatioZ;
@@ -38,37 +38,37 @@ async function loadAndTrain(train_data_onset, train_data_velocity, train_data_ti
 
   // Count onsets for conditioning
   let onsets = tf.greater(tf.tensor3d(train_data_onset, [train_data_onset.length, NUM_DRUM_CLASSES, LOOP_DURATION]), 0.5);
-  let onsets_sum = tf.sum(onsets, axis=2); // for each instruments
-  let onsets_kick = tf.gather(onsets_sum, 0, axis=1);
+  let onsets_sum = tf.sum(onsets, axis = 2); // for each instruments
+  let onsets_kick = tf.gather(onsets_sum, 0, axis = 1);
 
-  let onbeats = tf.gather(onsets, tf.range(0, LOOP_DURATION, BEAT_RESOLUTION, 'int32'), axis=2);
-  let onbeats_kick = tf.sum(tf.gather(onbeats, 0, axis=1), axis=1);
+  let onbeats = tf.gather(onsets, tf.range(0, LOOP_DURATION, BEAT_RESOLUTION, 'int32'), axis = 2);
+  let onbeats_kick = tf.sum(tf.gather(onbeats, 0, axis = 1), axis = 1);
   let offbeats_kick = tf.sub(onsets_kick, onbeats_kick);
   onbeats_kick = tf.add(onbeats_kick, tf.scalar(0.00001)); // avoid dividing by zero
 
   let onoff_ratio = tf.div(offbeats_kick, onbeats_kick);
-  let onoff_ratio_mean = tf.mean(onoff_ratio, axis=0); // for each instance
-  let onoff_ratio_std = tf.moments(onoff_ratio, axis=0).variance.sqrt();
+  let onoff_ratio_mean = tf.mean(onoff_ratio, axis = 0); // for each instance
+  let onoff_ratio_std = tf.moments(onoff_ratio, axis = 0).variance.sqrt();
   onoff_ratio_std = tf.add(onoff_ratio_std, tf.scalar(0.00001)); // avoid dividing by zero
   let onoff_ratio_z = tf.div(tf.sub(onoff_ratio, onoff_ratio_mean), onoff_ratio_std);
 
-  let onsets_means = tf.mean(onsets_sum, axis=0); // for each instance
-  let onsets_std = tf.moments(onsets_sum, axis=0).variance.sqrt();
+  let onsets_means = tf.mean(onsets_sum, axis = 0); // for each instance
+  let onsets_std = tf.moments(onsets_sum, axis = 0).variance.sqrt();
   onsets_std = tf.add(onsets_std, tf.scalar(0.00001)); // avoid dividing by zero
   let onsets_z = tf.div(tf.sub(onsets_sum, onsets_means), onsets_std);
 
   // shuffle in sync
   const total_num = train_data_onset.length;
   shuffled_indices = tf.util.createShuffledIndices(total_num);
-  train_data_onset = utils.shuffle_with_indices(train_data_onset,shuffled_indices);
-  train_data_velocity = utils.shuffle_with_indices(train_data_velocity,shuffled_indices);
-  train_data_timeshift = utils.shuffle_with_indices(train_data_timeshift,shuffled_indices);
+  train_data_onset = utils.shuffle_with_indices(train_data_onset, shuffled_indices);
+  train_data_velocity = utils.shuffle_with_indices(train_data_velocity, shuffled_indices);
+  train_data_timeshift = utils.shuffle_with_indices(train_data_timeshift, shuffled_indices);
   dataOnsetZ = tf.gather(onsets_z, tf.tensor1d(Array.from(shuffled_indices), 'int32')); // shuffled onset count data
   dataOnOffRatioZ = tf.gather(onoff_ratio_z, tf.tensor1d(Array.from(shuffled_indices), 'int32')); // shuffled onset count data
 
   // synced indices
   const num_trains = Math.floor(data.TRAIN_TEST_RATIO * total_num);
-  const num_tests  = total_num - num_trains;
+  const num_tests = total_num - num_trains;
   const train_indices = tf.util.createShuffledIndices(num_trains);
   const test_indices = tf.util.createShuffledIndices(num_tests);
 
@@ -82,14 +82,14 @@ async function loadAndTrain(train_data_onset, train_data_velocity, train_data_ti
   startTraining(); // start the actual training process with the given training data
 }
 
-function initModel(){
+function initModel() {
   model = new ConditionalVAE({
-    modelConfig:{
+    modelConfig: {
       originalDim: ORIGINAL_DIM,
       intermediateDim: INTERMEDIATE_DIM,
       latentDim: LATENT_DIM
     },
-    trainConfig:{
+    trainConfig: {
       batchSize: BATCH_SIZE,
       testBatchSize: TEST_BATCH_SIZE,
       optimizer: tf.train.adam()
@@ -97,62 +97,62 @@ function initModel(){
   });
 }
 
-async function startTraining(){
+async function startTraining() {
   await model.train();
 }
 
-function stopTraining(){
+function stopTraining() {
   model.shouldStopTraining = true;
   utils.log_status("Stopping training...");
 }
 
-function isTraining(){
+function isTraining() {
   if (model && model.isTraining) return true;
 }
 
-function isReadyToGenerate(){
+function isReadyToGenerate() {
   return (model && model.isTrained);
 }
 
-function setEpochs(e){
+function setEpochs(e) {
   numEpochs = e;
   Max.outlet("epoch", 0, numEpochs);
 }
 
-function generatePattern(z1, z2, kick, hats, onoff, noise_range=0.0){
+function generatePattern(z1, z2, kick, hats, onoff, noise_range = 0.0) {
   var zs;
-  if (z1 === 'undefined' || z2 === 'undefined'){
+  if (z1 === 'undefined' || z2 === 'undefined') {
     zs = tf.randomNormal([1, 2]);
   } else {
     zs = tf.tensor2d([[z1, z2]]);
   }
 
   // noise
-  if (noise_range > 0.0){
+  if (noise_range > 0.0) {
     var noise = tf.randomNormal([1, 2]);
     zs = zs.add(noise.mul(tf.scalar(noise_range)));
   }
-  return model.generate(zs, tf.tensor2d([[kick]]), tf.tensor2d([[hats]]),  tf.tensor2d([[onoff]]));
+  return model.generate(zs, tf.tensor2d([[kick]]), tf.tensor2d([[hats]]), tf.tensor2d([[onoff]]));
 }
 
-function encodePattern(inputOn, inputVel, inputTS){
+function encodePattern(inputOn, inputVel, inputTS) {
   return model.encode(inputOn, inputVel, inputTS);
 }
 
-async function saveModel(filepath){
+async function saveModel(filepath) {
   model.saveModel(filepath);
 }
 
-async function loadModel(filepath){
+async function loadModel(filepath) {
   if (!model) initModel();
   model.loadModel(filepath);
 }
 
-function clearModel(){
+function clearModel() {
   model = null;
 }
 
-function bendModel(noise_range){
+function bendModel(noise_range) {
   model.bendModel(noise_range)
 }
 
@@ -165,7 +165,7 @@ class ConditionalVAE {
   }
 
   build(modelConfig) {
-    if (modelConfig != undefined){
+    if (modelConfig != undefined) {
       this.modelConfig = modelConfig;
     }
     const config = this.modelConfig;
@@ -178,80 +178,80 @@ class ConditionalVAE {
     // build encoder model
 
     // Onset input
-    const encoderInputsOn = tf.input({shape: [originalDim]});
-    const x1LinearOn = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsOn);
-    const x1NormalisedOn = tf.layers.batchNormalization({axis: 1}).apply(x1LinearOn);
+    const encoderInputsOn = tf.input({ shape: [originalDim] });
+    const x1LinearOn = tf.layers.dense({ units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(encoderInputsOn);
+    const x1NormalisedOn = tf.layers.batchNormalization({ axis: 1 }).apply(x1LinearOn);
     const x1On = tf.layers.leakyReLU().apply(x1NormalisedOn);
-    
+
     // Velocity input
-    const encoderInputsVel = tf.input({shape: [originalDim]});
-    const x1LinearVel = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsVel);
-    const x1NormalisedVel = tf.layers.batchNormalization({axis: 1}).apply(x1LinearVel);
+    const encoderInputsVel = tf.input({ shape: [originalDim] });
+    const x1LinearVel = tf.layers.dense({ units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(encoderInputsVel);
+    const x1NormalisedVel = tf.layers.batchNormalization({ axis: 1 }).apply(x1LinearVel);
     const x1Vel = tf.layers.leakyReLU().apply(x1NormalisedVel);
 
     // Timeshift input
-    const encoderInputsTS= tf.input({shape: [originalDim]});
-    const x1LinearTS = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(encoderInputsTS);
-    const x1NormalisedTS = tf.layers.batchNormalization({axis: 1}).apply(x1LinearTS);
+    const encoderInputsTS = tf.input({ shape: [originalDim] });
+    const x1LinearTS = tf.layers.dense({ units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(encoderInputsTS);
+    const x1NormalisedTS = tf.layers.batchNormalization({ axis: 1 }).apply(x1LinearTS);
     const x1TS = tf.layers.leakyReLU().apply(x1NormalisedTS);
 
     // Merged
     const concatLayer = tf.layers.concatenate();
     const x1Merged = concatLayer.apply([x1On, x1Vel, x1TS]);
-    const x2Linear = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x1Merged);
-    const x2Normalised = tf.layers.batchNormalization({axis: 1}).apply(x2Linear);
+    const x2Linear = tf.layers.dense({ units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(x1Merged);
+    const x2Normalised = tf.layers.batchNormalization({ axis: 1 }).apply(x2Linear);
     const x2 = tf.layers.leakyReLU().apply(x2Normalised);
 
-    const zMean = tf.layers.dense({units: latentDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x2);
-    const zLogVar = tf.layers.dense({units: latentDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x2);
+    const zMean = tf.layers.dense({ units: latentDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(x2);
+    const zLogVar = tf.layers.dense({ units: latentDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(x2);
     const z = new sampleLayer.sampleLayer().apply([zMean, zLogVar]);
 
     const encoderInputs = [encoderInputsOn, encoderInputsVel, encoderInputsTS];
     const encoderOutputs = [zMean, zLogVar, z];
 
-    const encoder = tf.model({inputs: encoderInputs, outputs: encoderOutputs, name: "encoder"})
+    const encoder = tf.model({ inputs: encoderInputs, outputs: encoderOutputs, name: "encoder" })
 
     // build decoder model
-    const decoderInputs = tf.input({shape: [latentDim]});    
-    const zLinear = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(decoderInputs);
-    const zNormalised = tf.layers.batchNormalization({axis: 1}).apply(zLinear);
+    const decoderInputs = tf.input({ shape: [latentDim] });
+    const zLinear = tf.layers.dense({ units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(decoderInputs);
+    const zNormalised = tf.layers.batchNormalization({ axis: 1 }).apply(zLinear);
     const zNormalizedRelu = tf.layers.leakyReLU().apply(zNormalised);
 
-    const decoderCondKick = tf.input({shape: [1]});
-    const decoderCondHats = tf.input({shape: [1]});
-    const decoderCondOnOff = tf.input({shape: [1]});
+    const decoderCondKick = tf.input({ shape: [1] });
+    const decoderCondHats = tf.input({ shape: [1] });
+    const decoderCondOnOff = tf.input({ shape: [1] });
     const deccoderMerged = tf.layers.concatenate().apply([zNormalizedRelu, decoderCondKick, decoderCondHats, decoderCondOnOff]);
 
-    const x3Linear = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(deccoderMerged);
-    const x3Normalised = tf.layers.batchNormalization({axis: 1}).apply(x3Linear);
+    const x3Linear = tf.layers.dense({ units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(deccoderMerged);
+    const x3Normalised = tf.layers.batchNormalization({ axis: 1 }).apply(x3Linear);
     const x3 = tf.layers.leakyReLU().apply(x3Normalised);
 
     // Decoder for onsets
-    const x4LinearOn = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
-    const x4NormalisedOn = tf.layers.batchNormalization({axis: 1}).apply(x4LinearOn);
+    const x4LinearOn = tf.layers.dense({ units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(x3);
+    const x4NormalisedOn = tf.layers.batchNormalization({ axis: 1 }).apply(x4LinearOn);
     const x4On = tf.layers.leakyReLU().apply(x4NormalisedOn);
-    const decoderOutputsOn = tf.layers.dense({units: originalDim, activation: 'sigmoid'}).apply(x4On);
+    const decoderOutputsOn = tf.layers.dense({ units: originalDim, activation: 'sigmoid' }).apply(x4On);
 
     // Decoder for velocity
-    const x4LinearVel = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
-    const x4NormalisedVel = tf.layers.batchNormalization({axis: 1}).apply(x4LinearVel);
+    const x4LinearVel = tf.layers.dense({ units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(x3);
+    const x4NormalisedVel = tf.layers.batchNormalization({ axis: 1 }).apply(x4LinearVel);
     const x4Vel = tf.layers.leakyReLU().apply(x4NormalisedVel);
-    const decoderOutputsVel = tf.layers.dense({units: originalDim, activation: 'sigmoid'}).apply(x4Vel);
+    const decoderOutputsVel = tf.layers.dense({ units: originalDim, activation: 'sigmoid' }).apply(x4Vel);
 
     // Decoder for timeshift
-    const x4LinearTS = tf.layers.dense({units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x3);
-    const x4NormalisedTS = tf.layers.batchNormalization({axis: 1}).apply(x4LinearTS);
+    const x4LinearTS = tf.layers.dense({ units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(x3);
+    const x4NormalisedTS = tf.layers.batchNormalization({ axis: 1 }).apply(x4LinearTS);
     const x4TS = tf.layers.leakyReLU().apply(x4NormalisedTS);
-    const decoderOutputsTS = tf.layers.dense({units: originalDim, activation: 'tanh'}).apply(x4TS);
+    const decoderOutputsTS = tf.layers.dense({ units: originalDim, activation: 'tanh' }).apply(x4TS);
     const decoderOutputs = [decoderOutputsOn, decoderOutputsVel, decoderOutputsTS];
 
     // Decoder model
-    const decoder = tf.model({inputs: [decoderInputs, decoderCondKick, decoderCondHats, decoderCondOnOff], outputs: decoderOutputs, name: "decoder"})
+    const decoder = tf.model({ inputs: [decoderInputs, decoderCondKick, decoderCondHats, decoderCondOnOff], outputs: decoderOutputs, name: "decoder" })
 
     // build VAE model
     const vae = (inputs) => {
       return tf.tidy(() => {
-        const [zMean, zLogVar, z] = this.encoder.apply([inputs[0], inputs[1], inputs[2]]  );
+        const [zMean, zLogVar, z] = this.encoder.apply([inputs[0], inputs[1], inputs[2]]);
         const outputs = this.decoder.apply([z, inputs[3], inputs[4], inputs[5]]);
         return [zMean, zLogVar, outputs];
       });
@@ -313,7 +313,7 @@ class ConditionalVAE {
     this.isTrained = false;
     this.isTraining = true;
     this.shouldStopTraining = false;
-    if (trainConfig != undefined){
+    if (trainConfig != undefined) {
       this.trainConfig = trainConfig;
     }
     const config = this.trainConfig;
@@ -331,8 +331,8 @@ class ConditionalVAE {
     for (let i = 0; i < epochs; i++) {
       if (this.shouldStopTraining) break;
 
-      let batchInputOn,batchInputVel,batchInputTS;
-      let testBatchInputOn,testBatchInputVel,testBatchInputTS;
+      let batchInputOn, batchInputVel, batchInputTS;
+      let testBatchInputOn, testBatchInputVel, testBatchInputTS;
       let trainLoss; // for a training batch
       let epochLoss, valLoss;
 
@@ -345,15 +345,15 @@ class ConditionalVAE {
         let batchOnset = dataHandlerOnset.nextTrainBatch(batchSize);
         batchInputOn = batchOnset.xs.reshape([batchSize, originalDim]);
         let batchInputOnsetZ = tf.gather(dataOnsetZ, batchOnset.indices);
-        let batchInputKickZ = tf.gather(batchInputOnsetZ, 0, axis=1).expandDims(axis=1);
-        let batchInputHatsZ = tf.mean(tf.gather(batchInputOnsetZ, [1,2,3], axis=1), axis=1).expandDims(axis=1);
-        let batchInputOnOffZ = tf.gather(dataOnOffRatioZ, batchOnset.indices).expandDims(axis=1);
+        let batchInputKickZ = tf.gather(batchInputOnsetZ, 0, axis = 1).expandDims(axis = 1);
+        let batchInputHatsZ = tf.mean(tf.gather(batchInputOnsetZ, [1, 2, 3], axis = 1), axis = 1).expandDims(axis = 1);
+        let batchInputOnOffZ = tf.gather(dataOnOffRatioZ, batchOnset.indices).expandDims(axis = 1);
 
         batchInputVel = dataHandlerVelocity.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
         batchInputTS = dataHandlerTimeshift.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
 
         trainLoss = await optimizer.minimize(() => this.vaeLoss([batchInputOn, batchInputVel, batchInputTS],
-           this.apply([batchInputOn, batchInputVel, batchInputTS, batchInputKickZ, batchInputHatsZ, batchInputOnOffZ])), true);
+          this.apply([batchInputOn, batchInputVel, batchInputTS, batchInputKickZ, batchInputHatsZ, batchInputOnOffZ])), true);
 
         trainLoss = Number(trainLoss.dataSync());
         epochLoss = epochLoss + trainLoss;
@@ -365,17 +365,17 @@ class ConditionalVAE {
       Max.outlet("loss", epochLoss);
 
       // Validation 
-      testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize);      
+      testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize);
       let batchInputOnsetZ = tf.gather(dataOnsetZ, testBatchInputOn.indices);
-      let batchInputKickZ  = tf.gather(batchInputOnsetZ, 0, axis=1).expandDims(axis=1);
-      let batchInputHatsZ = tf.mean(tf.gather(batchInputOnsetZ, [1,2,3], axis=1), axis=1).expandDims(axis=1);
-      let batchInputOnOffZ = tf.gather(dataOnOffRatioZ, testBatchInputOn.indices).expandDims(axis=1);
+      let batchInputKickZ = tf.gather(batchInputOnsetZ, 0, axis = 1).expandDims(axis = 1);
+      let batchInputHatsZ = tf.mean(tf.gather(batchInputOnsetZ, [1, 2, 3], axis = 1), axis = 1).expandDims(axis = 1);
+      let batchInputOnOffZ = tf.gather(dataOnOffRatioZ, testBatchInputOn.indices).expandDims(axis = 1);
 
       testBatchInputOn = testBatchInputOn.xs.reshape([testBatchSize, originalDim]);
       testBatchInputVel = dataHandlerVelocity.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
       testBatchInputTS = dataHandlerTimeshift.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
-      valLoss = this.vaeLoss([testBatchInputOn, testBatchInputVel, testBatchInputTS], 
-                                this.apply([testBatchInputOn, testBatchInputVel, testBatchInputTS, batchInputKickZ, batchInputHatsZ, batchInputOnOffZ]));
+      valLoss = this.vaeLoss([testBatchInputOn, testBatchInputVel, testBatchInputTS],
+        this.apply([testBatchInputOn, testBatchInputVel, testBatchInputTS, batchInputKickZ, batchInputHatsZ, batchInputOnOffZ]));
       valLoss = Number(valLoss.dataSync());
 
       logMessage(`\tVal Loss: ${valLoss.toFixed(3)}. Epoch ${i} / ${epochs}\n`);
@@ -388,18 +388,18 @@ class ConditionalVAE {
     Max.outlet("training", 0);
     utils.log_status("Training finished!");
   }
-  
-  generate(zs, kick, hats, onoff){
+
+  generate(zs, kick, hats, onoff) {
     let [outputsOn, outputsVel, outputsTS] = this.decoder.apply([zs, kick, hats, onoff]);
 
-    outputsOn = outputsOn.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);   
-    outputsVel = outputsVel.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);    
+    outputsOn = outputsOn.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);
+    outputsVel = outputsVel.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]);
     outputsTS = outputsTS.reshape([NUM_DRUM_CLASSES, LOOP_DURATION]); // timshift output
 
     return [outputsOn.arraySync(), outputsVel.arraySync(), outputsTS.arraySync()];
   }
 
-  bendModel(noise_range){
+  bendModel(noise_range) {
     let weights = [];
     for (let i = 0; i < this.decoder.getWeights().length; i++) {
       let w = this.decoder.getWeights()[i];
@@ -412,7 +412,7 @@ class ConditionalVAE {
     this.decoder.setWeights(weights);
   }
 
-  async saveModel(path){
+  async saveModel(path) {
     if (!fs.existsSync(path)) fs.mkdir(path, { recursive: true }, (err) => {
       if (err) throw err;
     });
@@ -427,7 +427,7 @@ class ConditionalVAE {
     console.log(saved0, saved1);
   }
 
-  async loadModel(path){
+  async loadModel(path) {
     let dirpath = pathlib.dirname(path);
 
     let decoder_path = dirpath + "/decoder/model.json"
@@ -438,7 +438,7 @@ class ConditionalVAE {
     this.isTrained = true;
   }
 
-  encode(inputOn, inputVel, inputTS){
+  encode(inputOn, inputVel, inputTS) {
     if (!this.encoder) {
       utils.error_status("Model is not trained yet");
       return;
@@ -448,12 +448,12 @@ class ConditionalVAE {
     inputOn = inputOn.reshape([1, ORIGINAL_DIM]);
     inputVel = inputVel.reshape([1, ORIGINAL_DIM]);
     inputTS = inputTS.reshape([1, ORIGINAL_DIM]);
-    
+
     let [zMean, zLogVar, zs] = this.encoder.apply([inputOn, inputVel, inputTS]);
 
     // this.generate(zs); // generate rhythm pattern with the encoded z
     zs = zs.arraySync();
-    return zs[0]; 
+    return zs[0];
   }
 
 }
@@ -476,6 +476,53 @@ function range(start, edge, step) {
   return ret;
 }
 
+
+function exportAll(path) {
+  const zRange = 2.0;
+  const zResolution = 0.5;
+  const condRange = 3.0;
+  const condResolution = 0.5;
+  const threshold = 0.5;
+
+  let results = [];
+
+  // Conditioning
+  for (let kick = -condRange; kick <= condRange; kick += condResolution) {
+    for (let hats = -condRange; hats <= condRange; hats += condResolution) {
+      for (let onoff = -condRange; onoff <= condRange; onoff += condResolution) {
+        // Latent Vector
+        for (let z1 = -zRange; z1 <= zRange; z1 += zResolution) {
+          for (let z2 = -zRange; z2 <= zRange; z2 += zResolution) {
+
+            // generate!
+            let [onsets, velocities, timeshifts] = generatePattern(z1, z2, kick, hats, onoff);
+
+            let _onsets = [];
+            for (var i = 0; i < NUM_DRUM_CLASSES; i++) {
+              for (var j = 0; j < LOOP_DURATION; j++) {
+                if (onsets[i][j] > threshold) {
+                  let vel = Math.floor(velocities[i][j] * 127. + 1);
+                  _onsets.push([i, j, vel]);
+                } 
+              }
+            }
+
+            let dict = {};
+            dict["z1"] = z1;
+            dict["z2"] = z2;
+            dict["kick"] = kick;
+            dict["hats"] = hats;
+            dict["onoff"] = onoff;
+            dict["onsets"] = _onsets;
+            results.push(dict);
+          }
+        }
+      }
+    }
+  }
+  fs.writeFileSync(path, JSON.stringify(results));
+}
+
 exports.loadAndTrain = loadAndTrain;
 exports.saveModel = saveModel;
 exports.loadModel = loadModel;
@@ -487,4 +534,5 @@ exports.isReadyToGenerate = isReadyToGenerate;
 exports.isTraining = isTraining;
 exports.setEpochs = setEpochs;
 exports.bendModel = bendModel;
+exports.exportAll = exportAll;
 

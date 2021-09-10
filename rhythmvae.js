@@ -304,4 +304,15 @@ Max.addHandler("bend", (noise_range = 0.0)=>{
     }
 });
 
+Max.addHandler("export_all", (path)=>{
+    if (!vae.isReadyToGenerate()){
+        utils.post("No model is loaded.");
+        return; 
+    }
+    utils.log_status("exporting... ");
+    vae.exportAll(path);
+    utils.log_status("exporting finished!");
+});
+
+
 Max.outlet("loaded");
