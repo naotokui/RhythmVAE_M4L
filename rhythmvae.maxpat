@@ -1831,7 +1831,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 417.0, -95.128646850585938, 72.0, 22.0 ],
-					"restore" : [ -341, 387 ],
+					"restore" : [ -238, -192 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
@@ -10607,7 +10607,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 632.0, 542.0, 640.0, 480.0 ],
+						"rect" : [ 899.0, 489.0, 640.0, 480.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -10804,8 +10804,8 @@
 													"numinlets" : 6,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 74.0, 293.0, 231.0, 22.0 ],
-													"text" : "sprintf model_%d%d%d_%d%d%d.model"
+													"patching_rect" : [ 74.0, 293.0, 225.0, 22.0 ],
+													"text" : "sprintf rvae_model_%d%d%d_%d%d%d"
 												}
 
 											}
@@ -11066,7 +11066,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 55.0, 232.0, 114.0, 22.0 ],
+									"patching_rect" : [ 55.0, 249.0, 114.0, 22.0 ],
 									"text" : "prepend savemodel"
 								}
 
@@ -11118,7 +11118,7 @@
 									"maxclass" : "outlet",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 61.0, 370.0, 30.0, 30.0 ]
+									"patching_rect" : [ 55.0, 383.0, 30.0, 30.0 ]
 								}
 
 							}
@@ -11169,14 +11169,6 @@
 								"patchline" : 								{
 									"destination" : [ "obj-3", 0 ],
 									"source" : [ "obj-42", 0 ]
-								}
-
-							}
-, 							{
-								"patchline" : 								{
-									"destination" : [ "obj-6", 0 ],
-									"midpoints" : [ 489.5, 214.5, 278.5, 214.5 ],
-									"source" : [ "obj-5", 0 ]
 								}
 
 							}
@@ -13383,6 +13375,7 @@
 					"patching_rect" : [ 273.666666666666629, 538.916671752929688, 164.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 87.04127037525177, 139.792198208996837, 142.0, 18.0 ],
+					"text" : "Model loaded!",
 					"textcolor" : [ 0.999999284744263, 0.999974429607391, 0.999991297721863, 1.0 ],
 					"textjustification" : 1
 				}
@@ -14112,8 +14105,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -15556,7 +15547,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-63", 2 ],
-					"midpoints" : [ 544.935566663742065, 511.0, 610.493555545806885, 511.0, 610.493555545806885, 306.25, 552.75, 306.25 ],
+					"midpoints" : [ 544.935566663742065, 511.0, 617.493555545806885, 511.0, 617.493555545806885, 306.25, 552.75, 306.25 ],
 					"source" : [ "obj-79", 0 ]
 				}
 

@@ -3,6 +3,9 @@
 
 const Max = require('max-api');
 const tf = require('@tensorflow/tfjs-node');
+const fs = require('fs');
+const pathlib = require('path');
+const sampleLayer = require('./sampleLayer.js');
 
 const utils = require('./utils.js')
 const data = require('./data.js')
@@ -153,35 +156,6 @@ function bendModel(noise_range){
   model.bendModel(noise_range)
 }
 
-// Sampling Z 
-class sampleLayer extends tf.layers.Layer {
-  constructor(args) {
-    super({});
-  }
-
-  computeOutputShape(inputShape) {
-    return inputShape[0];
-  }
-
-  call(inputs, kwargs) {
-    return tf.tidy(() => {
-      const [zMean, zLogVar] = inputs;
-      const batch = zMean.shape[0];
-      const dim = zMean.shape[1];
-      const epsilon = tf.randomNormal([batch, dim]);
-      const half = tf.scalar(0.5);
-      const temp = zLogVar.mul(half).exp().mul(epsilon);
-      const sample = zMean.add(temp);
-      return sample;
-    });
-  }
-
-  getClassName() {
-    return 'sampleLayer';
-  }
-}
-
-  
 class ConditionalVAE {
   constructor(config) {
     this.modelConfig = config.modelConfig;
@@ -230,7 +204,7 @@ class ConditionalVAE {
 
     const zMean = tf.layers.dense({units: latentDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x2);
     const zLogVar = tf.layers.dense({units: latentDim, useBias: true, kernelInitializer: 'glorotNormal'}).apply(x2);
-    const z = new sampleLayer().apply([zMean, zLogVar]);
+    const z = new sampleLayer.sampleLayer().apply([zMean, zLogVar]);
 
     const encoderInputs = [encoderInputsOn, encoderInputsVel, encoderInputsTS];
     const encoderOutputs = [zMean, zLogVar, z];
@@ -439,12 +413,28 @@ class ConditionalVAE {
   }
 
   async saveModel(path){
-    const saved = await this.decoder.save(path);
-    utils.post(saved);
+    if (!fs.existsSync(path)) fs.mkdir(path, { recursive: true }, (err) => {
+      if (err) throw err;
+    });
+
+    fs.writeFile(path + '/model_rvae.json', '___', function (err) {
+      if (err) return console.log(err);
+    });
+
+    path = "file://" + path; // for tfjs 
+    const saved0 = await this.decoder.save(path + "/decoder");
+    const saved1 = await this.encoder.save(path + "/encoder");
+    console.log(saved0, saved1);
   }
 
   async loadModel(path){
-    this.decoder = await tf.loadLayersModel(path);
+    let dirpath = pathlib.dirname(path);
+
+    let decoder_path = dirpath + "/decoder/model.json"
+    this.decoder = await tf.loadLayersModel(decoder_path);
+    let encoder_path = dirpath + "/encoder/model.json"
+    this.encoder = await tf.loadLayersModel(encoder_path);
+
     this.isTrained = true;
   }
 

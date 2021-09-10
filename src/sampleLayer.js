@@ -26,7 +26,7 @@ class sampleLayer extends tf.layers.Layer {
     getClassName() {
       return 'sampleLayer';
     }
-  
     static className = "sampleLayer";
   }
   tf.serialization.registerClass(sampleLayer);
+exports.sampleLayer = sampleLayer;
