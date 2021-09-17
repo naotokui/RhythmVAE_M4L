@@ -235,10 +235,10 @@ Max.addHandler("encode_midi", (filename, mapping = 0) => {
     else midi_map = MIDI_DRUM_MAP;
 
     // process midifile
-    let [onsets, velocities, timeshifts] = processPianoroll(midiFile, midi_map);
+    let [onsets, velocities, timeshifts] = data.processPianoroll(midiFile, midi_map);
 
     // convert to tensor2d - here we are only interested in the first loop
-    let inputOn = tf.tensor2d(onsets[0], [NUM_DRUM_CLASSES, LOOP_DURATION])
+    let inputOn     = tf.tensor2d(onsets[0], [NUM_DRUM_CLASSES, LOOP_DURATION])
     let inputVel    = tf.tensor2d(velocities[0], [NUM_DRUM_CLASSES, LOOP_DURATION])
     let inputTS     = tf.tensor2d(timeshifts[0], [NUM_DRUM_CLASSES, LOOP_DURATION])
     
