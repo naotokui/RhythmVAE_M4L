@@ -29,6 +29,7 @@ let dataHandlerOnset;
 let dataHandlerVelocity;
 let dataHandlerTimeshift;
 let dataOnsetZ, dataOnOffRatioZ;
+let dataMeanStd = null;
 
 let model = null;
 let numEpochs = 150; // default # of epochs
@@ -47,7 +48,6 @@ async function loadAndTrain(train_data_onset, train_data_velocity, train_data_ti
 
   let onset_hats_mean = tf.mean(onsets_hats, axis=0); // average # of hats per loop
   let onset_hats_std = tf.moments(onsets_hats, axis = 0).variance.sqrt(); // std for # of hats
-
   console.log("mean/std", onset_kick_mean.dataSync()[0], onset_kick_std.dataSync()[0], onset_hats_mean.dataSync()[0], onset_hats_std.dataSync()[0]);
 
   let onbeats = tf.gather(onsets, tf.range(0, LOOP_DURATION, BEAT_RESOLUTION, 'int32'), axis = 2);
@@ -88,11 +88,40 @@ async function loadAndTrain(train_data_onset, train_data_velocity, train_data_ti
   dataHandlerVelocity = new data.DataHandler(train_data_velocity, train_indices, test_indices); // data utility for velocity
   dataHandlerTimeshift = new data.DataHandler(train_data_timeshift, train_indices, test_indices); // data utility for duration
 
-  // M
+  // 
+  dataMeanStd = {
+    onset_kick_mean: onset_kick_mean.dataSync()[0], 
+    onset_kick_std: onset_kick_std.dataSync()[0], 
+    onset_hats_mean: onset_hats_mean.dataSync()[0], 
+    onset_hats_std: onset_hats_std.dataSync()[0],
+    onoff_ratio_mean: onoff_ratio_mean.dataSync()[0], 
+    onoff_ratio_std: onoff_ratio_std.dataSync()[0]
+  }
 
   // start training!
   if (!model) initModel(); // initializing model class
   startTraining(); // start the actual training process with the given training data
+}
+
+function getConditionings(onsets){
+  if (dataMeanStd == null) return [0.0, 0.0, 0.0];
+
+  onsets = onsets.reshape([1, NUM_DRUM_CLASSES, LOOP_DURATION]); // batch
+
+  let onsets_sum = tf.sum(onsets, axis = 2); // for each instruments
+  let onsets_kick = tf.gather(onsets_sum, 0, axis = 1).dataSync()[0]; // kick count
+  let kick_z = (onsets_kick -  dataMeanStd.onset_kick_mean) / dataMeanStd.onset_kick_std;
+  let onsets_hats = tf.mean(tf.gather(onsets_sum, [1, 2, 3], axis = 1), axis = 1).dataSync()[0]; // hats count
+  let hats_z = (onsets_hats -  dataMeanStd.onset_hats_mean) / dataMeanStd.onset_hats_std;
+
+  let onbeats = tf.gather(onsets, tf.range(0, LOOP_DURATION, BEAT_RESOLUTION, 'int32'), axis = 2);
+  let onbeats_kick = tf.sum(tf.gather(onbeats, 0, axis = 1), axis = 1);
+  let offbeats_kick = tf.sub(onsets_kick, onbeats_kick);
+  onbeats_kick = tf.add(onbeats_kick, tf.scalar(0.00001)); // avoid dividing by zero
+  let onoff_ratio = tf.div(offbeats_kick, onbeats_kick).dataSync()[0];
+  let onoff_ratio_z = (onoff_ratio -  dataMeanStd.onoff_ratio_mean) / dataMeanStd.onoff_ratio_std;
+  console.log(onsets_kick, kick_z, onsets_hats, hats_z, onoff_ratio, onoff_ratio_z);
+  return [kick_z, hats_z, onoff_ratio_z];
 }
 
 function initModel() {
@@ -429,8 +458,9 @@ class ConditionalVAE {
     if (!fs.existsSync(path)) fs.mkdir(path, { recursive: true }, (err) => {
       if (err) throw err;
     });
-
-    fs.writeFile(path + '/model_rvae.json', '___', function (err) {
+1
+    let meanStdStr = JSON.stringify(dataMeanStd);
+    fs.writeFile(path + '/model_rvae.json', meanStdStr, function (err) {
       if (err) return console.log(err);
     });
 
@@ -441,7 +471,11 @@ class ConditionalVAE {
   }
 
   async loadModel(path) {
-    let dirpath = pathlib.dirname(path);
+    dataMeanStd = JSON.parse(fs.readFileSync(path));
+    console.log(dataMeanStd);
+    
+    let filepath = "file://" + path;
+    let dirpath = pathlib.dirname(filepath);
 
     let decoder_path = dirpath + "/decoder/model.json"
     this.decoder = await tf.loadLayersModel(decoder_path);
@@ -537,6 +571,7 @@ function exportAll(path) {
 }
 
 exports.loadAndTrain = loadAndTrain;
+exports.getConditionings = getConditionings;
 exports.saveModel = saveModel;
 exports.loadModel = loadModel;
 exports.clearModel = clearModel;

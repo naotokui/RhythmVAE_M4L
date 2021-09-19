@@ -245,8 +245,12 @@ Max.addHandler("encode_midi", (filename, mapping = 0) => {
     // Encode!
     let zs = vae.encodePattern(inputOn, inputVel, inputTS);
     
+    // Conditioning
+    let [kick_z, hats_z, onoff_z] = vae.getConditionings(inputOn);
+
     // output encoded z vector
     utils.post(zs)
+    Max.outlet("conditions", kick_z, hats_z, onoff_z);  
     Max.outlet("zs", zs[0], zs[1]);  
 });
 
@@ -275,8 +279,7 @@ Max.addHandler("savemodel", (path)=>{
 });
 
 Max.addHandler("loadmodel", (path)=>{
-    filepath = "file://" + path;
-    vae.loadModel(filepath);
+    vae.loadModel(path);
     utils.log_status("Model loaded!");
 });
 
