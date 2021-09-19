@@ -39,7 +39,16 @@ async function loadAndTrain(train_data_onset, train_data_velocity, train_data_ti
   // Count onsets for conditioning
   let onsets = tf.greater(tf.tensor3d(train_data_onset, [train_data_onset.length, NUM_DRUM_CLASSES, LOOP_DURATION]), 0.5);
   let onsets_sum = tf.sum(onsets, axis = 2); // for each instruments
-  let onsets_kick = tf.gather(onsets_sum, 0, axis = 1);
+  let onsets_kick = tf.gather(onsets_sum, 0, axis = 1); // kick count
+  let onsets_hats = tf.mean(tf.gather(onsets_sum, [1, 2, 3], axis = 1), axis = 1); // hats count
+
+  let onset_kick_mean = tf.mean(onsets_kick, axis=0); // average # of kick per loop
+  let onset_kick_std = tf.moments(onsets_kick, axis = 0).variance.sqrt(); // std for # of kicks
+
+  let onset_hats_mean = tf.mean(onsets_hats, axis=0); // average # of hats per loop
+  let onset_hats_std = tf.moments(onsets_hats, axis = 0).variance.sqrt(); // std for # of hats
+
+  console.log("mean/std", onset_kick_mean.dataSync()[0], onset_kick_std.dataSync()[0], onset_hats_mean.dataSync()[0], onset_hats_std.dataSync()[0]);
 
   let onbeats = tf.gather(onsets, tf.range(0, LOOP_DURATION, BEAT_RESOLUTION, 'int32'), axis = 2);
   let onbeats_kick = tf.sum(tf.gather(onbeats, 0, axis = 1), axis = 1);
@@ -50,6 +59,8 @@ async function loadAndTrain(train_data_onset, train_data_velocity, train_data_ti
   let onoff_ratio_mean = tf.mean(onoff_ratio, axis = 0); // for each instance
   let onoff_ratio_std = tf.moments(onoff_ratio, axis = 0).variance.sqrt();
   onoff_ratio_std = tf.add(onoff_ratio_std, tf.scalar(0.00001)); // avoid dividing by zero
+  console.log(onoff_ratio_mean.dataSync(), onoff_ratio_std.dataSync())
+
   let onoff_ratio_z = tf.div(tf.sub(onoff_ratio, onoff_ratio_mean), onoff_ratio_std);
 
   let onsets_means = tf.mean(onsets_sum, axis = 0); // for each instance
@@ -76,6 +87,8 @@ async function loadAndTrain(train_data_onset, train_data_velocity, train_data_ti
   dataHandlerOnset = new data.DataHandler(train_data_onset, train_indices, test_indices); // data utility fo onset
   dataHandlerVelocity = new data.DataHandler(train_data_velocity, train_indices, test_indices); // data utility for velocity
   dataHandlerTimeshift = new data.DataHandler(train_data_timeshift, train_indices, test_indices); // data utility for duration
+
+  // M
 
   // start training!
   if (!model) initModel(); // initializing model class
