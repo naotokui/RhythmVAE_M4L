@@ -41,7 +41,7 @@ async function loadAndTrain(train_data_onset, train_data_velocity, train_data_ti
   let onsets = tf.greater(tf.tensor3d(train_data_onset, [train_data_onset.length, NUM_DRUM_CLASSES, LOOP_DURATION]), 0.5);
   let onsets_sum = tf.sum(onsets, axis = 2); // for each instruments
   let onsets_kick = tf.gather(onsets_sum, 0, axis = 1); // kick count
-  let onsets_hats = tf.mean(tf.gather(onsets_sum, [1, 2, 3], axis = 1), axis = 1); // hats count
+  let onsets_hats = tf.mean(tf.gather(onsets_sum, [2, 3], axis = 1), axis = 1); // hats count
 
   let onset_kick_mean = tf.mean(onsets_kick, axis=0); // average # of kick per loop
   let onset_kick_std = tf.moments(onsets_kick, axis = 0).variance.sqrt(); // std for # of kicks
@@ -111,7 +111,7 @@ function getConditionings(onsets){
   let onsets_sum = tf.sum(onsets, axis = 2); // for each instruments
   let onsets_kick = tf.gather(onsets_sum, 0, axis = 1).dataSync()[0]; // kick count
   let kick_z = (onsets_kick -  dataMeanStd.onset_kick_mean) / dataMeanStd.onset_kick_std;
-  let onsets_hats = tf.mean(tf.gather(onsets_sum, [1, 2, 3], axis = 1), axis = 1).dataSync()[0]; // hats count
+  let onsets_hats = tf.mean(tf.gather(onsets_sum, [2, 3], axis = 1), axis = 1).dataSync()[0]; // hats count
   let hats_z = (onsets_hats -  dataMeanStd.onset_hats_mean) / dataMeanStd.onset_hats_std;
 
   let onbeats = tf.gather(onsets, tf.range(0, LOOP_DURATION, BEAT_RESOLUTION, 'int32'), axis = 2);
@@ -388,7 +388,7 @@ class ConditionalVAE {
         batchInputOn = batchOnset.xs.reshape([batchSize, originalDim]);
         let batchInputOnsetZ = tf.gather(dataOnsetZ, batchOnset.indices);
         let batchInputKickZ = tf.gather(batchInputOnsetZ, 0, axis = 1).expandDims(axis = 1);
-        let batchInputHatsZ = tf.mean(tf.gather(batchInputOnsetZ, [1, 2, 3], axis = 1), axis = 1).expandDims(axis = 1);
+        let batchInputHatsZ = tf.mean(tf.gather(batchInputOnsetZ, [2, 3], axis = 1), axis = 1).expandDims(axis = 1);
         let batchInputOnOffZ = tf.gather(dataOnOffRatioZ, batchOnset.indices).expandDims(axis = 1);
 
         batchInputVel = dataHandlerVelocity.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
@@ -410,7 +410,7 @@ class ConditionalVAE {
       testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize);
       let batchInputOnsetZ = tf.gather(dataOnsetZ, testBatchInputOn.indices);
       let batchInputKickZ = tf.gather(batchInputOnsetZ, 0, axis = 1).expandDims(axis = 1);
-      let batchInputHatsZ = tf.mean(tf.gather(batchInputOnsetZ, [1, 2, 3], axis = 1), axis = 1).expandDims(axis = 1);
+      let batchInputHatsZ = tf.mean(tf.gather(batchInputOnsetZ, [2, 3], axis = 1), axis = 1).expandDims(axis = 1);
       let batchInputOnOffZ = tf.gather(dataOnOffRatioZ, testBatchInputOn.indices).expandDims(axis = 1);
 
       testBatchInputOn = testBatchInputOn.xs.reshape([testBatchSize, originalDim]);
