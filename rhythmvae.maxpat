@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"openrect" : [ 27.0, 83.0, 1493.0, 262.0 ],
+		"openrect" : [ 27.0, 83.0, 1493.0, 165.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -1783,7 +1783,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 919.0, 206.121353149414062, 56.0, 22.0 ],
+					"patching_rect" : [ 919.0, 178.682029724121094, 56.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -1804,7 +1804,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 580.069872736930847, 66.343976709964494, 54.0, 28.0 ],
+					"patching_rect" : [ 935.0, 204.5625, 54.0, 28.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
 					"presentation_rect" : [ 580.0, 6.976560496274175, 47.0, 28.0 ],
@@ -2162,7 +2162,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 470.0, 384.5, 197.0, 35.0 ],
-					"text" : "generate 0.32 -2.125 0. 0. 0. 1. 0.5 0."
+					"text" : "generate 1.72 -1.03 0. 0. 0. 1. 0.5 0."
 				}
 
 			}
@@ -2315,13 +2315,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-64",
-					"linecount" : 5,
+					"linecount" : 6,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 184.303234501347674, 117.0, 91.0, 76.0 ],
-					"text" : "midi /Users/nao/Desktop/GM-Electronic/Breakbeat/ 1"
+					"patching_rect" : [ 205.5, 117.0, 91.0, 89.0 ],
+					"text" : "midi \"/Users/nao/Desktop/GM - Electronic GM/Type 0/Bonus/\" 1"
 				}
 
 			}
@@ -2500,19 +2500,19 @@
 											}
 , 											{
 												"key" : 1,
-												"value" : [ "snare_drum", 38 ]
+												"value" : [ "snare_drum", 37 ]
 											}
 , 											{
 												"key" : 2,
-												"value" : [ "closed_hihat", 42 ]
+												"value" : [ "closed_hihat", 43 ]
 											}
 , 											{
 												"key" : 3,
-												"value" : [ "open_hihat", 46 ]
+												"value" : [ "open_hihat", 44 ]
 											}
 , 											{
 												"key" : 4,
-												"value" : [ "low_tom", 41 ]
+												"value" : [ "low_tom", 40 ]
 											}
 , 											{
 												"key" : 5,
@@ -2520,15 +2520,15 @@
 											}
 , 											{
 												"key" : 6,
-												"value" : [ "high_tom", 48 ]
+												"value" : [ "high_tom", 39 ]
 											}
 , 											{
 												"key" : 7,
-												"value" : [ "hand_clap", 39 ]
+												"value" : [ "hand_clap", 50 ]
 											}
 , 											{
 												"key" : 8,
-												"value" : [ "rim_shot", 51 ]
+												"value" : [ "rim_shot", 41 ]
 											}
  ]
 									}
@@ -2760,24 +2760,6 @@
 					}
 ,
 					"varname" : "live.button[2]"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontname" : "Ableton Sans Light",
-					"fontsize" : 8.0,
-					"id" : "obj-29",
-					"linecount" : 5,
-					"maxclass" : "message",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 814.5, 423.375, 62.0, 56.0 ],
-					"presentation" : 1,
-					"presentation_linecount" : 4,
-					"presentation_rect" : [ 335.757372736930847, 117.923585070310708, 76.0, 47.0 ],
-					"text" : "\"/Users/nao/Desktop/GM-Electronic/House/140 House 06b.mid\""
 				}
 
 			}
@@ -3971,7 +3953,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 417.0, -95.128646850585938, 72.0, 22.0 ],
-					"restore" : [ 64, -425 ],
+					"restore" : [ 344, -206 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
@@ -4644,19 +4626,19 @@
 																			}
 , 																			{
 																				"key" : 1,
-																				"value" : [ "snare_drum", 38 ]
+																				"value" : [ "snare_drum", 37 ]
 																			}
 , 																			{
 																				"key" : 2,
-																				"value" : [ "closed_hihat", 42 ]
+																				"value" : [ "closed_hihat", 43 ]
 																			}
 , 																			{
 																				"key" : 3,
-																				"value" : [ "open_hihat", 46 ]
+																				"value" : [ "open_hihat", 44 ]
 																			}
 , 																			{
 																				"key" : 4,
-																				"value" : [ "low_tom", 41 ]
+																				"value" : [ "low_tom", 40 ]
 																			}
 , 																			{
 																				"key" : 5,
@@ -4664,15 +4646,15 @@
 																			}
 , 																			{
 																				"key" : 6,
-																				"value" : [ "high_tom", 48 ]
+																				"value" : [ "high_tom", 39 ]
 																			}
 , 																			{
 																				"key" : 7,
-																				"value" : [ "hand_clap", 39 ]
+																				"value" : [ "hand_clap", 50 ]
 																			}
 , 																			{
 																				"key" : 8,
-																				"value" : [ "rim_shot", 51 ]
+																				"value" : [ "rim_shot", 41 ]
 																			}
  ]
 																	}
@@ -5291,19 +5273,19 @@
 																			}
 , 																			{
 																				"key" : 1,
-																				"value" : [ "snare_drum", 38 ]
+																				"value" : [ "snare_drum", 37 ]
 																			}
 , 																			{
 																				"key" : 2,
-																				"value" : [ "closed_hihat", 42 ]
+																				"value" : [ "closed_hihat", 43 ]
 																			}
 , 																			{
 																				"key" : 3,
-																				"value" : [ "open_hihat", 46 ]
+																				"value" : [ "open_hihat", 44 ]
 																			}
 , 																			{
 																				"key" : 4,
-																				"value" : [ "low_tom", 41 ]
+																				"value" : [ "low_tom", 40 ]
 																			}
 , 																			{
 																				"key" : 5,
@@ -5311,15 +5293,15 @@
 																			}
 , 																			{
 																				"key" : 6,
-																				"value" : [ "high_tom", 48 ]
+																				"value" : [ "high_tom", 39 ]
 																			}
 , 																			{
 																				"key" : 7,
-																				"value" : [ "hand_clap", 39 ]
+																				"value" : [ "hand_clap", 50 ]
 																			}
 , 																			{
 																				"key" : 8,
-																				"value" : [ "rim_shot", 51 ]
+																				"value" : [ "rim_shot", 41 ]
 																			}
  ]
 																	}
@@ -8985,7 +8967,6 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-27",
@@ -11891,19 +11872,19 @@
 											}
 , 											{
 												"key" : 1,
-												"value" : [ "snare_drum", 38 ]
+												"value" : [ "snare_drum", 37 ]
 											}
 , 											{
 												"key" : 2,
-												"value" : [ "closed_hihat", 42 ]
+												"value" : [ "closed_hihat", 43 ]
 											}
 , 											{
 												"key" : 3,
-												"value" : [ "open_hihat", 46 ]
+												"value" : [ "open_hihat", 44 ]
 											}
 , 											{
 												"key" : 4,
-												"value" : [ "low_tom", 41 ]
+												"value" : [ "low_tom", 40 ]
 											}
 , 											{
 												"key" : 5,
@@ -11911,15 +11892,15 @@
 											}
 , 											{
 												"key" : 6,
-												"value" : [ "high_tom", 48 ]
+												"value" : [ "high_tom", 39 ]
 											}
 , 											{
 												"key" : 7,
-												"value" : [ "hand_clap", 39 ]
+												"value" : [ "hand_clap", 50 ]
 											}
 , 											{
 												"key" : 8,
-												"value" : [ "rim_shot", 51 ]
+												"value" : [ "rim_shot", 41 ]
 											}
  ]
 									}
@@ -12206,19 +12187,19 @@
 							}
 , 							{
 								"key" : 1,
-								"value" : [ "snare_drum", 38 ]
+								"value" : [ "snare_drum", 37 ]
 							}
 , 							{
 								"key" : 2,
-								"value" : [ "closed_hihat", 42 ]
+								"value" : [ "closed_hihat", 43 ]
 							}
 , 							{
 								"key" : 3,
-								"value" : [ "open_hihat", 46 ]
+								"value" : [ "open_hihat", 44 ]
 							}
 , 							{
 								"key" : 4,
-								"value" : [ "low_tom", 41 ]
+								"value" : [ "low_tom", 40 ]
 							}
 , 							{
 								"key" : 5,
@@ -12226,15 +12207,15 @@
 							}
 , 							{
 								"key" : 6,
-								"value" : [ "high_tom", 48 ]
+								"value" : [ "high_tom", 39 ]
 							}
 , 							{
 								"key" : 7,
-								"value" : [ "hand_clap", 39 ]
+								"value" : [ "hand_clap", 50 ]
 							}
 , 							{
 								"key" : 8,
-								"value" : [ "rim_shot", 51 ]
+								"value" : [ "rim_shot", 41 ]
 							}
  ]
 					}
@@ -15610,6 +15591,7 @@
 					"patching_rect" : [ 273.666666666666629, 538.916671752929688, 164.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 87.04127037525177, 139.792198208996837, 142.0, 18.0 ],
+					"text" : "Start training...",
 					"textcolor" : [ 0.999999284744263, 0.999974429607391, 0.999991297721863, 1.0 ],
 					"textjustification" : 1
 				}
@@ -16504,6 +16486,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -16912,7 +16896,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-20", 2 ],
-					"midpoints" : [ 757.5, 197.951030552387238, 590.166666666666629, 197.951030552387238 ],
+					"midpoints" : [ 757.5, 197.951030552387238, 579.785714285714221, 197.951030552387238 ],
 					"source" : [ "obj-131", 0 ]
 				}
 
@@ -17153,15 +17137,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-172", 0 ],
-					"order" : 1,
-					"source" : [ "obj-171", 2 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-29", 1 ],
-					"order" : 0,
 					"source" : [ "obj-171", 2 ]
 				}
 
@@ -17583,13 +17558,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-171", 2 ],
-					"source" : [ "obj-29", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-58", 0 ],
 					"midpoints" : [ 347.0, 432.0, 611.5, 432.0 ],
 					"order" : 1,
@@ -17899,7 +17867,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-20", 1 ],
-					"midpoints" : [ 576.75, 197.049339115619659, 553.833333333333371, 197.049339115619659 ],
+					"midpoints" : [ 576.75, 197.049339115619659, 548.64285714285711, 197.049339115619659 ],
 					"source" : [ "obj-60", 1 ]
 				}
 
