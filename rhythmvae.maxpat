@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"openrect" : [ 27.0, 83.0, 1493.0, 165.0 ],
+		"openrect" : [ 27.0, 83.0, 1493.0, 166.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -2193,7 +2193,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 470.0, 384.5, 197.0, 35.0 ],
-					"text" : "generate -0.095 -1.955 0. 0. 0. 1. 0.870079 0."
+					"text" : "generate -0.77 -2.705 -0.23622 3. 3. 1. 0.5 0."
 				}
 
 			}
@@ -2268,8 +2268,8 @@
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "onoff ratio",
-							"parameter_mmax" : 5.0,
-							"parameter_mmin" : -5.0,
+							"parameter_mmax" : 3.0,
+							"parameter_mmin" : -3.0,
 							"parameter_shortname" : "onoff",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 1
@@ -2298,8 +2298,8 @@
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "hats",
-							"parameter_mmax" : 5.0,
-							"parameter_mmin" : -5.0,
+							"parameter_mmax" : 3.0,
+							"parameter_mmin" : -3.0,
 							"parameter_shortname" : "hats",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 1
@@ -2328,8 +2328,8 @@
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "kick",
-							"parameter_mmax" : 5.0,
-							"parameter_mmin" : -5.0,
+							"parameter_mmax" : 3.0,
+							"parameter_mmin" : -3.0,
 							"parameter_shortname" : "kick",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 1
@@ -3984,7 +3984,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 417.0, -95.128646850585938, 72.0, 22.0 ],
-					"restore" : [ -19, -391 ],
+					"restore" : [ -154, -541 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
@@ -16536,6 +16536,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -18229,42 +18231,42 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "bg3.png",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
-				"patcherrelativepath" : "./images",
+				"bootpath" : "~/git/RhythmVAE_M4L/images",
+				"patcherrelativepath" : "../RhythmVAE_M4L/images",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "bg2.png",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
-				"patcherrelativepath" : "./images",
+				"bootpath" : "~/git/RhythmVAE_M4L/images",
+				"patcherrelativepath" : "../RhythmVAE_M4L/images",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "bg1.png",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
-				"patcherrelativepath" : "./images",
+				"bootpath" : "~/git/RhythmVAE_M4L/images",
+				"patcherrelativepath" : "../RhythmVAE_M4L/images",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "rhythmvae.js",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L",
+				"bootpath" : "~/git/RhythmVAE_M4L_simple",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "makenote_for_me.maxpat",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
+				"bootpath" : "~/git/RhythmVAE_M4L_simple/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "shuffle_metro.maxpat",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
+				"bootpath" : "~/git/RhythmVAE_M4L_simple/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
@@ -18295,28 +18297,28 @@
 			}
 , 			{
 				"name" : "setup_1_16.maxpat",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
+				"bootpath" : "~/git/RhythmVAE_M4L_simple/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "list_dup.maxpat",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
+				"bootpath" : "~/git/RhythmVAE_M4L_simple/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "vae_tex_210315_data.png",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
-				"patcherrelativepath" : "./images",
+				"bootpath" : "~/git/RhythmVAE_M4L/images",
+				"patcherrelativepath" : "../RhythmVAE_M4L/images",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "clip-creation.js",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/src",
+				"bootpath" : "~/git/RhythmVAE_M4L_simple/src",
 				"patcherrelativepath" : "./src",
 				"type" : "TEXT",
 				"implicit" : 1
