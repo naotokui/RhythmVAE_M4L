@@ -40,6 +40,35 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"activebgcolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ],
+					"id" : "obj-162",
+					"maxclass" : "live.numbox",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "float" ],
+					"parameter_enable" : 1,
+					"parameter_mappable" : 0,
+					"patching_rect" : [ 281.666666666666629, 676.402829428721589, 50.0, 15.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 348.04127037525177, 99.923585070310708, 34.0, 15.0 ],
+					"saved_attribute_attributes" : 					{
+						"valueof" : 						{
+							"parameter_invisible" : 2,
+							"parameter_longname" : "live.numbox[18]",
+							"parameter_mmax" : 1000.0,
+							"parameter_shortname" : "live.numbox",
+							"parameter_type" : 0,
+							"parameter_unitstyle" : 1
+						}
+
+					}
+,
+					"varname" : "live.numbox[15]"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-173",
 					"maxclass" : "newobj",
 					"numinlets" : 0,
@@ -687,7 +716,6 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-117",
-									"int" : 1,
 									"maxclass" : "gswitch",
 									"numinlets" : 3,
 									"numoutlets" : 1,
@@ -1957,7 +1985,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 470.0, 384.5, 197.0, 35.0 ],
-					"text" : "generate 1.41 -1.78 0.472441 -1.15748 1.748031 1. 0.5 0."
+					"text" : "generate -0.82 2.19 -1.700787 0.708661 -1.511811 1. 0.5 0."
 				}
 
 			}
@@ -2116,7 +2144,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 205.5, 117.0, 91.0, 89.0 ],
-					"text" : "midi \"/Users/nao/Desktop/GM - Electronic GM/Type 0/Bonus/\" 1"
+					"text" : "midi /Users/nao/git/AIDJ_ver2/rhythm_generation/data/GM-Electronic/Techno/ 1"
 				}
 
 			}
@@ -3748,7 +3776,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 417.0, -95.128646850585938, 72.0, 22.0 ],
-					"restore" : [ 282, -356 ],
+					"restore" : [ -164, 438 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
@@ -9762,6 +9790,7 @@
 , 			{
 				"box" : 				{
 					"activebgcolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ],
+					"hidden" : 1,
 					"id" : "obj-83",
 					"maxclass" : "live.numbox",
 					"numinlets" : 1,
@@ -9785,35 +9814,6 @@
 					}
 ,
 					"varname" : "live.numbox[1]"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"activebgcolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ],
-					"hidden" : 1,
-					"id" : "obj-123",
-					"maxclass" : "live.numbox",
-					"numinlets" : 1,
-					"numoutlets" : 2,
-					"outlettype" : [ "", "float" ],
-					"parameter_enable" : 1,
-					"parameter_mappable" : 0,
-					"patching_rect" : [ 285.0, 673.5, 50.0, 15.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 348.04127037525177, 99.923585070310708, 34.0, 15.0 ],
-					"saved_attribute_attributes" : 					{
-						"valueof" : 						{
-							"parameter_invisible" : 2,
-							"parameter_longname" : "live.numbox[14]",
-							"parameter_shortname" : "live.numbox",
-							"parameter_type" : 0,
-							"parameter_unitstyle" : 1
-						}
-
-					}
-,
-					"varname" : "live.numbox[14]"
 				}
 
 			}
@@ -9989,7 +9989,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 344.25, 666.5, 58.0, 22.0 ],
+					"patching_rect" : [ 344.25, 657.5, 58.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -10565,7 +10565,6 @@
 , 			{
 				"box" : 				{
 					"bgcolor" : [ 0.483607888221741, 0.483681797981262, 0.483572363853455, 1.0 ],
-					"hidden" : 1,
 					"id" : "obj-136",
 					"maxclass" : "multislider",
 					"numinlets" : 1,
@@ -14114,6 +14113,7 @@
 , 			{
 				"box" : 				{
 					"bgcolor" : [ 0.483607888221741, 0.483681797981262, 0.483572363853455, 1.0 ],
+					"hidden" : 1,
 					"id" : "obj-91",
 					"maxclass" : "multislider",
 					"numinlets" : 1,
@@ -15386,6 +15386,7 @@
 					"patching_rect" : [ 273.666666666666629, 538.916671752929688, 164.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 87.04127037525177, 139.792198208996837, 142.0, 18.0 ],
+					"text" : "Start training...",
 					"textcolor" : [ 0.999999284744263, 0.999974429607391, 0.999991297721863, 1.0 ],
 					"textjustification" : 1
 				}
@@ -16300,6 +16301,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -16693,15 +16696,15 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-123", 0 ],
-					"source" : [ "obj-130", 1 ]
+					"destination" : [ "obj-136", 0 ],
+					"source" : [ "obj-130", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-136", 0 ],
-					"source" : [ "obj-130", 0 ]
+					"destination" : [ "obj-162", 0 ],
+					"source" : [ "obj-130", 1 ]
 				}
 
 			}
@@ -16845,17 +16848,17 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-123", 0 ],
-					"order" : 0,
+					"destination" : [ "obj-136", 0 ],
+					"midpoints" : [ 392.75, 693.0, 266.166666666666629, 693.0 ],
+					"order" : 1,
 					"source" : [ "obj-156", 1 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-136", 0 ],
-					"midpoints" : [ 392.75, 693.0, 266.166666666666629, 693.0 ],
-					"order" : 1,
+					"destination" : [ "obj-162", 0 ],
+					"order" : 0,
 					"source" : [ "obj-156", 1 ]
 				}
 
@@ -17930,7 +17933,6 @@
 			"obj-112" : [ "live.numbox[13]", "live.numbox[5]", 0 ],
 			"obj-116" : [ "live.menu[1]", "live.menu", 0 ],
 			"obj-122" : [ "live.menu[2]", "live.menu", 0 ],
-			"obj-123" : [ "live.numbox[14]", "live.numbox", 0 ],
 			"obj-131" : [ "kick", "kick", 0 ],
 			"obj-140" : [ "live.text[7]", "live.text[7]", 0 ],
 			"obj-144" : [ "live.tab[1]", "live.tab[1]", 0 ],
@@ -17942,6 +17944,7 @@
 			"obj-155" : [ "live.text[16]", "live.text[7]", 0 ],
 			"obj-157" : [ "live.step[2]", "live.step", 0 ],
 			"obj-161" : [ "live.grid[1]", "live.grid", 0 ],
+			"obj-162" : [ "live.numbox[18]", "live.numbox", 0 ],
 			"obj-163" : [ "generated", "generated", 0 ],
 			"obj-172" : [ "live.button[2]", "live.button[2]", 0 ],
 			"obj-18" : [ "live.grid", "live.grid", 0 ],

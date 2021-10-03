@@ -16,14 +16,13 @@ const LOOP_DURATION = require('./constants.js').LOOP_DURATION;
 
 const ORIGINAL_DIM = require('./constants.js').ORIGINAL_DIM;
 const { BEAT_RESOLUTION } = require('./constants.js');
-const INTERMEDIATE_DIM = 512;
+const INTERMEDIATE_DIM = 64;
 const LATENT_DIM = 2;
 
 const BATCH_SIZE = 64;
 const TEST_BATCH_SIZE = 128;
-const TS_LOSS_COEF = 5.0;  // coef for timeshift loss
-const VEL_LOSS_COEF = 2.5;  // coef for velocity loss
-
+const TS_LOSS_COEF = 1.0;  // coef for timeshift loss
+const VEL_LOSS_COEF = 1.5;  // coef for velocity loss
 
 let dataHandlerOnset;
 let dataHandlerVelocity;
@@ -237,18 +236,29 @@ class ConditionalVAE {
     const x1NormalisedTS = tf.layers.batchNormalization({ axis: 1 }).apply(x1LinearTS);
     const x1TS = tf.layers.leakyReLU().apply(x1NormalisedTS);
 
-    // Merged
-    const concatLayer = tf.layers.concatenate();
-    const x1Merged = concatLayer.apply([x1On, x1Vel, x1TS]);
+    // Conditioning input
+    const encoderCondKick = tf.input({ shape: [1] });
+    const encoderCondHats = tf.input({ shape: [1] });
+    const encoderCondOnOff = tf.input({ shape: [1] });
+    const x1Merged = tf.layers.concatenate().apply([x1On, x1Vel, x1TS, encoderCondKick, encoderCondHats, encoderCondOnOff]);
+
+    // // Merged
+    // const concatLayer = tf.layers.concatenate();
+    // const x1Merged = concatLayer.apply([x1On, x1Vel, x1TS]);
+
     const x2Linear = tf.layers.dense({ units: intermediateDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(x1Merged);
     const x2Normalised = tf.layers.batchNormalization({ axis: 1 }).apply(x2Linear);
     const x2 = tf.layers.leakyReLU().apply(x2Normalised);
 
-    const zMean = tf.layers.dense({ units: latentDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(x2);
-    const zLogVar = tf.layers.dense({ units: latentDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(x2);
+    const x21Linear = tf.layers.dense({ units: intermediateDim/2, useBias: true, kernelInitializer: 'glorotNormal' }).apply(x2);
+    const x21Normalised = tf.layers.batchNormalization({ axis: 1 }).apply(x21Linear);
+    const x21 = tf.layers.leakyReLU().apply(x21Normalised);
+
+    const zMean = tf.layers.dense({ units: latentDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(x21);
+    const zLogVar = tf.layers.dense({ units: latentDim, useBias: true, kernelInitializer: 'glorotNormal' }).apply(x21);
     const z = new sampleLayer.sampleLayer().apply([zMean, zLogVar]);
 
-    const encoderInputs = [encoderInputsOn, encoderInputsVel, encoderInputsTS];
+    const encoderInputs = [encoderInputsOn, encoderInputsVel, encoderInputsTS, encoderCondKick, encoderCondHats, encoderCondOnOff];
     const encoderOutputs = [zMean, zLogVar, z];
 
     const encoder = tf.model({ inputs: encoderInputs, outputs: encoderOutputs, name: "encoder" })
@@ -293,7 +303,7 @@ class ConditionalVAE {
     // build VAE model
     const vae = (inputs) => {
       return tf.tidy(() => {
-        const [zMean, zLogVar, z] = this.encoder.apply([inputs[0], inputs[1], inputs[2]]);
+        const [zMean, zLogVar, z] = this.encoder.apply([inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5]]);
         const outputs = this.decoder.apply([z, inputs[3], inputs[4], inputs[5]]);
         return [zMean, zLogVar, outputs];
       });
