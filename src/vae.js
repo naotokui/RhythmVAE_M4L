@@ -176,8 +176,8 @@ function generatePattern(z1, z2, kick, hats, onoff, noise_range = 0.0) {
   return model.generate(zs, tf.tensor2d([[kick]]), tf.tensor2d([[hats]]), tf.tensor2d([[onoff]]));
 }
 
-function encodePattern(inputOn, inputVel, inputTS) {
-  return model.encode(inputOn, inputVel, inputTS);
+function encodePattern(inputOn, inputVel, inputTS, kick_z, hats_z, onoff_z) {
+  return model.encode(inputOn, inputVel, inputTS, kick_z, hats_z, onoff_z);
 }
 
 async function saveModel(filepath) {
@@ -495,7 +495,7 @@ class ConditionalVAE {
     this.isTrained = true;
   }
 
-  encode(inputOn, inputVel, inputTS) {
+  encode(inputOn, inputVel, inputTS, kick_z, hats_z, onoff_z) {
     if (!this.encoder) {
       utils.error_status("Model is not trained yet");
       return;
@@ -506,7 +506,11 @@ class ConditionalVAE {
     inputVel = inputVel.reshape([1, ORIGINAL_DIM]);
     inputTS = inputTS.reshape([1, ORIGINAL_DIM]);
 
-    let [zMean, zLogVar, zs] = this.encoder.apply([inputOn, inputVel, inputTS]);
+    kick_z = tf.tensor([kick_z], [1, 1]);
+    hats_z = tf.tensor([hats_z], [1, 1]);
+    onoff_z = tf.tensor([onoff_z], [1, 1]);
+
+    let [zMean, zLogVar, zs] = this.encoder.apply([inputOn, inputVel, inputTS, kick_z, hats_z, onoff_z]);
 
     // this.generate(zs); // generate rhythm pattern with the encoded z
     zs = zs.arraySync();

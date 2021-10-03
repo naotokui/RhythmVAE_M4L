@@ -242,11 +242,11 @@ Max.addHandler("encode_midi", (filename, mapping = 0) => {
     let inputVel    = tf.tensor2d(velocities[0], [NUM_DRUM_CLASSES, LOOP_DURATION])
     let inputTS     = tf.tensor2d(timeshifts[0], [NUM_DRUM_CLASSES, LOOP_DURATION])
     
-    // Encode!
-    let zs = vae.encodePattern(inputOn, inputVel, inputTS);
-    
     // Conditioning
     let [kick_z, hats_z, onoff_z] = vae.getConditionings(inputOn);
+
+    // Encode!
+    let zs = vae.encodePattern(inputOn, inputVel, inputTS, kick_z, hats_z, onoff_z);
 
     // output encoded z vector
     utils.post(zs)

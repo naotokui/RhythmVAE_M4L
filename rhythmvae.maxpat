@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 8,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -41,6 +41,7 @@
 		"boxes" : [ 			{
 				"box" : 				{
 					"activebgcolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ],
+					"hidden" : 1,
 					"id" : "obj-162",
 					"maxclass" : "live.numbox",
 					"numinlets" : 1,
@@ -212,7 +213,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -478,7 +479,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -716,6 +717,7 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-117",
+									"int" : 1,
 									"maxclass" : "gswitch",
 									"numinlets" : 3,
 									"numoutlets" : 1,
@@ -1499,7 +1501,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1648,7 +1650,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1985,7 +1987,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 470.0, 384.5, 197.0, 35.0 ],
-					"text" : "generate -0.82 2.19 -1.700787 0.708661 -1.511811 1. 0.5 0."
+					"text" : "generate -0.695 0.135 -0.405684 3.080459 -0.79474 1. 0.5 0."
 				}
 
 			}
@@ -1996,7 +1998,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 789.000000000000227, 301.757293701171875, 128.0, 54.0 ],
+					"patching_rect" : [ 764.98541259765625, 301.757293701171875, 128.0, 54.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 728.632372736930847, 24.585077920896651, 624.19555098930914, 136.00000011920929 ]
 				}
@@ -2138,13 +2140,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-64",
-					"linecount" : 6,
+					"linecount" : 8,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 205.5, 117.0, 91.0, 89.0 ],
-					"text" : "midi /Users/nao/git/AIDJ_ver2/rhythm_generation/data/GM-Electronic/Techno/ 1"
+					"patching_rect" : [ 205.5, 117.0, 91.0, 116.0 ],
+					"text" : "midi \"/Users/nao/Desktop/GM - Electronic GM/Type 0/DnB/150 DnB 22a.mid\" 1"
 				}
 
 			}
@@ -2243,7 +2245,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2544,7 +2546,7 @@
 					"parameter_enable" : 1,
 					"patching_rect" : [ 229.833333333333286, 1055.599122464254378, 33.0, 33.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 564.432372748851776, 6.976560496274175, 15.0, 15.0 ],
+					"presentation_rect" : [ 458.432372748851776, 6.976560496274175, 15.0, 15.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_enum" : [ "off", "on" ],
@@ -2583,34 +2585,6 @@
 					}
 ,
 					"varname" : "live.button[2]"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"activebgoncolor" : [ 1.0, 0.984313725490196, 0.427450980392157, 1.0 ],
-					"id" : "obj-95",
-					"ignoreclick" : 1,
-					"maxclass" : "live.button",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"parameter_enable" : 1,
-					"patching_rect" : [ 742.75, 423.375, 29.23541259765625, 27.425958415212676 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 417.202166438102665, 99.923585070310708, 12.0, 12.0 ],
-					"saved_attribute_attributes" : 					{
-						"valueof" : 						{
-							"parameter_enum" : [ "off", "on" ],
-							"parameter_longname" : "live.button[5]",
-							"parameter_mmax" : 1,
-							"parameter_shortname" : "live.button[1]",
-							"parameter_type" : 2
-						}
-
-					}
-,
-					"varname" : "live.button[3]"
 				}
 
 			}
@@ -3271,7 +3245,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -3479,7 +3453,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -3776,7 +3750,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 417.0, -95.128646850585938, 72.0, 22.0 ],
-					"restore" : [ -164, 438 ],
+					"restore" : [ -139, 27 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
@@ -3833,7 +3807,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -3942,7 +3916,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -4073,7 +4047,7 @@
 														"appversion" : 														{
 															"major" : 8,
 															"minor" : 1,
-															"revision" : 8,
+															"revision" : 11,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -4143,7 +4117,7 @@
 																		"appversion" : 																		{
 																			"major" : 8,
 																			"minor" : 1,
-																			"revision" : 8,
+																			"revision" : 11,
 																			"architecture" : "x64",
 																			"modernui" : 1
 																		}
@@ -4720,7 +4694,7 @@
 														"appversion" : 														{
 															"major" : 8,
 															"minor" : 1,
-															"revision" : 8,
+															"revision" : 11,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -4790,7 +4764,7 @@
 																		"appversion" : 																		{
 																			"major" : 8,
 																			"minor" : 1,
-																			"revision" : 8,
+																			"revision" : 11,
 																			"architecture" : "x64",
 																			"modernui" : 1
 																		}
@@ -5378,7 +5352,7 @@
 														"appversion" : 														{
 															"major" : 8,
 															"minor" : 1,
-															"revision" : 8,
+															"revision" : 11,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -5485,7 +5459,7 @@
 																		"appversion" : 																		{
 																			"major" : 8,
 																			"minor" : 1,
-																			"revision" : 8,
+																			"revision" : 11,
 																			"architecture" : "x64",
 																			"modernui" : 1
 																		}
@@ -6484,8 +6458,6 @@
 					"outlettype" : [ "" ],
 					"parameter_enable" : 1,
 					"patching_rect" : [ 1467.5, 529.5, 15.0, 15.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 458.432372748851776, 6.976560496274175, 15.0, 15.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_enum" : [ "off", "on" ],
@@ -6513,7 +6485,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -6630,7 +6602,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -7538,80 +7510,6 @@
 			}
 , 			{
 				"box" : 				{
-					"fontname" : "Ableton Sans Light",
-					"fontsize" : 9.0,
-					"id" : "obj-204",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 2068.5, 86.189323425292969, 54.0, 17.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 394.069872736930847, 39.343976709964487, 47.0, 17.0 ],
-					"text" : "Bending",
-					"textcolor" : [ 0.996078431372549, 0.996078431372549, 0.996078431372549, 1.0 ]
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"annotation" : "Network Bending - intentionally \"break\" the trained network to introduce some randomness in rhythm generation.",
-					"hint" : "Network Bending - intentionally \"break\" the trained network to introduce some randomness in rhythm generation.",
-					"id" : "obj-203",
-					"maxclass" : "live.button",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"parameter_enable" : 1,
-					"patching_rect" : [ 626.0, 266.992706298828125, 23.0, 23.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 401.167269587516785, 53.593976709964487, 23.0, 23.0 ],
-					"saved_attribute_attributes" : 					{
-						"valueof" : 						{
-							"parameter_enum" : [ "off", "on" ],
-							"parameter_info" : "Network Bending - intentionally \"break\" the trained network to introduce some randomness in rhythm generation.",
-							"parameter_longname" : "live.button[4]",
-							"parameter_mmax" : 1,
-							"parameter_shortname" : "live.button[4]",
-							"parameter_type" : 2
-						}
-
-					}
-,
-					"varname" : "live.button[4]"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"annotation" : "Network Bending coef: how much do you want to \"break\" the network?  The range around 0.05-0.1 is suitable. ",
-					"hint" : "Network Bending coef: how much do you want to \"break\" the network?  The range around 0.05-0.1 is suitable. ",
-					"id" : "obj-195",
-					"maxclass" : "live.numbox",
-					"numinlets" : 1,
-					"numoutlets" : 2,
-					"outlettype" : [ "", "float" ],
-					"parameter_enable" : 1,
-					"patching_rect" : [ 666.0, 266.992706298828125, 44.0, 15.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 398.132372736930847, 78.770070208250161, 31.069793701171875, 15.0 ],
-					"saved_attribute_attributes" : 					{
-						"valueof" : 						{
-							"parameter_info" : "Network Bending coef: how much do you want to \"break\" the network?  The range around 0.05-0.1 is suitable. ",
-							"parameter_longname" : "live.numbox[16]",
-							"parameter_mmax" : 0.5,
-							"parameter_shortname" : "live.numbox[16]",
-							"parameter_type" : 0,
-							"parameter_unitstyle" : 1
-						}
-
-					}
-,
-					"varname" : "live.numbox[16]"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-193",
 					"maxclass" : "message",
 					"numinlets" : 2,
@@ -7658,7 +7556,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -7716,7 +7614,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -7798,7 +7696,7 @@
 														"appversion" : 														{
 															"major" : 8,
 															"minor" : 1,
-															"revision" : 8,
+															"revision" : 11,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -8291,7 +8189,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 79.0, 149.0, 120.0, 22.0 ],
-									"text" : "1.304712 -1.015821"
+									"text" : "-0.699688 0.13686"
 								}
 
 							}
@@ -8756,7 +8654,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -9790,7 +9688,6 @@
 , 			{
 				"box" : 				{
 					"activebgcolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ],
-					"hidden" : 1,
 					"id" : "obj-83",
 					"maxclass" : "live.numbox",
 					"numinlets" : 1,
@@ -9841,7 +9738,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -10068,7 +9965,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -10565,6 +10462,7 @@
 , 			{
 				"box" : 				{
 					"bgcolor" : [ 0.483607888221741, 0.483681797981262, 0.483572363853455, 1.0 ],
+					"hidden" : 1,
 					"id" : "obj-136",
 					"maxclass" : "multislider",
 					"numinlets" : 1,
@@ -10903,7 +10801,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -11550,7 +11448,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -12500,7 +12398,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -12676,7 +12574,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -13323,7 +13221,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -13616,7 +13514,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -14113,7 +14011,6 @@
 , 			{
 				"box" : 				{
 					"bgcolor" : [ 0.483607888221741, 0.483681797981262, 0.483572363853455, 1.0 ],
-					"hidden" : 1,
 					"id" : "obj-91",
 					"maxclass" : "multislider",
 					"numinlets" : 1,
@@ -14215,7 +14112,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -14508,7 +14405,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -15183,7 +15080,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -15386,7 +15283,6 @@
 					"patching_rect" : [ 273.666666666666629, 538.916671752929688, 164.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 87.04127037525177, 139.792198208996837, 142.0, 18.0 ],
-					"text" : "Start training...",
 					"textcolor" : [ 0.999999284744263, 0.999974429607391, 0.999991297721863, 1.0 ],
 					"textjustification" : 1
 				}
@@ -15438,7 +15334,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -16301,8 +16197,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -16958,13 +16852,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-95", 0 ],
-					"source" : [ "obj-171", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-232", 0 ],
 					"source" : [ "obj-173", 0 ]
 				}
@@ -17065,13 +16952,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-193", 0 ],
-					"source" : [ "obj-195", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-40", 2 ],
 					"source" : [ "obj-199", 0 ]
 				}
@@ -17118,13 +16998,6 @@
 				"patchline" : 				{
 					"destination" : [ "obj-218", 8 ],
 					"source" : [ "obj-201", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-185", 0 ],
-					"source" : [ "obj-203", 0 ]
 				}
 
 			}
@@ -17948,10 +17821,8 @@
 			"obj-163" : [ "generated", "generated", 0 ],
 			"obj-172" : [ "live.button[2]", "live.button[2]", 0 ],
 			"obj-18" : [ "live.grid", "live.grid", 0 ],
-			"obj-195" : [ "live.numbox[16]", "live.numbox[16]", 0 ],
 			"obj-2" : [ "live.text[3]", "live.text", 0 ],
 			"obj-201" : [ "live.text[6]", "live.text[6]", 0 ],
-			"obj-203" : [ "live.button[4]", "live.button[4]", 0 ],
 			"obj-207" : [ "live.text[8]", "live.text[6]", 0 ],
 			"obj-208" : [ "live.text[9]", "live.text[6]", 0 ],
 			"obj-210" : [ "live.text[10]", "live.text[6]", 0 ],
@@ -17983,7 +17854,6 @@
 			"obj-87" : [ "live.numbox[7]", "live.numbox[5]", 0 ],
 			"obj-9" : [ "live.text[4]", "live.text", 0 ],
 			"obj-90" : [ "live.numbox[8]", "live.numbox[5]", 0 ],
-			"obj-95" : [ "live.button[5]", "live.button[1]", 0 ],
 			"obj-96" : [ "live.numbox[9]", "live.numbox[5]", 0 ],
 			"obj-97" : [ "live.numbox[10]", "live.numbox[5]", 0 ],
 			"obj-98" : [ "live.numbox[11]", "live.numbox[5]", 0 ],
@@ -17996,42 +17866,42 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "bg3.png",
-				"bootpath" : "~/git/RhythmVAE_M4L/images",
-				"patcherrelativepath" : "../RhythmVAE_M4L/images",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
+				"patcherrelativepath" : "./images",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "bg2.png",
-				"bootpath" : "~/git/RhythmVAE_M4L/images",
-				"patcherrelativepath" : "../RhythmVAE_M4L/images",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
+				"patcherrelativepath" : "./images",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "bg1.png",
-				"bootpath" : "~/git/RhythmVAE_M4L/images",
-				"patcherrelativepath" : "../RhythmVAE_M4L/images",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
+				"patcherrelativepath" : "./images",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "rhythmvae.js",
-				"bootpath" : "~/git/RhythmVAE_M4L_simple",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "makenote_for_me.maxpat",
-				"bootpath" : "~/git/RhythmVAE_M4L_simple/subpatches",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "shuffle_metro.maxpat",
-				"bootpath" : "~/git/RhythmVAE_M4L_simple/subpatches",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
@@ -18062,28 +17932,28 @@
 			}
 , 			{
 				"name" : "setup_1_16.maxpat",
-				"bootpath" : "~/git/RhythmVAE_M4L_simple/subpatches",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "list_dup.maxpat",
-				"bootpath" : "~/git/RhythmVAE_M4L_simple/subpatches",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
 				"patcherrelativepath" : "./subpatches",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "vae_tex_210315_data.png",
-				"bootpath" : "~/git/RhythmVAE_M4L/images",
-				"patcherrelativepath" : "../RhythmVAE_M4L/images",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
+				"patcherrelativepath" : "./images",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "clip-creation.js",
-				"bootpath" : "~/git/RhythmVAE_M4L_simple/src",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/src",
 				"patcherrelativepath" : "./src",
 				"type" : "TEXT",
 				"implicit" : 1
