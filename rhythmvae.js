@@ -219,7 +219,7 @@ Max.addHandler("encode_done", () =>  {
     Max.outlet("zs", zs[0], zs[1]);  
 });
 
-Max.addHandler("encode_midi", (filename, mapping = 0) => {
+Max.addHandler("encode_midi", (filename, mapping = 0, cond_range = 2.0) => {
     utils.post("encode_midi", filename);
 
     // // Read MIDI file into a buffer
@@ -244,6 +244,11 @@ Max.addHandler("encode_midi", (filename, mapping = 0) => {
     
     // Conditioning
     let [kick_z, hats_z, onoff_z] = vae.getConditionings(inputOn);
+
+    // Range Limit
+    kick_z = utils.limit(kick_z, -1. * cond_range, cond_range);
+    hats_z = utils.limit(hats_z, -1. * cond_range, cond_range);
+    onoff_z = utils.limit(onoff_z, -1. * cond_range, cond_range);
 
     // Encode!
     let zs = vae.encodePattern(inputOn, inputVel, inputTS, kick_z, hats_z, onoff_z);
