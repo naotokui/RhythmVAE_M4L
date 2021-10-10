@@ -539,9 +539,9 @@ function range(start, edge, step) {
 
 
 function exportAll(path) {
-  const zRange = 2.0;
+  const zRange = 3.0;
   const zResolution = 0.5;
-  const condRange = 3.0;
+  const condRange = 2.0;
   const condResolution = 0.5;
   const threshold = 0.5;
 
