@@ -366,13 +366,14 @@
 					"parameter_enable" : 1,
 					"patching_rect" : [ 955.0, 16.371353149414062, 25.0, 36.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 675.587204277515411, 72.390738354982233, 39.632372736930847, 36.0 ],
+					"presentation_rect" : [ 675.587204277515411, 72.390738354982233, 43.412795722484589, 36.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_initial" : [ 0.5 ],
 							"parameter_initial_enable" : 1,
 							"parameter_longname" : "threshold",
-							"parameter_mmax" : 1.0,
+							"parameter_mmax" : 0.98,
+							"parameter_mmin" : 0.2,
 							"parameter_shortname" : "threshold",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 1
@@ -992,6 +993,7 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-117",
+									"int" : 1,
 									"maxclass" : "gswitch",
 									"numinlets" : 3,
 									"numoutlets" : 1,
@@ -2261,7 +2263,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 470.0, 384.5, 197.0, 35.0 ],
-					"text" : "generate -1.755 1.79 0. 0. 0. 1. 0.5 0."
+					"text" : "generate -0.04 1.325 -2.645669 -1.275591 1.748031 1. 0.94315 0."
 				}
 
 			}
@@ -4024,7 +4026,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 417.0, -95.128646850585938, 72.0, 22.0 ],
-					"restore" : [ -351, 358 ],
+					"restore" : [ -8, 265 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
@@ -7836,7 +7838,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 34.0, 520.0, 640.0, 480.0 ],
+						"rect" : [ 34.0, 180.0, 640.0, 480.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -7864,6 +7866,7 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
+						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-11",
@@ -12691,7 +12694,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 134.0, 179.0, 640.0, 480.0 ],
+						"rect" : [ 134.0, 87.0, 640.0, 480.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -12719,6 +12722,7 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
+						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-2",
@@ -16577,7 +16581,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 263.0, 679.0, 1623.0, 551.0 ],
+						"rect" : [ 329.0, 784.0, 1623.0, 551.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -16734,7 +16738,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 29.0, 221.0, 80.0, 22.0 ],
-									"text" : "speedlim 100"
+									"text" : "speedlim 200"
 								}
 
 							}
@@ -17158,6 +17162,15 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-2", 6 ],
+									"order" : 0,
+									"source" : [ "obj-28", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-3", 0 ],
+									"order" : 1,
 									"source" : [ "obj-28", 0 ]
 								}
 
@@ -17434,6 +17447,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
