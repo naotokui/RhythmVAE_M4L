@@ -2,8 +2,8 @@
 	"name" : "M4L.RhythmVAE",
 	"version" : 1,
 	"creationdate" : 3672837233,
-	"modificationdate" : 3698760989,
-	"viewrect" : [ 25.0, 104.0, 300.0, 500.0 ],
+	"modificationdate" : 3742893165,
+	"viewrect" : [ 25.0, 106.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
 	"showdependencies" : 1,
@@ -15,7 +15,7 @@
 				"local" : 1,
 				"toplevel" : 1,
 				"singleton" : 				{
-					"bootpath" : "~/git/RhythmVAE_M4L",
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L",
 					"projectrelativepath" : ".."
 				}
 
@@ -26,10 +26,35 @@
 		"media" : 		{
 			"vae_tex_210315_data.png" : 			{
 				"kind" : "imagefile",
+				"local" : 1
+			}
+,
+			"bg2.png" : 			{
+				"kind" : "imagefile",
 				"local" : 1,
 				"singleton" : 				{
-					"bootpath" : "~/Dropbox (Qosmo)/Qosmo チーム フォルダ/Projects (On Going)/Q21-NVIDIA_GTC/_shared/plugin-design/20210315",
-					"projectrelativepath" : "../../../Dropbox (Qosmo)/Qosmo チーム フォルダ/Projects (On Going)/Q21-NVIDIA_GTC/_shared/plugin-design/20210315"
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
+					"projectrelativepath" : "../images"
+				}
+
+			}
+,
+			"bg3.png" : 			{
+				"kind" : "imagefile",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
+					"projectrelativepath" : "../images"
+				}
+
+			}
+,
+			"bg1.png" : 			{
+				"kind" : "imagefile",
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
+					"projectrelativepath" : "../images"
 				}
 
 			}
@@ -48,8 +73,8 @@
 ,
 	"searchpath" : 	{
 		"0" : 		{
-			"bootpath" : "~/git/RhythmVAE_M4L/node_modules",
-			"projectrelativepath" : "../node_modules",
+			"bootpath" : "/",
+			"projectrelativepath" : "../../../../../..",
 			"label" : "node_modules",
 			"recursive" : 1,
 			"enabled" : 1,
@@ -57,7 +82,7 @@
 		}
 ,
 		"1" : 		{
-			"bootpath" : "~/git/RhythmVAE_M4L/src",
+			"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/src",
 			"projectrelativepath" : "../src",
 			"label" : "src",
 			"recursive" : 1,
@@ -66,7 +91,7 @@
 		}
 ,
 		"2" : 		{
-			"bootpath" : "~/git/RhythmVAE_M4L/subpatches",
+			"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
 			"projectrelativepath" : "../subpatches",
 			"label" : "subpatch",
 			"recursive" : 1,

@@ -1,5 +1,5 @@
 {
-  "name": "RhythmVAE",
+  "name": "rhythmvae",
   "version": "1.0.0",
   "main": "rhythmvae.js",
   "scripts": {
@@ -9,10 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tensorflow/tfjs-node": "^1.7.4",
+    "@tensorflow/tfjs-node": "^3.19.0",
     "@tonejs/midi": "^2.0.25",
     "cross-fetch": "^3.1.5",
-    "glob": "^7.1.6",
+    "glob": "^8.0.3",
     "tiny-glob": "^0.2.6"
   },
   "description": "Max for Live(M4L) Rhythm generator using Variational Autoencoder(VAE)",
