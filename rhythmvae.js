@@ -27,8 +27,10 @@ var train_data_velocities = [];
 var train_data_timeshifts = [];
 
 const SEQ_LENGTH = 4; // predict next bar from the last 4 bars
-var train_seq_inputs = []; 
+var train_seq_inputs = [];
+var train_seq_inputs_zs = []; 
 var train_seq_output = []; 
+var train_seq_output_zs = []; 
 
 var isGenerating = false;
 
@@ -65,8 +67,6 @@ function getNumOfDrumOnsets(onsets){
     }
     return count;
 }
-
-
 
 // Convert midi into pianoroll matrix
 function processPianoroll(midiFile, midi_map){
@@ -263,7 +263,35 @@ async function generatePattern(z1, z2, threshold, noise_range){
   }
 }
 
+Max.addHandler("train_seq", (is_test) =>  {
+    if (vae.isReadyToGenerate()){    
+        for (var i=0; i < train_seq_inputs.length; i++){
+            var inputs = train_seq_inputs[i];
+            var output = train_seq_output[i];
 
+            // input sequence
+            var inputZs = [];
+            for (var j=0; j < inputs.length; j++){
+                var onset = train_data_onsets[inputs[j]];
+                var velocity = train_data_velocities[inputs[j]];
+                var ts = train_data_timeshifts[inputs[j]];
+                let zs = vae.encodePattern(onset, velocity, ts);
+                inputZs.push(zs);
+            }
+            train_seq_inputs_zs.push(inputZs);
+
+            // output 
+            var onset = train_data_onsets[output];
+            var velocity = train_data_velocities[output];
+            var ts = train_data_timeshifts[output];
+            let zs = vae.encodePattern(onset, velocity, ts);
+            train_seq_output_zs.push(zs);
+            console.assert(train_seq_inputs_zs.length == train_seq_output_zs.length);
+        }
+    } else{
+        utils.error_status("You need to train VAE first");
+    }
+});
 
 // Start encoding... reset input matrix
 var input_onset;
