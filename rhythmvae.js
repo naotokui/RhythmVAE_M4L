@@ -25,6 +25,11 @@ Max.post(`Loaded the ${path.basename(__filename)} script`);
 var train_data_onsets = []; 
 var train_data_velocities = []; 
 var train_data_timeshifts = [];
+
+const SEQ_LENGTH = 4; // predict next bar from the last 4 bars
+var train_seq_inputs = []; 
+var train_seq_output = []; 
+
 var isGenerating = false;
 
 function isValidMIDIFile(midiFile){
@@ -117,13 +122,25 @@ function processPianoroll(midiFile, midi_map){
     // }
     
     // 2D array to tf.tensor2d
+    var onset_index = [];
     for (var i=0; i < onsets.length; i++){
-        if (getNumOfDrumOnsets(onsets[i]) > MIN_ONSETS_THRESHOLD){
+        // if (getNumOfDrumOnsets(onsets[i]) > MIN_ONSETS_THRESHOLD){
             train_data_onsets.push(tf.tensor2d(onsets[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
             train_data_velocities.push(tf.tensor2d(velocities[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
             train_data_timeshifts.push(tf.tensor2d(timeshifts[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
-        }
+        // }
+        // index of the last array added
+        onset_index.push(train_data_onsets.length - 1);
     }
+
+    for (var i=0; i < onset_index.length - SEQ_LENGTH - 1; i++){
+        var input = new Array(SEQ_LENGTH);
+        var index = onset_index[i];
+        for (var j=0; j<SEQ_LENGTH; j++) input[j] = index + j;
+        train_seq_inputs.push(input);
+        train_seq_output.push(i + SEQ_LENGTH);
+    }
+    // console.log(train_seq_inputs, train_seq_output);
 }
 
 function processMidiFile(filename, mapping = 0){
