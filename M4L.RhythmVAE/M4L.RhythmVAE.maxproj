@@ -2,7 +2,7 @@
 	"name" : "M4L.RhythmVAE",
 	"version" : 1,
 	"creationdate" : 3672837233,
-	"modificationdate" : 3742893165,
+	"modificationdate" : 3747496930,
 	"viewrect" : [ 25.0, 106.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -24,9 +24,14 @@
 		}
 ,
 		"media" : 		{
-			"vae_tex_210315_data.png" : 			{
+			"bg1.png" : 			{
 				"kind" : "imagefile",
-				"local" : 1
+				"local" : 1,
+				"singleton" : 				{
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
+					"projectrelativepath" : "../images"
+				}
+
 			}
 ,
 			"bg2.png" : 			{
@@ -49,12 +54,12 @@
 
 			}
 ,
-			"bg1.png" : 			{
+			"vae_tex_210315_data.png" : 			{
 				"kind" : "imagefile",
 				"local" : 1,
 				"singleton" : 				{
-					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/images",
-					"projectrelativepath" : "../images"
+					"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L",
+					"projectrelativepath" : ".."
 				}
 
 			}
@@ -73,15 +78,6 @@
 ,
 	"searchpath" : 	{
 		"0" : 		{
-			"bootpath" : "/",
-			"projectrelativepath" : "../../../../../..",
-			"label" : "node_modules",
-			"recursive" : 1,
-			"enabled" : 1,
-			"includeincollective" : 1
-		}
-,
-		"1" : 		{
 			"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/src",
 			"projectrelativepath" : "../src",
 			"label" : "src",
@@ -90,10 +86,19 @@
 			"includeincollective" : 1
 		}
 ,
-		"2" : 		{
+		"1" : 		{
 			"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
 			"projectrelativepath" : "../subpatches",
 			"label" : "subpatch",
+			"recursive" : 1,
+			"enabled" : 1,
+			"includeincollective" : 1
+		}
+,
+		"2" : 		{
+			"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/node_modules",
+			"projectrelativepath" : "../node_modules",
+			"label" : "",
 			"recursive" : 1,
 			"enabled" : 1,
 			"includeincollective" : 1
