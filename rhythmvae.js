@@ -264,7 +264,7 @@ async function generatePattern(z1, z2, threshold, noise_range){
   }
 }
 
-Max.addHandler("train_seq", (is_test) =>  {
+Max.addHandler("train_seq", (numEpoch) =>  {
     if (vae.isReadyToGenerate()){    
         for (var i=0; i < train_seq_inputs.length; i++){
             var inputs = train_seq_inputs[i];
@@ -289,7 +289,7 @@ Max.addHandler("train_seq", (is_test) =>  {
             train_seq_output_zs.push(tf.tensor2d(zs, [1, 2]));
             console.assert(train_seq_inputs_zs.length == train_seq_output_zs.length);
         }
-        sequence.loadAndTrainModel(train_seq_inputs_zs, train_seq_output_zs)
+        sequence.loadAndTrainModel(train_seq_inputs_zs, train_seq_output_zs, numEpoch)
     } else{
         utils.error_status("You need to train VAE first");
     }
@@ -381,6 +381,20 @@ Max.addHandler("savemodel", (path)=>{
 Max.addHandler("loadmodel", (path)=>{
     filepath = "file://" + path;
     vae.loadModel(filepath);
+    utils.log_status("Model loaded!");
+});
+
+
+Max.addHandler("savemodel_seq", (path)=>{
+    // check if already trained or not
+    filepath = "file://" + path;
+    sequence.saveModel(filepath);
+    utils.log_status("Model saved.");
+});
+
+Max.addHandler("loadmodel_seq", (path)=>{
+    filepath = "file://" + path;
+    sequence.loadModel(filepath);
     utils.log_status("Model loaded!");
 });
 

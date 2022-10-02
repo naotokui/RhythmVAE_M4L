@@ -14,7 +14,7 @@ const SEQ_LSTM_UNIT = 16;
 let dataHandlerZ;
 let modelSeq = null;
 
-async function loadAndTrainModel(train_seq_inputs_zs, train_seq_output_zs) {
+async function loadAndTrainModel(train_seq_inputs_zs, train_seq_output_zs, numEpoch) {
   console.assert(train_seq_inputs_zs.length == train_seq_output_zs.length);
   
   // shuffle in sync
@@ -35,7 +35,7 @@ async function loadAndTrainModel(train_seq_inputs_zs, train_seq_output_zs) {
 
   // start training!
   if (!modelSeq) initModel(); // initializing model class
-  startTraining(); // start the actual training process with the given training data
+  startTraining(numEpoch); // start the actual training process with the given training data
 }
 
 function initModel(){
@@ -48,8 +48,8 @@ function initModel(){
   }});
 }
 
-async function startTraining(){
-  await modelSeq.train();
+async function startTraining(numEpoch){
+  await modelSeq.train(numEpoch);
 }
 
 function stopTraining(){
@@ -70,43 +70,28 @@ function setEpochs(e){
   Max.outlet("epoch", 0, numEpochs);
 }
 
-function generatePattern(z1, z2, noise_range=0.0){
-  var zs;
-  if (z1 === 'undefined' || z2 === 'undefined'){
-    zs = tf.randomNormal([1, 2]);
-  } else {
-    zs = tf.tensor2d([[z1, z2]]);
-  }
-
-  // noise
-  if (noise_range > 0.0){
-    var noise = tf.randomNormal([1, 2]);
-    zs = zs.add(noise.mul(tf.scalar(noise_range)));
-  }
-  return model.generate(zs);
+function generate(z1, z2){
+    if (!modelSeq) return;
+    modelSeq.generate(z1, z2);
 }
 
-function encodePattern(inputOn, inputVel, inputTS){
-  return model.encode(inputOn, inputVel, inputTS);
+function addHistory(z1, z2){
+    if (!modelSeq) return;
+    modelSeq.addHistory(z1, z2);
 }
 
 async function saveModel(filepath){
-  model.saveModel(filepath);
+  modelSeq.saveModel(filepath);
 }
 
 async function loadModel(filepath){
-  if (!model) initModel();
-  model.loadModel(filepath);
+  if (!modelSeq) initModel();
+  modelSeq.loadModel(filepath);
 }
 
 function clearModel(){
   model = null;
 }
-
-function bendModel(noise_range){
-  model.bendModel(noise_range)
-}
-
 class SequenceLSTM {
   constructor(config) {
     this.modelConfig = config.modelConfig;
@@ -146,18 +131,15 @@ class SequenceLSTM {
     });
   }
 
-  async train(data, trainConfig) {
+  async train(data, numEpoch) {
     this.isTrained = false;
     this.isTraining = true;
     this.shouldStopTraining = false;
-    if (trainConfig != undefined){
-      this.trainConfig = trainConfig;
-    }
     const config = this.trainConfig;
 
     const batchSize = config.batchSize;
     const numBatch = Math.floor(dataHandlerZ.getDataSize() / batchSize);
-    const epochs = 200;
+    const epochs = numEpoch;
     const testBatchSize = config.testBatchSize;
     const optimizer = config.optimizer;
     const logMessage = console.log;
@@ -237,15 +219,25 @@ class SequenceLSTM {
   //   return [outputsOn.arraySync(), outputsVel.arraySync(), outputsTS.arraySync()];
   // }
 
-  // async saveModel(path){
-  //   const saved = await this.decoder.save(path);
-  //   utils.post(saved);
-  // }
+  generate(z1, z2){
+    var input     = tf.tensor([z1, z2]);
+    var output = this.model.apply(input.reshape([1, 1, 2]));
+  }
 
-  // async loadModel(path){
-  //   this.decoder = await tf.loadLayersModel(path);
-  //   this.isTrained = true;
-  // }
+  addHistory(z1, z2){
+    var input     = tf.tensor([z1, z2]);
+    var output = this.model.apply(input.reshape([1, 1, 2]));
+  }
+
+  async saveModel(path){
+    const saved = await this.model.save(path);
+    utils.post(saved);
+  }
+
+  async loadModel(path){
+    this.model = await tf.loadLayersModel(path);
+    this.isTrained = true;
+  }
 }
 
 
@@ -273,11 +265,8 @@ exports.loadAndTrainModel = loadAndTrainModel;
 exports.saveModel = saveModel;
 exports.loadModel = loadModel;
 exports.clearModel = clearModel;
-exports.generatePattern = generatePattern;
-exports.encodePattern = encodePattern;
 exports.stopTraining = stopTraining;
 exports.isReadyToGenerate = isReadyToGenerate;
 exports.isTraining = isTraining;
 exports.setEpochs = setEpochs;
-exports.bendModel = bendModel;
 

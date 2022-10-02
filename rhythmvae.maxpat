@@ -95,9 +95,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 301.0, 315.0, 58.0, 22.0 ],
-					"presentation_linecount" : 3,
-					"text" : "train_seq"
+					"patching_rect" : [ 301.0, 315.0, 75.0, 22.0 ],
+					"text" : "train_seq 10"
 				}
 
 			}
@@ -7938,7 +7937,7 @@
 					"presentation_rect" : [ 285.30895984172821, 97.55862156666106, 99.0, 62.0 ],
 					"setminmax" : [ 0.0, 200.0 ],
 					"setstyle" : 1,
-					"size" : 400,
+					"size" : 150,
 					"slidercolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ]
 				}
 
@@ -10793,7 +10792,6 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"bgmode" : 0,
@@ -11562,7 +11560,7 @@
 					"presentation_rect" : [ 285.30895984172821, 97.55862156666106, 99.0, 62.0 ],
 					"setminmax" : [ 0.0, 200.0 ],
 					"setstyle" : 1,
-					"size" : 400,
+					"size" : 150,
 					"slidercolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ]
 				}
 
@@ -11979,7 +11977,6 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-29",
@@ -12880,7 +12877,7 @@
 					"patching_rect" : [ 273.666666666666629, 538.916671752929688, 164.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 87.04127037525177, 139.792198208996837, 142.0, 18.0 ],
-					"text" : "Stopping training...",
+					"text" : "Sequence Model built!",
 					"textcolor" : [ 0.999999284744263, 0.999974429607391, 0.999991297721863, 1.0 ],
 					"textjustification" : 1
 				}
@@ -13495,6 +13492,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -15215,6 +15214,13 @@
 				"name" : "fit_jweb_to_bounds.js",
 				"bootpath" : "C74:/packages/Node for Max/patchers/debug-monitor",
 				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "list_dup.maxpat",
+				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
+				"patcherrelativepath" : "./subpatches",
+				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
