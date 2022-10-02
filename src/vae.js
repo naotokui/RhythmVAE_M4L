@@ -349,7 +349,7 @@ class ConditionalVAE {
 
       // Validation 
       testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize, true).xs.reshape([testBatchSize, originalDim]);
-      testBatchInputVel = dataHandlerVelocity.nextTestBatch(testBatchSize, tr).xs.reshape([testBatchSize, originalDim]);
+      testBatchInputVel = dataHandlerVelocity.nextTestBatch(testBatchSize, true).xs.reshape([testBatchSize, originalDim]);
       testBatchInputTS = dataHandlerTimeshift.nextTestBatch(testBatchSize, true).xs.reshape([testBatchSize, originalDim]);
       valLoss = this.vaeLoss([testBatchInputOn, testBatchInputVel, testBatchInputTS], 
                                 this.apply([testBatchInputOn, testBatchInputVel, testBatchInputTS]));

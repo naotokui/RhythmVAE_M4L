@@ -102,7 +102,7 @@ const NUM_DRUM_CLASSES = DRUM_CLASSES.length;
 const BEAT_RESOLUTION = 12;
 const LOOP_DURATION = BEAT_RESOLUTION * 4 * 2; // 2bars x 16th note
 
-const MIN_ONSETS_THRESHOLD = 5; // ignore loops with onsets less than this num
+const MIN_ONSETS_THRESHOLD = 6; // ignore loops with onsets less than this num
 
 const ORIGINAL_DIM = NUM_DRUM_CLASSES * LOOP_DURATION;
 

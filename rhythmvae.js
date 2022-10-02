@@ -125,13 +125,14 @@ function processPianoroll(midiFile, midi_map){
     // 2D array to tf.tensor2d
     var onset_index = [];
     for (var i=0; i < onsets.length; i++){
-        // if (getNumOfDrumOnsets(onsets[i]) > MIN_ONSETS_THRESHOLD){
+        if (getNumOfDrumOnsets(onsets[i]) > MIN_ONSETS_THRESHOLD){
             train_data_onsets.push(tf.tensor2d(onsets[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
             train_data_velocities.push(tf.tensor2d(velocities[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
             train_data_timeshifts.push(tf.tensor2d(timeshifts[i], [NUM_DRUM_CLASSES, LOOP_DURATION]));
-        // }
-        // index of the last array added
-        onset_index.push(train_data_onsets.length - 1);
+        
+            // index of the last array added
+            onset_index.push(train_data_onsets.length - 1);
+        }
     }
 
     for (var i=0; i < onset_index.length - SEQ_LENGTH - 1; i++){
@@ -293,6 +294,18 @@ Max.addHandler("train_seq", (numEpoch) =>  {
     } else{
         utils.error_status("You need to train VAE first");
     }
+});
+
+Max.addHandler("generate_next_z", (z1, z2) =>  {
+    sequence.generateNextZ(z1, z2);
+});
+
+Max.addHandler("add_history", (z1, z2) =>  {
+    sequence.addHistory(z1, z2);
+});
+
+Max.addHandler("reset_history", (z1, z2) =>  {
+    sequence.resetHistory();
 });
 
 // Start encoding... reset input matrix

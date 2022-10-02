@@ -70,14 +70,19 @@ function setEpochs(e){
   Max.outlet("epoch", 0, numEpochs);
 }
 
-function generate(z1, z2){
+function generateNextZ(z1, z2){
     if (!modelSeq) return;
-    modelSeq.generate(z1, z2);
+    modelSeq.generateNextZ(z1, z2, false);
 }
 
 function addHistory(z1, z2){
     if (!modelSeq) return;
-    modelSeq.addHistory(z1, z2);
+    modelSeq.generateNextZ(z1, z2, true);
+}
+
+function resetHistory(){
+    if (!modelSeq) return;
+    modelSeq.resetHistory();
 }
 
 async function saveModel(filepath){
@@ -131,7 +136,7 @@ class SequenceLSTM {
     });
   }
 
-  async train(data, numEpoch) {
+  async train(numEpoch) {
     this.isTrained = false;
     this.isTraining = true;
     this.shouldStopTraining = false;
@@ -201,6 +206,9 @@ class SequenceLSTM {
     utils.log_status("Training finished!");
   }
   
+  resetHistory(){
+    this.model.resetStates();
+  }
   // generate(zs){
   //   let [outputsOn, outputsVel, outputsTS] = this.decoder.apply(zs);
 
@@ -219,14 +227,10 @@ class SequenceLSTM {
   //   return [outputsOn.arraySync(), outputsVel.arraySync(), outputsTS.arraySync()];
   // }
 
-  generate(z1, z2){
+  generateNextZ(z1, z2, silent){
     var input     = tf.tensor([z1, z2]);
-    var output = this.model.apply(input.reshape([1, 1, 2]));
-  }
-
-  addHistory(z1, z2){
-    var input     = tf.tensor([z1, z2]);
-    var output = this.model.apply(input.reshape([1, 1, 2]));
+    var output = this.model.apply(input.reshape([1, 1, 2])).dataSync();
+    if (!silent) Max.outlet("next_z", output[0], output[1]);
   }
 
   async saveModel(path){
@@ -269,4 +273,7 @@ exports.stopTraining = stopTraining;
 exports.isReadyToGenerate = isReadyToGenerate;
 exports.isTraining = isTraining;
 exports.setEpochs = setEpochs;
+exports.generateNextZ = generateNextZ;
+exports.addHistory = addHistory;
+exports.resetHistory = resetHistory;
 
