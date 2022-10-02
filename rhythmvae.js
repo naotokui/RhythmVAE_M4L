@@ -17,6 +17,7 @@ const BEAT_RESOLUTION = require('./src/constants.js').BEAT_RESOLUTION;
 // VAE model and Utilities
 const utils = require('./src/utils.js');
 const vae = require('./src/vae.js');
+const sequence = require('./src/sequence.js');
 
 // This will be printed directly to the Max console
 Max.post(`Loaded the ${path.basename(__filename)} script`);
@@ -278,16 +279,17 @@ Max.addHandler("train_seq", (is_test) =>  {
                 let zs = vae.encodePattern(onset, velocity, ts);
                 inputZs.push(zs);
             }
-            train_seq_inputs_zs.push(inputZs);
+            train_seq_inputs_zs.push(tf.tensor2d(inputZs, [SEQ_LENGTH, 2]));
 
             // output 
             var onset = train_data_onsets[output];
             var velocity = train_data_velocities[output];
             var ts = train_data_timeshifts[output];
             let zs = vae.encodePattern(onset, velocity, ts);
-            train_seq_output_zs.push(zs);
+            train_seq_output_zs.push(tf.tensor2d(zs, [1, 2]));
             console.assert(train_seq_inputs_zs.length == train_seq_output_zs.length);
         }
+        sequence.loadAndTrainModel(train_seq_inputs_zs, train_seq_output_zs)
     } else{
         utils.error_status("You need to train VAE first");
     }

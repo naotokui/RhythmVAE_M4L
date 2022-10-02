@@ -333,9 +333,9 @@ class ConditionalVAE {
 
       // Training 
       for (let j = 0; j < numBatch; j++) {
-        batchInputOn = dataHandlerOnset.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
-        batchInputVel = dataHandlerVelocity.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
-        batchInputTS = dataHandlerTimeshift.nextTrainBatch(batchSize).xs.reshape([batchSize, originalDim]);
+        batchInputOn = dataHandlerOnset.nextTrainBatch(batchSize, true).xs.reshape([batchSize, originalDim]);
+        batchInputVel = dataHandlerVelocity.nextTrainBatch(batchSize, true).xs.reshape([batchSize, originalDim]);
+        batchInputTS = dataHandlerTimeshift.nextTrainBatch(batchSize, true).xs.reshape([batchSize, originalDim]);
         trainLoss = await optimizer.minimize(() => this.vaeLoss([batchInputOn, batchInputVel, batchInputTS],
            this.apply([batchInputOn, batchInputVel, batchInputTS])), true);
         trainLoss = Number(trainLoss.dataSync());
@@ -348,9 +348,9 @@ class ConditionalVAE {
       Max.outlet("loss", epochLoss);
 
       // Validation 
-      testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
-      testBatchInputVel = dataHandlerVelocity.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
-      testBatchInputTS = dataHandlerTimeshift.nextTestBatch(testBatchSize).xs.reshape([testBatchSize, originalDim]);
+      testBatchInputOn = dataHandlerOnset.nextTestBatch(testBatchSize, true).xs.reshape([testBatchSize, originalDim]);
+      testBatchInputVel = dataHandlerVelocity.nextTestBatch(testBatchSize, tr).xs.reshape([testBatchSize, originalDim]);
+      testBatchInputTS = dataHandlerTimeshift.nextTestBatch(testBatchSize, true).xs.reshape([testBatchSize, originalDim]);
       valLoss = this.vaeLoss([testBatchInputOn, testBatchInputVel, testBatchInputTS], 
                                 this.apply([testBatchInputOn, testBatchInputVel, testBatchInputTS]));
       valLoss = Number(valLoss.dataSync());
@@ -381,7 +381,6 @@ class ConditionalVAE {
     for (let i = 0; i < this.decoder.getWeights().length; i++) {
       let w = this.decoder.getWeights()[i];
       let shape = w.shape;
-      console.log(shape);
       let noise = tf.randomNormal(w.shape, 0.0, noise_range);
       let neww = tf.add(w, noise);
       weights.push(neww);

@@ -40,6 +40,56 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-182",
+					"maxclass" : "button",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 703.0, 421.01458740234375, 42.48541259765625, 42.48541259765625 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-172",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 4,
+					"outlettype" : [ "bang", "bang", "bang", "bang" ],
+					"patching_rect" : [ 703.0, 488.0, 188.0, 22.0 ],
+					"text" : "t b b b b"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-163",
+					"linecount" : 11,
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 505.0, 373.0, 50.0, 156.0 ],
+					"text" : "loadmodel /Users/nao/Desktop/model_2022102_5235.model/model.json"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-114",
+					"linecount" : 20,
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 230.0, 135.0, 50.0, 277.0 ],
+					"text" : "midi \"/Users/nao/Qosmo Dropbox/Qosmo チーム フォルダ/Projects (On Going)/Q22_BIGYUKI/Drum_MIDI/100bpm_org.mid\" 0"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-29",
 					"maxclass" : "message",
 					"numinlets" : 2,
@@ -1855,7 +1905,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 428.25, -95.128646850585938, 72.0, 22.0 ],
-					"restore" : [ -599, 316 ],
+					"restore" : [ -408, -467 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
@@ -7888,7 +7938,7 @@
 					"presentation_rect" : [ 285.30895984172821, 97.55862156666106, 99.0, 62.0 ],
 					"setminmax" : [ 0.0, 200.0 ],
 					"setstyle" : 1,
-					"size" : 150,
+					"size" : 400,
 					"slidercolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ]
 				}
 
@@ -10743,6 +10793,7 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
+						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"bgmode" : 0,
@@ -11511,7 +11562,7 @@
 					"presentation_rect" : [ 285.30895984172821, 97.55862156666106, 99.0, 62.0 ],
 					"setminmax" : [ 0.0, 200.0 ],
 					"setstyle" : 1,
-					"size" : 150,
+					"size" : 400,
 					"slidercolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ]
 				}
 
@@ -11928,6 +11979,7 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
+						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-29",
@@ -12828,7 +12880,7 @@
 					"patching_rect" : [ 273.666666666666629, 538.916671752929688, 164.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 87.04127037525177, 139.792198208996837, 142.0, 18.0 ],
-					"text" : "Training finished!",
+					"text" : "Stopping training...",
 					"textcolor" : [ 0.999999284744263, 0.999974429607391, 0.999991297721863, 1.0 ],
 					"textjustification" : 1
 				}
@@ -13653,6 +13705,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-27", 0 ],
+					"source" : [ "obj-114", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-113", 0 ],
 					"order" : 1,
 					"source" : [ "obj-116", 0 ]
@@ -14090,6 +14149,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-27", 0 ],
+					"source" : [ "obj-163", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-184", 0 ],
 					"source" : [ "obj-164", 0 ]
 				}
@@ -14118,6 +14184,34 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-114", 0 ],
+					"source" : [ "obj-172", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-12", 0 ],
+					"source" : [ "obj-172", 3 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-163", 0 ],
+					"source" : [ "obj-172", 2 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-29", 0 ],
+					"source" : [ "obj-172", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-188", 0 ],
 					"source" : [ "obj-179", 0 ]
 				}
@@ -14134,6 +14228,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-180", 0 ],
 					"source" : [ "obj-181", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-172", 0 ],
+					"source" : [ "obj-182", 0 ]
 				}
 
 			}
@@ -14458,6 +14559,14 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-27", 0 ],
+					"midpoints" : [ 310.5, 360.0, 95.0, 360.0 ],
+					"source" : [ "obj-29", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-58", 0 ],
 					"midpoints" : [ 347.0, 440.0, 611.5, 440.0 ],
 					"order" : 1,
@@ -14645,7 +14754,16 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-114", 1 ],
+					"order" : 0,
+					"source" : [ "obj-47", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-27", 0 ],
+					"order" : 1,
 					"source" : [ "obj-47", 0 ]
 				}
 
@@ -14771,8 +14889,17 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-163", 1 ],
+					"order" : 0,
+					"source" : [ "obj-63", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-27", 0 ],
 					"midpoints" : [ 392.75, 358.125, 95.0, 358.125 ],
+					"order" : 1,
 					"source" : [ "obj-63", 0 ]
 				}
 
@@ -14996,14 +15123,6 @@
 				}
 
 			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-27", 0 ],
-					"midpoints" : [ 310.5, 360.0, 95.0, 360.0 ],
-					"source" : [ "obj-29", 0 ]
-				}
-
-			}
  ],
 		"parameters" : 		{
 			"obj-1" : [ "live.step[1]", "live.step", 0 ],
@@ -15096,13 +15215,6 @@
 				"name" : "fit_jweb_to_bounds.js",
 				"bootpath" : "C74:/packages/Node for Max/patchers/debug-monitor",
 				"type" : "TEXT",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "list_dup.maxpat",
-				"bootpath" : "~/Documents/GitHub/RhythmVAE_M4L/subpatches",
-				"patcherrelativepath" : "./subpatches",
-				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{

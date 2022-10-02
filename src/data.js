@@ -33,26 +33,27 @@ class DataHandler {
     return this.dataset.length;
   }
 
-  nextTrainBatch(batchSize) {
-    return this.nextBatch(batchSize, this.trainData, () => {
+  nextTrainBatch(batchSize, reshape) {
+    return this.nextBatch(batchSize, this.trainData, reshape, () => {
       this.shuffledTrainIndex = (this.shuffledTrainIndex + 1) % this.trainIndices.length;
       return this.trainIndices[this.shuffledTrainIndex];
     });
   }
 
-  nextTestBatch(batchSize) {
-    return this.nextBatch(batchSize, this.testData, () => {
+  nextTestBatch(batchSize, reshape) {
+    return this.nextBatch(batchSize, this.testData, reshape, () => {
       this.shuffledTestIndex = (this.shuffledTestIndex + 1) % this.testIndices.length;
       return this.testIndices[this.shuffledTestIndex];
     });
   }
 
   // Create batch from an array of tf.tensor2d
-  nextBatch(batchSize, data, index) {
+  nextBatch(batchSize, data, reshape, index) {
     const batchArray = [];
     for (let i = 0; i < batchSize; i++) {
       const idx = index();
-      batchArray.push(data[idx].reshape([1, ORIGINAL_DIM]));
+      if (reshape) batchArray.push(data[idx].reshape([1, ORIGINAL_DIM]));
+      else batchArray.push(data[idx]);
     }
     const axis = 0;
     const xs = tf.concat(batchArray, axis);
