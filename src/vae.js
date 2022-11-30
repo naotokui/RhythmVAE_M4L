@@ -16,11 +16,12 @@ const LOOP_DURATION = require('./constants.js').LOOP_DURATION;
 
 const ORIGINAL_DIM = require('./constants.js').ORIGINAL_DIM;
 const { BEAT_RESOLUTION } = require('./constants.js');
-const INTERMEDIATE_DIM = 64;
+
+const INTERMEDIATE_DIM = 32;
 const LATENT_DIM = 2;
 
-const BATCH_SIZE = 64;
-const TEST_BATCH_SIZE = 128;
+const BATCH_SIZE = 32;
+const TEST_BATCH_SIZE = 32;
 const TS_LOSS_COEF = 1.0;  // coef for timeshift loss
 const VEL_LOSS_COEF = 1.5;  // coef for velocity loss
 
