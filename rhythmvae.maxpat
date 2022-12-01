@@ -2298,13 +2298,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-142",
-					"linecount" : 2,
+					"linecount" : 3,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 470.0, 384.5, 197.0, 35.0 ],
-					"text" : "generate -2.12 -1.145 0.708661 0.897638 1.700787 1. 0.5 0."
+					"patching_rect" : [ 470.0, 384.5, 197.0, 49.0 ],
+					"text" : "generate -1.58 2.56 0.968504 -0.425197 -0.141732 1. 0.285039 0."
 				}
 
 			}
@@ -2505,13 +2505,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-64",
-					"linecount" : 11,
+					"linecount" : 10,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 205.5, 117.0, 91.0, 156.0 ],
-					"text" : "midi \"/Users/nao/Qosmo Dropbox/Qosmo チーム フォルダ/Projects (On Going)/Q22_BIGYUKI/Drum_MIDI/Others/MIDI/unknown/\" 1"
+					"patching_rect" : [ 205.5, 117.0, 91.0, 143.0 ],
+					"text" : "midi \"/Users/nao/Qosmo Dropbox/Qosmo チーム フォルダ/Projects (On Going)/Q22_BIGYUKI/Drum_MIDI/YUKI/\" 1"
 				}
 
 			}
@@ -2698,7 +2698,7 @@
 											}
 , 											{
 												"key" : 3,
-												"value" : [ "open_hihat", 44 ]
+												"value" : [ "open_hihat", 40 ]
 											}
 , 											{
 												"key" : 4,
@@ -3034,6 +3034,7 @@
 					"id" : "obj-1",
 					"loopruler" : 0,
 					"maxclass" : "live.step",
+					"mode" : 2,
 					"nseq" : 9,
 					"numinlets" : 1,
 					"numoutlets" : 5,
@@ -4252,7 +4253,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 417.0, -95.128646850585938, 72.0, 22.0 ],
-					"restore" : [ -424, -229 ],
+					"restore" : [ -316, 512 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
@@ -4933,7 +4934,7 @@
 																			}
 , 																			{
 																				"key" : 3,
-																				"value" : [ "open_hihat", 44 ]
+																				"value" : [ "open_hihat", 40 ]
 																			}
 , 																			{
 																				"key" : 4,
@@ -5580,7 +5581,7 @@
 																			}
 , 																			{
 																				"key" : 3,
-																				"value" : [ "open_hihat", 44 ]
+																				"value" : [ "open_hihat", 40 ]
 																			}
 , 																			{
 																				"key" : 4,
@@ -11927,7 +11928,7 @@
 					"presentation_rect" : [ 285.30895984172821, 97.55862156666106, 99.0, 62.0 ],
 					"setminmax" : [ 0.0, 200.0 ],
 					"setstyle" : 1,
-					"size" : 150,
+					"size" : 300,
 					"slidercolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ]
 				}
 
@@ -13045,7 +13046,7 @@
 											}
 , 											{
 												"key" : 3,
-												"value" : [ "open_hihat", 44 ]
+												"value" : [ "open_hihat", 40 ]
 											}
 , 											{
 												"key" : 4,
@@ -13360,7 +13361,7 @@
 							}
 , 							{
 								"key" : 3,
-								"value" : [ "open_hihat", 44 ]
+								"value" : [ "open_hihat", 40 ]
 							}
 , 							{
 								"key" : 4,
@@ -15641,7 +15642,7 @@
 					"presentation_rect" : [ 285.30895984172821, 97.55862156666106, 99.0, 62.0 ],
 					"setminmax" : [ 0.0, 200.0 ],
 					"setstyle" : 1,
-					"size" : 150,
+					"size" : 300,
 					"slidercolor" : [ 1.0, 0.509803921568627, 0.509803921568627, 1.0 ]
 				}
 
@@ -16958,7 +16959,6 @@
 					"patching_rect" : [ 273.666666666666629, 538.916671752929688, 164.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 87.04127037525177, 139.792198208996837, 142.0, 18.0 ],
-					"text" : "Start training...",
 					"textcolor" : [ 0.999999284744263, 0.999974429607391, 0.999991297721863, 1.0 ],
 					"textjustification" : 1
 				}
@@ -17882,8 +17882,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
