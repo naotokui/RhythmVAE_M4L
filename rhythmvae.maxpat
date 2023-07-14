@@ -9026,8 +9026,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 2,
 					"outlettype" : [ "float", "float" ],
-					"patching_rect" : [ 1392.0, 763.0, 252.0, 22.0 ],
-					"text" : "makenote_for_me @velocity 1 @timeshift 1"
+					"patching_rect" : [ 1392.0, 763.0, 241.0, 22.0 ],
+					"text" : "makenote_for_me @velocity 1 @timeshift 0"
 				}
 
 			}
@@ -9794,6 +9794,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -10818,7 +10820,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-40", 1 ],
-					"midpoints" : [ 1634.5, 793.5, 1416.5, 793.5 ],
+					"midpoints" : [ 1623.5, 793.5, 1416.5, 793.5 ],
 					"source" : [ "obj-39", 1 ]
 				}
 
@@ -10940,7 +10942,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-39", 1 ],
-					"midpoints" : [ 1582.0, 754.121353149414062, 1634.5, 754.121353149414062 ],
+					"midpoints" : [ 1582.0, 754.121353149414062, 1623.5, 754.121353149414062 ],
 					"source" : [ "obj-55", 0 ]
 				}
 
