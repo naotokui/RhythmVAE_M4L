@@ -1,5 +1,5 @@
 
-
+// Name of each drum
 const DRUM_CLASSES = [
   'Kick',
   'Snare',
@@ -12,6 +12,7 @@ const DRUM_CLASSES = [
   'Rim'
 ]
 
+// MIDI to Drum mapping
 const MIDI_DRUM_MAP = {
   36: 0,
   35: 0,
@@ -76,6 +77,7 @@ const MIDI_DRUM_MAP = {
   82: 8
 }
 
+// MIDI to Drum mapping (strict) - Ignore other MIDI notes
 const MIDI_DRUM_MAP_STRICT = {
   36: 0, // Acoustic Bass Drum
   35: 0, // Bass drum
@@ -97,14 +99,13 @@ const MIDI_DRUM_MAP_STRICT = {
   59: 8, // Ride Symbal 2
 }
 
-
-const NUM_DRUM_CLASSES = DRUM_CLASSES.length;
-const BEAT_RESOLUTION = 4;
+const NUM_DRUM_CLASSES = DRUM_CLASSES.length;  // total number of drums
+const BEAT_RESOLUTION = 4;                     // resolution of unit beat (4 = 16th note)
 const LOOP_DURATION = BEAT_RESOLUTION * 4 * 2; // 2bars x 16th note
 
 const MIN_ONSETS_THRESHOLD = 5; // ignore loops with onsets less than this num
 
-const ORIGINAL_DIM = NUM_DRUM_CLASSES * LOOP_DURATION;
+const ORIGINAL_DIM = NUM_DRUM_CLASSES * LOOP_DURATION; // length of input array
 
 exports.MIDI_DRUM_MAP = MIDI_DRUM_MAP;
 exports.MIDI_DRUM_MAP_STRICT = MIDI_DRUM_MAP_STRICT;

@@ -127,7 +127,7 @@ async function generatePattern(z1, z2, kick, hats, onoff, timeshift_coef, thresh
               // if (pattern[i * LOOP_DURATION + j] > 0.2) x = 1;
               if (onsets[i][j] > threshold){
                 Max.outlet("matrix_output", j + 1, i + 1, 1); // index for live.grid starts from 1
-           
+
                 // for live.step
                 sequence.push(Math.floor(velocities[i][j]*127. + 1)); // 0-1 -> 1-127
                 sequenceTS.push(Math.floor(utils.scale(timeshifts[i][j], -1., 1, 0, 127))); // -1 - 1 -> 0 - 127
@@ -135,6 +135,7 @@ async function generatePattern(z1, z2, kick, hats, onoff, timeshift_coef, thresh
                 sequence.push(0);
                 sequenceTS.push(64);
               }
+              Max.outlet("onset_output", j, i, onsets[i][j]); // index for jit.matrix starts from 0
           }
   
           // output for live.step object
@@ -142,7 +143,7 @@ async function generatePattern(z1, z2, kick, hats, onoff, timeshift_coef, thresh
           Max.outlet("timeshift_output", i+1, sequenceTS.join(" "));
       }
 
-      // Live Clip
+    // Live Clip - creating a new MIDI clip using Max for Live API
     Max.outlet("clip_start", 1);
     for (var i=0; i< NUM_DRUM_CLASSES; i++){
         // output for matrix view

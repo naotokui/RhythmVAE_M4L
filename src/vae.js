@@ -452,6 +452,7 @@ class ConditionalVAE {
     return [outputsOn.arraySync(), outputsVel.arraySync(), outputsTS.arraySync()];
   }
 
+  // network bending - add random noise to the model weights
   bendModel(noise_range) {
     let weights = [];
     for (let i = 0; i < this.decoder.getWeights().length; i++) {
@@ -496,6 +497,7 @@ class ConditionalVAE {
     this.isTrained = true;
   }
 
+  // Use encoder to encode input MIDI file to get its latent representation
   encode(inputOn, inputVel, inputTS, kick_z, hats_z, onoff_z) {
     if (!this.encoder) {
       utils.error_status("Model is not trained yet");
@@ -517,7 +519,6 @@ class ConditionalVAE {
     zs = zs.arraySync();
     return zs[0];
   }
-
 }
 
 function range(start, edge, step) {
