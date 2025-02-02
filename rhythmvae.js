@@ -136,6 +136,8 @@ async function generatePattern(z1, z2, kick, hats, onoff, timeshift_coef, thresh
                 sequenceTS.push(64);
               }
               Max.outlet("onset_output", j, i, onsets[i][j]); // index for jit.matrix starts from 0
+              Max.outlet("velocity_output", j, i, velocities[i][j]); // index for jit.matrix starts from 0
+              Max.outlet("timeshift_output", j, i, timeshifts[i][j]); // index for jit.matrix starts from 0
           }
   
           // output for live.step object
